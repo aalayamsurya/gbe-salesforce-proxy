@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:error-handler-plugin="http://www.mulesoft.org/schema/mule/error-handler-plugin"
+	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/error-handler-plugin http://www.mulesoft.org/schema/mule/error-handler-plugin/current/mule-error-handler-plugin.xsd">
+	 
+		
+	<error-handler name="ng-error-handler">
+        <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="d6a94618-1445-45aa-8e13-4de3b6f50caa">
+			<json-logger:logger doc:name="Logger" doc:id="114d5f8a-d2e0-4020-a22d-65a0998355af" config-ref="jsonLoggerConfig" tracePoint="EXCEPTION" priority="ERROR" message="Log Exception"/>
+			<choice doc:name="Type of Error" doc:id="2d6b411d-1f5c-459d-881f-1376dc367bd1">
+                    <when expression='#[error.errorType.namespace == "EXAMPLE" and error.errorType.identifier == "ERROR"]'>
+                        <set-variable value='#[%dw 2.0
+output application/json
+---
+{
+	message: "Error Payload via Error Handler Plugin Custom Properties"
+}]' doc:name="errorPayload" doc:id="d38d22a8-9b3f-448a-95cd-85ab3a5dd3e3" variableName="errorPayload" />
+                    </when>
+                <otherwise>
+                        <set-variable value='#[if (error.errorMessage.payload == null) "No Payload Available" else error.errorMessage.payload]' doc:name="errorPayload" doc:id="ed3f1411-bfce-4a93-b0db-4b7618ef81e2" variableName="errorPayload" />
+                    </otherwise>
+                </choice>
+			<error-handler-plugin:on-error doc:name="Process Error" doc:id="8f8d4a67-e04c-4036-b214-19d50b2b9b9c" apiVersion="p('api.version')" customErrorMap="#[${file::dwl/errorMap.dwl}]" customValidationErrorMap="#[${file::dwl/validationErrorMap.dwl}]"/>
+			<choice doc:name="Choice" doc:id="2aa66edc-d348-4886-b772-ffb8fd70a6c0" >
+				<when expression='#[vars.errorPayload != "No Payload Available"]'>
+					<ee:transform doc:name="Transform Message" doc:id="4eefb59c-64a1-4774-85c5-b885f2acb8b3" >
+						<ee:message >
+							<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+vars.errorPayload]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<set-variable value="#[attributes.httpStatus]" doc:name="Set Variable" doc:id="0e348c40-c0ea-44c7-9e42-2b80c74ed588" variableName="httpStatus"/>
+				</when>
+				<otherwise >
+					<ee:transform doc:name="Transform Message" doc:id="7561d242-b621-45ca-b1e0-251a2821827e">
+				<ee:message>
+					<ee:set-payload resource="dwl/transformInsertErrorPayload.dwl" />
+				</ee:message>
+			</ee:transform>
+					<set-variable value="#[attributes.httpStatus]" doc:name="httpStatus" doc:id="66c7bc03-88e2-46e0-8eb6-5d82a0b95971" variableName="httpStatus" />
+					<flow-ref doc:name="Flow Reference to alertNotificationFlow" doc:id="b7800834-b56c-4498-a75a-214f7daf8317" name="alert-notification-subflow"/>
+				</otherwise>
+			</choice>
+			<json-logger:logger doc:name="Logger" doc:id="cfe66788-9c9d-4932-8a7e-497613cdeb56" config-ref="jsonLoggerConfig" message="Log End with Exception" tracePoint="END" priority="ERROR"/>
+			<!-- <flow-ref doc:name="Flow Reference" doc:id="fb7c9578-1a94-48c4-9608-48528bc5167f" name="errorSub_Flow"/>
+             -->
+
+</on-error-propagate>
+        </error-handler>
+<sub-flow name="alert-notification-subflow" doc:id="56946fae-fea2-4068-9c80-6329239d0848" >
+		<async doc:name="Async" doc:id="b221098e-e6b9-4108-9dc2-09a33edd2504" >
+			<ee:transform doc:name="Transform Message" doc:id="a793da0d-09cf-4dff-b727-1ba90c1997f5">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+					<ee:set-variable resource="dwl/alertNotification.dwl" variableName="alert_text" />
+			</ee:variables>
+		</ee:transform>
+		</async>
+	</sub-flow> 
+	
+	
+	</mule>

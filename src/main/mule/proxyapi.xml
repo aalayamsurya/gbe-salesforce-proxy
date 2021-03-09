@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="162e3774-f2c7-4fe4-af13-80a46db3f5d6" >
+		<http:listener-connection host="0.0.0.0" port="${http.private.port}" />
+	</http:listener-config>
+	<http:request-config name="http-request-config-premise-basic" doc:name="HTTP Request configuration" doc:id="b99f422a-5402-47d4-ac45-68fcfb1b5c03" responseTimeout="1200000" >
+		<http:request-connection host="${http.premise.host}" port="${http.premise.port}" connectionIdleTimeout="1200000" >
+		</http:request-connection>
+	</http:request-config>
+	<http:request-config name="http-request-config-workorders-basic" doc:name="HTTP Request configuration" doc:id="e0e4b7ba-b428-4564-83d2-362dbe62511f" >
+		<http:request-connection host="${http.workOrders.host}" port="${http.workOrders.port}" connectionIdleTimeout="1200000" />
+		<http:response-validator >
+			<http:failure-status-code-validator values="0..599" />
+		</http:response-validator>
+	</http:request-config>
+	<http:request-config name="http-request-config-Basic_Auth" doc:name="HTTP Request configuration" doc:id="0065c42b-faae-40b7-bf2a-73f130778bd9" >
+		<http:request-connection host="${http.serviceOrders.host}" port="${http.serviceOrders.port}" />
+	</http:request-config>
+	<http:request-config name="http-request-config-customers-basic" doc:name="HTTP Request configuration" doc:id="3e417f82-6104-4969-ba89-a907d9903af2" >
+		<http:request-connection host="${http.customer.host}" port="${http.customer.port}" />
+	</http:request-config>
+	<flow name="proxyapiFlow" doc:id="44aed962-7709-4491-9d24-ad90a655ad27" >
+		<http:listener doc:name="Listener" doc:id="f8ef60ff-b1c6-4838-ae2d-2192b29cc7bf" config-ref="HTTP_Listener_config" path="/${http.listener.version}/*"/>
+		<json-logger:logger doc:name="initialLogger" doc:id="372e4a57-d85a-4221-93c2-8789d647b32b" config-ref="jsonLoggerConfig" message="initial request payload">
+			<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<flow-ref doc:name="ng-api-initialization" doc:id="a0421caf-9d79-4f42-8dfe-2d0c738531b9" name="ng-api-initialization"/>
+		<json-logger:logger doc:name="afterProfileSetupLogger" doc:id="1673360e-8035-443e-9be1-cf3513e1ee40" config-ref="jsonLoggerConfig" message="after API Profile setup">
+			<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<set-variable value="#[attributes.headers]" doc:name="loadInboundProperties" doc:id="d10039ed-f529-4bf2-ba26-c620fd39c304" variableName="v_inbound_properties"/>
+		<json-logger:logger doc:name="inboundMesssageLogger" doc:id="e795638a-14bd-4d25-bc87-127b5065b873" message='#[if(vars.apiPath != "") vars.apiPath else "Unknown" ++ " NG API Proxy Started with Inbound Messsage"]' config-ref="jsonLoggerConfig" tracePoint="AFTER_REQUEST">
+			<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<flow-ref doc:name="flowReferenceMutualTlsValidation" doc:id="32077387-cd08-439c-9371-2924f1ed9913" name="mutual-tls-validation"/>
+		<error-handler ref="ng-error-handler" />
+		
+	</flow>
+	<sub-flow name="ng-api-initialization" doc:id="c9bd498b-f858-442c-bf95-79a0cf31e7d4" >
+		<set-variable value="#[attributes.headers.'X-Root-Correlation-Id' default correlationId]" doc:name="setCorrelationalID" doc:id="da1d0569-a7cc-44a6-a0ec-77978d44c4f7" variableName="CorrelationalID"/>
+		<set-variable value="#[attributes.requestPath]" doc:name="setApiPath" doc:id="d6d7aa1d-bd23-4a05-b4f7-89d70e9fc37c" variableName="apiPath"/>
+		<set-variable value='#[if(attributes.requestUri contains ("v04")) (attributes.requestUri  splitBy("v04")) else (attributes.requestUri  splitBy("v01"))]' doc:name="setPathName" doc:id="aeecb656-308c-444c-a5c9-425f8ccaa9bc" variableName="pathName" />
+		<set-variable value="#[if(attributes.headers.'Target-System' !=null)  attributes.headers.'Target-System' else &quot;UNKNOWN&quot;]" doc:name="setTarget-System" doc:id="8cd5c95c-9c75-4726-ac6d-c9c36241feee" variableName="Target-System"/>
+		<set-variable value="#[if(attributes.headers.'Source-System' !=null)  attributes.headers.'Source-System' else &quot;UNKNOWN&quot;]" doc:name="setSource-System" doc:id="7c6389e1-aeed-48b0-8c62-553244943e20" variableName="Source System"/>
+		<set-variable value="#[if(attributes.headers.'content-type' != null) attributes.headers.'content-type'   else  &quot;application/json&quot;]" doc:name="contentType" doc:id="75f4756b-4dbb-4f39-9d1b-2ee70d8ac166" variableName="v_content_type"/>
+	</sub-flow>
+	<sub-flow name="mutual-tls-validation" doc:id="65a37693-ef1f-44c7-a55f-b12f72cda725" >
+		<flow-ref doc:name="mutualTlsPropertyFetchFlow" doc:id="b431829c-dbb2-4886-bb64-776d5d6b3ebd" name="mutual-tls-property-fetch-flow"/>
+		<choice doc:name="Choice" doc:id="25647ec2-2833-498a-89be-7a31ba2ed07f" >
+			<when expression="#[vars.mtlsValidationRequired == 'Y' and (vars.'X-SSL-Client-Verify' == null or vars.'X-SSL-Client-Verify' != 'SUCCESS')]">
+				<ee:transform doc:name="clientValidationErrorTransformMessage" doc:id="9faff7f2-7680-492b-b96f-7d6579463e90">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	   "webserviceControllerOutput": {         
+	   "severity": "error",         
+	   "code": 403,         
+	   "status": "Forbidden Access",        
+	    "details": "The API requires a valid client certificate. Please contact  API Management team for support"      }
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<set-variable value="403" doc:name="setStatus" doc:id="57e21295-26f1-4cd6-9d40-ad8e53aed419" variableName="http.status"/>
+			</when>
+			<otherwise >
+				<json-logger:logger doc:name="MutualTLSValidationCheckLogger" doc:id="6a53de0d-cafa-4c2b-9f85-fd5176b4b79b" message="Mutual TLS Validation" config-ref="jsonLoggerConfig">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<flow-ref doc:name="ng-proxy-api" doc:id="7da33c29-3df6-4ae4-b4fd-0357cdeca4cb" name="ng-proxy-api"/>
+			</otherwise>
+		</choice>
+	</sub-flow>
+	<flow name="mutual-tls-property-fetch-flow" doc:id="01d8311d-bdec-4a3c-900e-ae5a246f5062" >
+		<ee:transform doc:name="validateTransformMessage" doc:id="2fc9ec31-bc80-4902-83a5-3dfd06fecfbc" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="mtlsValidationRequired" ><![CDATA[ output application/json
+---
+
+if ((vars.v_inbound_properties.'Source-System' != null) and  p(lower(vars.v_inbound_properties.'Source-System' ++ '.mtls.validation.enabled')) !=null) 
+p(lower(vars.v_inbound_properties.'Source-System' ++ '.mtls.validation.enabled') )  else "N" ]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+
+	</flow>
+	<sub-flow name="ng-proxy-api" doc:id="dc6ec052-016c-4a67-aade-2ff4615a21e6" >
+		<choice doc:name="Choice" doc:id="8bd40ae7-9059-4f18-aea9-9ed8ceedc7dd" >
+			 <when expression='#[(vars.pathName[1]== "/premise" or vars.pathName[1] ==  "/assets")]'>
+			 
+				<json-logger:logger doc:name="beforePremiseCallLogger" doc:id="e7c41f86-c623-4465-81e1-f9f53057893c" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<http:request method="GET" doc:name="callHttpWithPremise" doc:id="562ad646-682c-4d33-aaf2-820a43e9cadd" config-ref="http-request-config-premise-basic" path="#[attributes.requestPath]">
+					<http:response-validator >
+						<http:success-status-code-validator values="0..599" />
+					</http:response-validator>
+				</http:request>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="StatusCode"/>
+			</when> 
+			<when expression='#[vars.pathName[1] == "/workOrders"]'>
+				<json-logger:logger doc:name="beforeWorkOrdersLogger" doc:id="b05168b6-14f1-4ac6-a5cf-367178ba02ef"  message="Before  WorkOrders Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger> 
+				<http:request method="GET" doc:name="callHttpWithBasicAuthWorkOrders" doc:id="0db17a99-9f76-4221-a661-61ed05f9986f" config-ref="http-request-config-workorders-basic" path="#[attributes.requestPath]"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="StatusCode"/>
+			</when>
+			<when expression='#[vars.pathName[1] == "/serviceOrders"]'>
+				<json-logger:logger doc:name="beforeServiceOrdersLogger" doc:id="41527380-02ef-4de4-857e-e8034f835cd4" message="before ServiceOrders payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<http:request method="GET" doc:name="callServiceOrdersBasicAuth" doc:id="af4e021e-4fdd-4d11-b5bb-0f29273e51de" config-ref="http-request-config-Basic_Auth" path="#[attributes.requestPath]"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="StatusCode"/>
+			</when>
+			<when expression='#[vars.pathName[1]== "/customer"]'>
+				<json-logger:logger doc:name="beforeCustomersLogger" doc:id="32d2abd1-50b5-4dfd-bfc5-cf2d72806410" message="Before Customers Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<http:request method="GET" doc:name="callHttpwithCustomersBasic" doc:id="767c5b38-b555-4cfe-8bfd-0d74579b8de0" config-ref="http-request-config-customers-basic" path="#[attributes.requestPath]"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="StatusCode"/>
+			</when>
+			<otherwise >
+				<json-logger:logger doc:name="DefaultLogger" doc:id="cd56dad5-fb2a-41e4-b3a9-16bef8b33b17" message="DefaultLogger payload" config-ref="jsonLoggerConfig" tracePoint="AFTER_TRANSFORM">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="96b9e2ae-5779-4a12-870e-2f8279459f33" variableName="StatusCode"/>
+				<set-payload value='#[{"message" : "Application is not configured in Proxy application. Invalid URI."}]' doc:name="setPayload" doc:id="35508cbc-94ca-40c5-b115-a1282fb517fa" />
+			</otherwise>
+		</choice>
+		<choice doc:name="Choice" doc:id="a5df0a1d-e248-49e4-843a-ccc38349ab8e" >
+			<when expression="#[attributes.statusCode &lt; '400']">
+				<json-logger:logger doc:name="responseStatusLogger" doc:id="5f5ea996-f906-4911-b4a9-17f386f29f34" config-ref="jsonLoggerConfig" message="Response status payload">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+			</when>
+			<when expression="#[attributes.statusCode &gt;= 400]">
+				<json-logger:logger doc:name="responseStatusLogger" doc:id="b9d528e8-5f58-4452-bbce-d42be854bcf5" message="Call ServiceOrders Basic Auth" config-ref="jsonLoggerConfig">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+			</when>
+			<otherwise >
+				<json-logger:logger doc:name="anyResponseStatusLogger" doc:id="6e1182c4-ebf8-498a-a719-a788a656c8af" message="ANY  ERROR " config-ref="jsonLoggerConfig">
+					<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<ee:transform doc:name="errorResponseInApiTransformMessage" doc:id="604a607f-acfa-49e2-92b9-7a0e306831b1" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	    "webserviceControllerOutput": { 
+	    "severity": "error", 
+	   	"code": 500,        
+	    "status": "Internal Error",        
+	    "details": "Error while connecting to internal/external system or some other internal error occurred. Please contact  API Management team for support"
+	    }
+	
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+		<json-logger:logger doc:name="END" doc:id="4adc6684-6253-488d-a6d6-42031316d23b" message="NG API Proxy End" config-ref="jsonLoggerConfig" tracePoint="END">
+			<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+		</json-logger:logger>
+	</sub-flow>
+	 <!-- <sub-flow name="Set-Api-System-Name-For-Alert-Notifications" doc:id="d12f4a7b-e2cd-4fd4-ab3e-e79e97239ee6" >
+		<set-variable value="if(vars.Source-System != null) (&quot;Source-System&quot;) else (attributes.headers.'Source-System' default &quot;Source-System&quot;)]]"vars.Source-System=""") doc:name="Set Variable" doc:id="399b04ab-8558-4d54-a294-393f75136e3a" variableName="v_source_system"/>
+		<set-variable value="if(vars.Target-System != null) (&quot;Target-System&quot;) else (attributes.headers.'Target-System' default &quot;Target-System&quot;)]]" doc:name="Set-v_target_system" doc:id="48e1dbfc-d17f-446c-9b58-32782342998c" variableName="v_target_system"/>
+		
+	</sub-flow> -->
+</mule>
