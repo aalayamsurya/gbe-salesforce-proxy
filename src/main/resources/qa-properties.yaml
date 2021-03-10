@@ -23,7 +23,7 @@ http:
     requestpath: "/premise"
     timeout: "3000000"
     port: "8093"
-    host: "mule-worker-internal-apidev-premiseassets.cloudhub.io"
+    host: "mule-worker-internal-apiqa-premiseassets.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -51,7 +51,7 @@ http:
     requestpath: "/serviceOrders"
     timeout: "3000000"
     port: "8093"
-    host: "mule-worker-internal-apidev-serviceorders.cloudhub.io"
+    host: "mule-worker-internal-apiqa-serviceorders.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -65,7 +65,7 @@ http:
     requestpath: "/workOrders"
     timeout: "3000000"
     port: "8093"
-    host: "mule-worker-internal-apidev-workorders-v02.cloudhub.io"
+    host: "mule-worker-internal-apiqa-workorders.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -79,7 +79,7 @@ http:
     requestpath: "/customer"
     timeout: "3000000"
     port: "8093"
-    host: "mule-worker-internal-apidev-customers.cloudhub.io"
+    host: "mule-worker-internal-apiqa-customers.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	
+	<flow name="proxyapiFlow" doc:id="4f236a5a-f3a1-490e-84df-acfa357b3b7d" >
+		<http:listener doc:name="Listener" doc:id="f59b7d34-17b5-484d-83ab-55e04a759eb8" path="${http.listener.version}" config-ref="HTTP_Listener_config"/>
+		<json-logger:logger doc:name="initialLogger" doc:id="1f51478a-50d5-4fd3-a947-5d478c11e8fb" config-ref="jsonLoggerConfig" message="initial request payload">
+			<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<flow-ref doc:name="ng-api-initialization" doc:id="23a317aa-778f-4c49-a033-02de52f5ff72" name="ng-api-initialization"/>
+		<json-logger:logger doc:name="afterProfileSetupLogger" doc:id="e913106d-dc9e-4873-8531-94a323c7f2fd" config-ref="jsonLoggerConfig" message="after API Profile setup">
+			<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<set-variable value="#[attributes.headers]" doc:name="loadInboundProperties" doc:id="5969a641-d567-4809-bfe5-edaeee442c87" variableName="v_inbound_properties"/>
+		<json-logger:logger doc:name="inboundMesssageLogger" doc:id="8c58f8a0-7a54-486e-81e0-3c527b926598" message='#[if(vars.apiPath != "") vars.apiPath else "Unknown" ++ " NG API Proxy Started with Inbound Messsage"]' config-ref="jsonLoggerConfig" tracePoint="AFTER_REQUEST">
+			<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<flow-ref doc:name="flowReferenceMutualTlsValidation" doc:id="585a2dd8-e4ad-40d2-8530-83a38cad273f" name="mutual-tls-validation"/>
+		<error-handler ref="ng-error-handler" />
+		
+	</flow>
+
+	<sub-flow name="ng-api-initialization" doc:id="259c0db9-e038-43b8-88b5-3eac8f7151cb" >
+		<set-variable value="#[attributes.headers.'X-Root-Correlation-Id' default correlationId]" doc:name="setCorrelationalID" doc:id="f956d283-47cf-4cb3-a980-cf3cbb18e5d1" variableName="CorrelationalID"/>
+		<set-variable value="#[attributes.requestPath]" doc:name="setApiPath" doc:id="deddadaa-ee7a-4659-96c2-e311388f14a0" variableName="apiPath"/>
+		<set-variable value='#[if(attributes.requestUri contains ("v04")) (attributes.requestUri  splitBy("v04")) else (attributes.requestUri  splitBy("v01"))]' doc:name="setPathName" doc:id="fe4d4a33-b74c-4ba3-a326-9155149b891a" variableName="pathName" />
+		<set-variable value="#[if(attributes.headers.'Target-System' !=null)  attributes.headers.'Target-System' else &quot;UNKNOWN&quot;]" doc:name="setTarget-System" doc:id="4be74794-37e6-4e3c-9b49-517eb049d1d9" variableName="Target-System"/>
+		<set-variable value="#[if(attributes.headers.'Source-System' !=null)  attributes.headers.'Source-System' else &quot;UNKNOWN&quot;]" doc:name="setSource-System" doc:id="032f6cfd-0349-4169-bc32-1dff0ae9850f" variableName="Source System"/>
+		<set-variable value="#[if(attributes.headers.'content-type' != null) attributes.headers.'content-type'   else  &quot;application/json&quot;]" doc:name="contentType" doc:id="89b95435-5346-4ef1-a428-21e184c5f5a6" variableName="v_content_type"/>
+	</sub-flow>
+	<sub-flow name="mutual-tls-validation" doc:id="f58725b6-8097-4779-bef9-33929e88ed89" >
+		<flow-ref doc:name="mutualTlsPropertyFetchFlow" doc:id="2e1bc4a8-a93e-4e7c-bf9f-854ae27dfb77" name="mutual-tls-property-fetch-flow"/>
+		<choice doc:name="Choice" doc:id="f6a675a7-8091-44ea-8996-6f86ad99a697" >
+			<when expression="#[vars.mtlsValidationRequired == 'Y' and (vars.'X-SSL-Client-Verify' == null or vars.'X-SSL-Client-Verify' != 'SUCCESS')]">
+				<ee:transform doc:name="clientValidationErrorTransformMessage" doc:id="03a593ac-0983-4956-88a4-e119a79de303">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	   "webserviceControllerOutput": {         
+	   "severity": "error",         
+	   "code": 403,         
+	   "status": "Forbidden Access",        
+	    "details": "The API requires a valid client certificate. Please contact  API Management team for support"      }
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<set-variable value="403" doc:name="setStatus" doc:id="5a1fb761-5b35-49b7-8d49-5b116b5c1373" variableName="httpStatus"/>
+			</when>
+			<otherwise >
+				<json-logger:logger doc:name="MutualTLSValidationCheckLogger" doc:id="9e3c1341-cee1-466f-bcbb-0f18faf4f06f" message="Mutual TLS Validation" config-ref="jsonLoggerConfig">
+					<json-logger:content><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<flow-ref doc:name="ng-proxy-api" doc:id="09fba1d2-c58a-4c46-97c5-7924a4d7f2e4" name="ng-proxy-api"/>
+			</otherwise>
+		</choice>
+	</sub-flow>
+	<flow name="mutual-tls-property-fetch-flow" doc:id="307314bb-878e-454a-8367-7714b214b5af" >
+		<ee:transform doc:name="validateTransformMessage" doc:id="a656c932-ebc1-4c91-894c-5c3776873293" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="mtlsValidationRequired" ><![CDATA[ output application/json
+---
+
+if ((vars.v_inbound_properties.'Source-System' != null) and  p(lower(vars.v_inbound_properties.'Source-System' ++ '.mtls.validation.enabled')) !=null) 
+p(lower(vars.v_inbound_properties.'Source-System' ++ '.mtls.validation.enabled') )  else "N" ]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+
+	</flow>
+	</mule>

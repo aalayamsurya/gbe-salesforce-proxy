@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
-http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
 	<configuration-properties doc:name="Configuration properties" doc:id="8a2a297e-727e-459b-9c91-b54df8ed9e96" file="${env}-properties.yaml" />
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="191d7624-e363-4884-a26b-56353b975b04" file="${env}-properties.yaml" key="${key}" />
 	<configuration doc:name="Configuration" doc:id="e08bdaf4-0e40-42ff-924b-47ebe65dabc0" defaultErrorHandler-ref="ng-error-handler" />
-	<json-logger:config name="jsonLoggerConfig" doc:name="JSON Logger Config" doc:id="852b7003-6b82-4406-ace1-b5f1bbf091f7" applicationName="${app.name}" applicationVersion="${app.version}" environment="dev" />
+	<json-logger:config name="jsonLoggerConfig" doc:name="JSON Logger Config" doc:id="852b7003-6b82-4406-ace1-b5f1bbf091f7" applicationName="${api.name}" applicationVersion="${api.version}" environment="${env}" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d76612eb-3b28-4ff6-ab11-98a075f66c1b" >
+		<http:listener-connection host="0.0.0.0" port="${http.private.port}" />
+	</http:listener-config>
+	<http:request-config name="http-request-config-premise-basic" doc:name="HTTP Request configuration" doc:id="e2463c7d-4c0b-4c57-8024-0573a3e87651" responseTimeout="1200000" >
+		<http:request-connection host="${http.premise.host}" port="${http.premise.port}" connectionIdleTimeout="1200000" >
+		</http:request-connection>
+	</http:request-config>
+	<http:request-config name="http-request-config-workorders-basic" doc:name="HTTP Request configuration" doc:id="5e827d5f-e532-46f7-8294-529f69cb2f67" >
+		<http:request-connection host="${http.workOrders.host}" port="${http.workOrders.port}" connectionIdleTimeout="1200000" />
+		<http:response-validator >
+			<http:failure-status-code-validator values="0..599" />
+		</http:response-validator>
+	</http:request-config>
+	<http:request-config name="http-request-config-Basic_Auth" doc:name="HTTP Request configuration" doc:id="1aa13f64-cdec-4909-a116-3d54b3dbd8e3" >
+		<http:request-connection host="${http.serviceOrders.host}" port="${http.serviceOrders.port}" />
+	</http:request-config>
+	<http:request-config name="http-request-config-customers-basic" doc:name="HTTP Request configuration" doc:id="59686d4c-0dfb-4f15-b1cb-bf12058af68a" >
+		<http:request-connection host="${http.customer.host}" port="${http.customer.port}" />
+	</http:request-config>
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fac8c170-7045-4d28-afd4-928ff0695aa8" flowRef="proxyapiFlow" />
 </mule>

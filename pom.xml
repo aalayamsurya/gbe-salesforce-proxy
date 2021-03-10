@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>com.mycompany</groupId>
-	<artifactId>proxyapi</artifactId>
+	<parent>
+        <groupId>com.ng.mulesoft</groupId>
+        <artifactId>ng-mule-parent-pom</artifactId>
+        <version>1.0.4</version>
+        <relativePath>parent-pom.xml</relativePath>
+    </parent>
+	<groupId>56c14f77-79ed-4de3-8313-d542ea9f232b</groupId>
+	<artifactId>gbe-salesforce-proxy-oauth</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>ng-proxy-api</name>
+	<name>gbe-salesforce-proxy-oauth</name>
 
     <properties>
+		<my.bg.org.id>56c14f77-79ed-4de3-8313-d542ea9f232b</my.bg.org.id>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<app.runtime>4.3.0-20201013</app.runtime>
-		<mule.maven.plugin.version>3.3.5</mule.maven.plugin.version>
-	<munit.version>2.3.1</munit.version>
+		<app.runtime>4.3.0</app.runtime>
+		<mule.maven.plugin.version>3.4.0</mule.maven.plugin.version>
+		<munit.version>2.2.5</munit.version>
+        <api.context>gbe-salesforce-proxy-oauth</api.context>
+		<api.layer>${api.layer.sapi}</api.layer>
+		<api.visualizer.layer>${api.visualizer.sapi}</api.visualizer.layer>
+		<api.groupId>56c14f77-79ed-4de3-8313-d542ea9f232b</api.groupId>
+		<api.artifactId>gbe-salesforce-proxy-oauth</api.artifactId>
+		<rtf.domain>${rtf.domain.internal}</rtf.domain>
+		<api.version>1.0.0</api.version>
     </properties>
 
 	<build>
@@ -30,32 +42,21 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
-				<configuration>
-				</configuration>
-			</plugin>
+            </plugin>
 		<plugin>
-                <groupId>com.mulesoft.munit.tools</groupId>
-                <artifactId>munit-maven-plugin</artifactId>
-                <version>${munit.version}</version>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>test</goal>
-                            <goal>coverage-report</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- <version>3.7.0</version> -->
                 <configuration>
-                    <coverage>
-                        <runCoverage>true</runCoverage>
-                        <formats>
-                            <format>html</format>
-                        </formats>
-                    </coverage>
+                    <compilerArgs>
+                        <args>-parameters</args>
+                    </compilerArgs>
                 </configuration>
             </plugin>
+        <plugin>
+				<groupId>com.mulesoft.munit.tools</groupId>
+				<artifactId>munit-maven-plugin</artifactId>
+			</plugin>
         </plugins>
 	</build>
 
@@ -113,46 +114,8 @@
             <artifactId>munit-tools</artifactId>
             <classifier>mule-plugin</classifier>
             <scope>test</scope>
-        </dependency> 
-    	<dependency>
-            <groupId>com.mulesoft.munit</groupId>
-            <artifactId>munit-runner</artifactId>
-            <version>2.3.1</version>
-            <classifier>mule-plugin</classifier>
-            <scope>test</scope>
-        </dependency>	<dependency>
-            <groupId>com.mulesoft.munit</groupId>
-            <artifactId>munit-tools</artifactId>
-            <version>2.3.1</version>
-            <classifier>mule-plugin</classifier>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
-	<repositories>
-          <repository>
-            <id>anypoint-exchange-v2</id>
-            <name>Anypoint Exchange</name>
-            <url>https://maven.anypoint.mulesoft.com/api/v2/maven</url>
-            <layout>default</layout>
-        </repository>
-        <repository>
-            <id>mulesoft-releases</id>
-            <name>MuleSoft Releases Repository</name>
-            <url>https://repository.mulesoft.org/releases/</url>
-            <layout>default</layout>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>mulesoft-releases</id>
-            <name>mulesoft release repository</name>
-            <layout>default</layout>
-            <url>https://repository.mulesoft.org/releases/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
 </project>
