@@ -24,7 +24,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="StatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="vStatusCode"/>
 			</when> 
 			<when expression='#[vars.pathName[1] == "/workOrders"]'>
 				<json-logger:logger doc:name="beforeWorkOrdersLogger" doc:id="b05168b6-14f1-4ac6-a5cf-367178ba02ef"  message="Before  WorkOrders Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -35,7 +35,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]]></json-logger:content>
 				</json-logger:logger> 
 				<http:request method="GET" doc:name="callHttpWithBasicAuthWorkOrders" doc:id="0db17a99-9f76-4221-a661-61ed05f9986f" path="#[attributes.requestPath]" config-ref="http-request-config-workorders-basic"/>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="StatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="vStatusCode"/>
 			</when>
 			<when expression='#[vars.pathName[1] == "/serviceOrders"]'>
 				<json-logger:logger doc:name="beforeServiceOrdersLogger" doc:id="41527380-02ef-4de4-857e-e8034f835cd4" message="before ServiceOrders payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -46,7 +46,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]]></json-logger:content>
 				</json-logger:logger>
 				<http:request method="GET" doc:name="callServiceOrdersBasicAuth" doc:id="af4e021e-4fdd-4d11-b5bb-0f29273e51de" path="#[attributes.requestPath]" config-ref="http-request-config-Basic_Auth"/>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="StatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="vStatusCode"/>
 			</when>
 			<when expression='#[vars.pathName[1]== "/customer"]'>
 				<json-logger:logger doc:name="beforeCustomersLogger" doc:id="32d2abd1-50b5-4dfd-bfc5-cf2d72806410" message="Before Customers Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -57,7 +57,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]]></json-logger:content>
 				</json-logger:logger>
 				<http:request method="GET" doc:name="callHttpwithCustomersBasic" doc:id="767c5b38-b555-4cfe-8bfd-0d74579b8de0" path="#[attributes.requestPath]" config-ref="http-request-config-customers-basic"/>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="StatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="vStatusCode"/>
 			</when>
 			<otherwise >
 				<json-logger:logger doc:name="DefaultLogger" doc:id="cd56dad5-fb2a-41e4-b3a9-16bef8b33b17" message="DefaultLogger payload" config-ref="jsonLoggerConfig" tracePoint="AFTER_TRANSFORM">
@@ -67,12 +67,12 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="96b9e2ae-5779-4a12-870e-2f8279459f33" variableName="StatusCode"/>
+				<set-variable value="400" doc:name="setStatusCode" doc:id="96b9e2ae-5779-4a12-870e-2f8279459f33" variableName="vStatusCode"/>
 				<set-payload value='#[{"message" : "Application is not configured in Proxy application. Invalid URI."}]' doc:name="setPayload" doc:id="35508cbc-94ca-40c5-b115-a1282fb517fa" />
 			</otherwise>
 		</choice>
 		<choice doc:name="Choice" doc:id="a5df0a1d-e248-49e4-843a-ccc38349ab8e" >
-			<when expression="#[attributes.statusCode &lt; 400]">
+			<when expression="#[vars.vStatusCode &lt; 400]">
 				<json-logger:logger doc:name="responseStatusLogger" doc:id="5f5ea996-f906-4911-b4a9-17f386f29f34" config-ref="jsonLoggerConfig" message="Response status payload">
 					<json-logger:content ><![CDATA[#[output application/json ---
 {
@@ -81,7 +81,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]]></json-logger:content>
 				</json-logger:logger>
 			</when>
-			<when expression="#[attributes.statusCode &gt;= 400]">
+			<when expression="#[vars.vStatusCode &gt;= 400]">
 				<json-logger:logger doc:name="responseStatusLogger" doc:id="b9d528e8-5f58-4452-bbce-d42be854bcf5" message="Call ServiceOrders Basic Auth" config-ref="jsonLoggerConfig">
 					<json-logger:content ><![CDATA[#[output application/json ---
 {
