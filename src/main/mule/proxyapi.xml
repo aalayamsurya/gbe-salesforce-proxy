@@ -25,7 +25,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="GET" doc:name="callHttpWithPremise" doc:id="562ad646-682c-4d33-aaf2-820a43e9cadd" path="#[attributes.requestPath]" config-ref="http-request-config-premise-basic">
+				<http:request method="#[attributes.method]" doc:name="callHttpWithPremise" doc:id="562ad646-682c-4d33-aaf2-820a43e9cadd" path="#[attributes.requestPath]" config-ref="http-request-config-premise-basic">
 					<http:response-validator >
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>
@@ -40,7 +40,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger> 
-				<http:request method="GET" doc:name="callHttpWithBasicAuthWorkOrders" doc:id="0db17a99-9f76-4221-a661-61ed05f9986f" path="#[attributes.requestPath]" config-ref="http-request-config-workorders-basic"/>
+				<http:request method="#[attributes.method]" doc:name="callHttpWithBasicAuthWorkOrders" doc:id="0db17a99-9f76-4221-a661-61ed05f9986f" path="#[attributes.requestPath]" config-ref="http-request-config-workorders-basic"/>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="vStatusCode"/>
 			</when>
 			<when expression='#[vars.pathName[1] == "/serviceOrders"]'>
@@ -51,7 +51,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="GET" doc:name="callServiceOrdersBasicAuth" doc:id="af4e021e-4fdd-4d11-b5bb-0f29273e51de" path="#[attributes.requestPath]" config-ref="http-request-config-Basic_Auth"/>
+				<http:request method="#[attributes.method]" doc:name="callServiceOrdersBasicAuth" doc:id="af4e021e-4fdd-4d11-b5bb-0f29273e51de" path="#[attributes.requestPath]" config-ref="http-request-config-Basic_Auth"/>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="vStatusCode"/>
 			</when>
 			<when expression='#[vars.pathName[1]== "/customer"]'>
@@ -62,7 +62,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="GET" doc:name="callHttpwithCustomersBasic" doc:id="767c5b38-b555-4cfe-8bfd-0d74579b8de0" path="#[attributes.requestPath]" config-ref="http-request-config-customers-basic"/>
+				<http:request method="#[attributes.method]" doc:name="callHttpwithCustomersBasic" doc:id="767c5b38-b555-4cfe-8bfd-0d74579b8de0" path="#[attributes.requestPath]" config-ref="http-request-config-customers-basic"/>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="vStatusCode"/>
 			</when>
 			<otherwise >
