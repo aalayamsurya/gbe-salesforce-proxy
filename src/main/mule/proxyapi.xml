@@ -9,6 +9,12 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 	
 	<sub-flow name="ng-proxy-api" doc:id="dc6ec052-016c-4a67-aade-2ff4615a21e6" >
+		<json-logger:logger doc:name="Logger" doc:id="fd809228-7a9a-40ed-ab5f-cf38b30979e1" config-ref="jsonLoggerConfig" message="Start of proxy routing">
+			<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+    path: JSONLoggerModule::stringifyNonJSON(vars.pathName) 
+}]]]></json-logger:content>
+		</json-logger:logger>
 		<choice doc:name="Choice" doc:id="8bd40ae7-9059-4f18-aea9-9ed8ceedc7dd" >
 			 <when expression='#[(vars.pathName[1]== "/premise" or vars.pathName[1] ==  "/assets")]'>
 			 
@@ -68,7 +74,10 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]]></json-logger:content>
 				</json-logger:logger>
 				<set-variable value="400" doc:name="setStatusCode" doc:id="96b9e2ae-5779-4a12-870e-2f8279459f33" variableName="vStatusCode"/>
-				<set-payload value='#[{"message" : "Application is not configured in Proxy application. Invalid URI."}]' doc:name="setPayload" doc:id="35508cbc-94ca-40c5-b115-a1282fb517fa" />
+				<set-payload value='#[%dw 2.0
+output application/json
+---
+{"message" : "Application is not configured in Proxy application. Invalid URI."}]' doc:name="setPayload" doc:id="35508cbc-94ca-40c5-b115-a1282fb517fa" />
 			</otherwise>
 		</choice>
 		<choice doc:name="Choice" doc:id="a5df0a1d-e248-49e4-843a-ccc38349ab8e" >

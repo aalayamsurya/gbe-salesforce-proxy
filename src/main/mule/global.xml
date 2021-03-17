@@ -17,19 +17,34 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 	</http:listener-config>
 	<http:request-config name="http-request-config-premise-basic" doc:name="HTTP Request configuration" doc:id="e2463c7d-4c0b-4c57-8024-0573a3e87651" responseTimeout="1200000" >
 		<http:request-connection host="${http.premise.host}" port="${http.premise.port}" connectionIdleTimeout="1200000" >
+			<http:authentication >
+				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
+			</http:authentication>
 		</http:request-connection>
 	</http:request-config>
 	<http:request-config name="http-request-config-workorders-basic" doc:name="HTTP Request configuration" doc:id="5e827d5f-e532-46f7-8294-529f69cb2f67" >
-		<http:request-connection host="${http.workOrders.host}" port="${http.workOrders.port}" connectionIdleTimeout="1200000" />
+		<http:request-connection host="${http.workOrders.host}" port="${http.workOrders.port}" connectionIdleTimeout="1200000" >
+			<http:authentication >
+				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
+			</http:authentication>
+		</http:request-connection>
 		<http:response-validator >
 			<http:failure-status-code-validator values="0..599" />
 		</http:response-validator>
 	</http:request-config>
 	<http:request-config name="http-request-config-Basic_Auth" doc:name="HTTP Request configuration" doc:id="1aa13f64-cdec-4909-a116-3d54b3dbd8e3" >
-		<http:request-connection host="${http.serviceOrders.host}" port="${http.serviceOrders.port}" />
+		<http:request-connection host="${http.serviceOrders.host}" port="${http.serviceOrders.port}" >
+			<http:authentication >
+				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
+			</http:authentication>
+		</http:request-connection>
 	</http:request-config>
 	<http:request-config name="http-request-config-customers-basic" doc:name="HTTP Request configuration" doc:id="59686d4c-0dfb-4f15-b1cb-bf12058af68a" >
-		<http:request-connection host="${http.customer.host}" port="${http.customer.port}" />
+		<http:request-connection host="${http.customer.host}" port="${http.customer.port}" >
+			<http:authentication >
+				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
+			</http:authentication>
+		</http:request-connection>
 	</http:request-config>
-	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fac8c170-7045-4d28-afd4-928ff0695aa8" flowRef="proxyapiFlow" />
+	 <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fac8c170-7045-4d28-afd4-928ff0695aa8" flowRef="proxyapiFlow" />
 </mule>

@@ -16,13 +16,15 @@ http:
     version: "/*"
     config: HTTPS_Shared_Listener_Config
   
-    
+  requester:
+    username: "637fcf6f13514c2fbc3e946cca8d2063" 
+    password: "![unqBJjpgQvXkd16Z8VQowPMmsVsmJIBVxcpG6rFAPqhJz9HYoo48VRJN0qYPB7kZ]"  
   premise:
     basepath: ""
     version: "v1"
     requestpath: "/premise"
     timeout: "3000000"
-    port: "8093"
+    port: "8091"
     host: "mule-worker-internal-apidev-premiseassets.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -36,7 +38,7 @@ http:
     version: "v1"
     requestpath: "/assets"
     timeout: "3000000"
-    port: "8093"
+    port: "8091"
     host: "mule-worker-internal-apidev-premiseassets-fr.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -50,7 +52,7 @@ http:
     version: "v04"
     requestpath: "/serviceOrders"
     timeout: "3000000"
-    port: "8093"
+    port: "8091"
     host: "mule-worker-internal-apidev-serviceorders.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -64,8 +66,8 @@ http:
     version: "v1"
     requestpath: "/workOrders"
     timeout: "3000000"
-    port: "8093"
-    host: "mule-worker-internal-apidev-workorders-v02.cloudhub.io"
+    port: "8091"
+    host: "mule-worker-internal-apidev-workorders-fr.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -78,7 +80,7 @@ http:
     version: "v1"
     requestpath: "/customer"
     timeout: "3000000"
-    port: "8093"
+    port: "8091"
     host: "mule-worker-internal-apidev-customers.cloudhub.io"
     reconnection:
       attempts: "2"
