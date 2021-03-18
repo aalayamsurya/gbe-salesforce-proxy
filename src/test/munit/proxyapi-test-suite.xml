@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		
+	http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="proxyapi-test-suite.xml" />
+	<munit:test name="proxyapi-test-suiteTest" doc:id="516a15d7-7068-4cc2-aff5-3a2a1d7b4ee6" timeOut="120000">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="4cd55368-2739-4e03-a9c4-0a2d66f06271" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="callHttpWithBasicAuthWorkOrders" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="0db17a99-9f76-4221-a661-61ed05f9986f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:attributes value="#[{'statusCode': 200}]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="8009e35a-6552-4474-9a79-7b0b787ca18e" >
+				<munit:payload value='#[{
+	"member": [{
+			"woserviceaddress": {
+				"ng_originaljob": "",
+				"ng_cssrirefid": "",
+				"ng_companycode": ""
+			},
+			"worktype": "CLEC",
+			"lead": "ANAIK",
+			"status": "En_Route",
+			"ng_corrrepaircode": "W-Full Recoat Service",
+			"wosfdcid": "0WOK00000000MISOA2",
+			"ng_sfcommodity": "",
+			"ng_fieldresp": "",
+			"sfwonum": "00035728",
+			"leakreadings": [{
+				"ng_section": "023456",
+				"type": "NG_Leak_Reading",
+				"ng_code": "CB",
+				"ng_surface": "Paved",
+				"ng_value": "Value",
+				"ng_type": "Type",
+				"ng_remarks": "Remarks",
+				"ng_lkgrade": "Grade 1"
+			}]
+		}
+	]
+}]' />
+				<munit:attributes value='#[{
+      "headers" : {
+        "content-type" : "application/json",
+        "source-system" : "Salesforce",
+        "target-system" : "Maximo",
+        "user-agent" : "PostmanRuntime/7.26.8",
+        "accept" : "*/*",
+        "postman-token" : "dfd09200-0ab7-4eab-b9b2-f7b06ef39347",
+        "host" : "localhost:8091",
+        "accept-encoding" : "gzip, deflate, br",
+        "connection" : "keep-alive",
+        "content-length" : "626"
+      },
+      "method" : "POST",
+      "scheme" : "http",
+      "requestUri" : "/api/v04/workOrders",
+      "queryString" : "",
+      "version" : "HTTP/1.1",
+      "maskedRequestPath" : "/api/v04/workOrders",
+      "listenerPath" : "/*",
+      "localAddress" : "/127.0.0.1:8091",
+      "relativePath" : "/v01/api/v04/workOrders",
+      "uriParams" : { },
+      "rawRequestUri" : "/api/v04/workOrders",
+      "rawRequestPath" : "/api/v04/workOrders",
+      "remoteAddress" : "/127.0.0.1:51234",
+      "requestPath" : "/api/v04/workOrders"
+    }
+  ]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow Reference" doc:id="2b5b44f5-309c-465b-98e6-7b1097130393" name="proxyapiFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="ed920a2b-17f1-4c12-956f-30a391e5c32a" processor="json-logger:logger" atLeast="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="END" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="4adc6684-6253-488d-a6d6-42031316d23b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="proxyapi-test-suiteTest1" doc:id="00a492b7-92ed-4af8-933f-420669215737" timeOut="120000">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="8adf93ee-55fb-4d98-87d9-77c9d2362a6d" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="callServiceOrdersBasicAuth" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="af4e021e-4fdd-4d11-b5bb-0f29273e51de" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:attributes value="#[{'statusCode': 500}]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="95246d39-ceae-410c-9c20-bf9badde710b" >
+				<munit:attributes value='#[{
+      "headers" : {
+        "source-system" : "Salesforce",
+        "target-system" : "CSS",
+        "content-type" : "application/json",
+        "user-agent" : "PostmanRuntime/7.26.8",
+        "accept" : "*/*",
+        "postman-token" : "24c9367d-fef8-4eeb-a53f-fe116e468894",
+        "host" : "localhost:8091",
+        "accept-encoding" : "gzip, deflate, br",
+        "connection" : "keep-alive",
+        "content-length" : "1378"
+      },
+      "clientCertificate" : null,
+      "method" : "POST",
+      "scheme" : "http",
+      "queryParams" : { },
+      "requestUri" : "api/v01/serviceOrders",
+      "queryString" : "",
+      "version" : "HTTP/1.1",
+      "maskedRequestPath" : "/v01/serviceOrders",
+      "listenerPath" : "/*",
+      "relativePath" : "/api/v01/serviceOrders",
+      "localAddress" : "/127.0.0.1:8091",
+      "uriParams" : { },
+      "rawRequestUri" : "/api/v01/serviceOrders",
+      "rawRequestPath" : "/api/v01/serviceOrders",
+      "remoteAddress" : "/127.0.0.1:62696",
+      "requestPath" : "/api/v01/serviceOrders"
+    }]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow Reference" doc:id="618f6906-547d-46d0-a052-ccf52718d4f4" name="proxyapiFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="4c2fcbad-0b85-450c-a679-67f528a41c78" processor="json-logger:logger" atLeast="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="END" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="4adc6684-6253-488d-a6d6-42031316d23b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="proxyapi-test-suiteTest2" doc:id="f19c4d6f-689d-4d6d-8082-008e21b322c6" timeOut="1200000">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="af37b890-91b0-4f27-beae-5d874f4e0d8a" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="callHttpwithCustomersBasic" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="767c5b38-b555-4cfe-8bfd-0d74579b8de0" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:attributes value="#[{'statusCode': 500}]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="799531a3-4c57-46aa-8251-fd9344b4367f" >
+				<munit:attributes value='#[{
+      "headers" : {
+        "source-system" : "Salesforce",
+        "target-system" : "CSS",
+        
+      },
+      "clientCertificate" : null,
+      "method" : "GET",
+      "scheme" : "http",
+      "queryParams" : { },
+      "requestUri" : "/v01/customer",
+      "queryString" : "",
+      "version" : "HTTP/1.1",
+      "maskedRequestPath" : "/v01/customer",
+      "listenerPath" : "/*",
+      "relativePath" : "/v01/customer",
+      "localAddress" : "/127.0.0.1:8091",
+      "uriParams" : { },
+      "rawRequestUri" : "/v01/customer",
+      "rawRequestPath" : "/v01/customer",
+      "remoteAddress" : "/127.0.0.1:49559",
+      "requestPath" : "/v01/customer"
+    }]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow Reference" doc:id="6c55bf36-a805-4c9d-a8ac-2a45cfbb50de" name="proxyapiFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="a337a94b-598b-45ff-88b7-3d3bb338fbab" processor="json-logger:logger" atLeast="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="END" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="4adc6684-6253-488d-a6d6-42031316d23b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="proxyapi-test-suiteTest3" doc:id="a0735d6f-65e8-4033-80c2-0f6161e20e84" timeOut="1200000">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="b986faa5-0304-49c0-8461-49ec5aeae72c" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="callHttpWithPremise" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="562ad646-682c-4d33-aaf2-820a43e9cadd" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:attributes value="#[{'statusCode': 500}]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="9925d1e7-6228-4e9c-becf-710305bc3fcd" >
+				<munit:attributes value='#[ {
+      "headers" : {
+        "source-system" : "Salesforce",
+        "target-system" : "CSS",
+        
+      },
+      "clientCertificate" : null,
+      "method" : "GET",
+      "scheme" : "http",
+      "queryParams" : { },
+      "requestUri" : "/api/v01/premise",
+      "queryString" : "",
+      "version" : "HTTP/1.1",
+      "maskedRequestPath" : "/api/v01/premise",
+      "listenerPath" : "/*",
+      "relativePath" : "/api/v01/premise",
+      "localAddress" : "/127.0.0.1:8091",
+      "uriParams" : { },
+      "rawRequestUri" : "/api/v01/premise",
+      "rawRequestPath" : "/api/v01/premise",
+      "remoteAddress" : "/127.0.0.1:49506",
+      "requestPath" : "/api/v01/premise"
+    }]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow Reference" doc:id="3789d866-8515-4bfa-9156-23d7f25f20cd" name="proxyapiFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="b28a0eb7-df59-437d-9bf4-9c60a8472ee3" processor="json-logger:logger" atLeast="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="END" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="4adc6684-6253-488d-a6d6-42031316d23b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
