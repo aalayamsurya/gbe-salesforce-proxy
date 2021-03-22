@@ -246,6 +246,55 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
+	<munit:test name="proxyapi-test-suiteTest4" doc:id="572eea06-0d31-4fd1-a064-9e050a352091" timeOut="1200000">
+		<munit:behavior>
+			<munit-tools:mock-when doc:name="Mock when" doc:id="5576ec23-c1bb-4f9e-ba8a-ab2d4f506c67" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="callHttpWithAssetsKeyword" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="e609c510-2857-48eb-b876-4e94f737bd7b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:attributes value="#[{'statusCode': 200}]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="a15c9c68-8d95-4449-b81c-56a0f566c045" >
+				<munit:attributes value='#[ {
+      "headers" : {
+        "source-system" : "Salesforce",
+        "target-system" : "CSS",
+        
+      },
+      "clientCertificate" : null,
+      "method" : "GET",
+      "scheme" : "http",
+      "queryParams" : { },
+      "requestUri" : "/api/v01/assets",
+      "queryString" : "",
+      "version" : "HTTP/1.1",
+      "maskedRequestPath" : "/api/v01/assets",
+      "listenerPath" : "/*",
+      "relativePath" : "/api/v01/assets",
+      "localAddress" : "/127.0.0.1:8091",
+      "uriParams" : { },
+      "rawRequestUri" : "/api/v01/assets",
+      "rawRequestPath" : "/api/v01/assets",
+      "remoteAddress" : "/127.0.0.1:49506",
+      "requestPath" : "/api/v01/assets"
+    }]' />
+			</munit:set-event>
+			<flow-ref doc:name="Flow Reference" doc:id="bc3d22f4-fe7d-4d96-a010-5c5ce48d6a50" name="proxyapiFlow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:verify-call doc:name="Verify call" doc:id="18656afd-a8f5-4bde-bff1-0b0a98e3f9ea" processor="json-logger:logger" atLeast="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="END" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="4adc6684-6253-488d-a6d6-42031316d23b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
 
 
 </mule>

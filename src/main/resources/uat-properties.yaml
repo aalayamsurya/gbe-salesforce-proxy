@@ -1,7 +1,7 @@
 api:
   name:    "proxyapi" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
-  id: "16660772"
+  id: "16702622"
 
 
 
