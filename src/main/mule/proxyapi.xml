@@ -16,10 +16,9 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]]></json-logger:content>
 		</json-logger:logger>
 		<choice doc:name="Choice" doc:id="8bd40ae7-9059-4f18-aea9-9ed8ceedc7dd" >
-			 <when expression='#[(vars.pathName[1]== "/premise" or vars.pathName[1] ==  "/assets")]'>
-			 
-				<json-logger:logger doc:name="beforePremiseCallLogger" doc:id="e7c41f86-c623-4465-81e1-f9f53057893c" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content ><![CDATA[#[output application/json ---
+			 <when expression='#[vars.pathName[1] startsWith("/premise")]'>
+			 	<json-logger:logger doc:name="beforePremiseCallLogger" doc:id="a8bdc7d4-6c42-4c0b-905e-1a21218c6755" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
+					<json-logger:content><![CDATA[#[output application/json ---
 {
  	payload: payload,
  	attributes: attributes
@@ -41,7 +40,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="vStatusCode"/>
 			</when> 
-			<when expression='#[vars.pathName[1] == "/workOrders"]'>
+			<when expression='#[vars.pathName[1] startsWith("/workOrders")]'>
 				<json-logger:logger doc:name="beforeWorkOrdersLogger" doc:id="b05168b6-14f1-4ac6-a5cf-367178ba02ef"  message="Before  WorkOrders Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
 					<json-logger:content ><![CDATA[#[output application/json ---
 {
@@ -62,7 +61,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="vStatusCode"/>
 			</when>
-			<when expression='#[vars.pathName[1] == "/serviceOrders"]'>
+			<when expression='#[vars.pathName[1] startsWith("/serviceOrders")]'>
 				<json-logger:logger doc:name="beforeServiceOrdersLogger" doc:id="41527380-02ef-4de4-857e-e8034f835cd4" message="before ServiceOrders payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
 					<json-logger:content ><![CDATA[#[output application/json ---
 {
@@ -83,7 +82,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="vStatusCode"/>
 			</when>
-			<when expression='#[vars.pathName[1]== "/customer"]'>
+			<when expression='#[vars.pathName[1] startsWith("/customer")]'>
 				<json-logger:logger doc:name="beforeCustomersLogger" doc:id="32d2abd1-50b5-4dfd-bfc5-cf2d72806410" message="Before Customers Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
 					<json-logger:content ><![CDATA[#[output application/json ---
 {
@@ -103,6 +102,30 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 }]]]></http:headers>
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="vStatusCode"/>
+			</when>
+			<when expression='#[vars.pathName[1] startsWith("/assets")]'>
+				<json-logger:logger doc:name="beforePremiseCallLogger" doc:id="e7c41f86-c623-4465-81e1-f9f53057893c" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
+					<json-logger:content><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<http:request method="#[attributes.method]" doc:name="callHttpWithAssetsKeyword" doc:id="e609c510-2857-48eb-b876-4e94f737bd7b" path="#[attributes.requestPath]" config-ref="http-request-config-premise-basic">
+					<http:headers ><![CDATA[#[output application/json
+---
+{
+	
+	"X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
+	"Content-Type" : vars."v_content_type",
+	"Source-System" : vars.'Source-System',
+	"Target-System" : vars.'Target-System',
+}]]]></http:headers>
+					<http:response-validator >
+						<http:success-status-code-validator values="0..599" />
+					</http:response-validator>
+				</http:request>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="80daa2e3-4f6f-47ff-b602-3d5e20cfb744" variableName="vStatusCode"/>
 			</when>
 			<otherwise >
 				<json-logger:logger doc:name="DefaultLogger" doc:id="cd56dad5-fb2a-41e4-b3a9-16bef8b33b17" message="DefaultLogger payload" config-ref="jsonLoggerConfig" tracePoint="AFTER_TRANSFORM">
