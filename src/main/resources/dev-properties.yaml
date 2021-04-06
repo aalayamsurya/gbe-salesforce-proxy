@@ -88,7 +88,31 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
+  
+  getcustomer:
+    host: "api-dev-int-us.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-dev"
+    version: "v1"
+    requestpath: "/getCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
       
+tls:
+  keystore:
+    type: "pkcs12"
+    path: "certs/preprodexternal.p12"
+    alias: "preprodexternal"
+    keyPassword: "![FfXDvxLVBJ9T79NqtQ24Ng==]"
+    password: "![FfXDvxLVBJ9T79NqtQ24Ng==]"
+  truststore:
+    type: "pkcs12"
+    path: "certs/te_070b9965_b8c6_4fca_883a_6bdb2cb96641.p12" 
 ##M-TLS configurations
 salesforce:
     mtls: 

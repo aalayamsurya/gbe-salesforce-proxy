@@ -1,0 +1,42 @@
+app:
+  name:    ${project.artifactId} # replaced through Maven resource filtering
+  version: ${project.version}    # replaced through Maven resource filtering
+  
+api:
+  context:      "${api.context}"    # replaced through Maven resource filtering
+  layer:        "${api.layer}"    # replaced through Maven resource filtering
+  groupId:      "${api.groupId}"    # replaced through Maven resource filtering
+  artifactId:   "${api.artifactId}" # replaced through Maven resource filtering
+  version:      "${api.version}"    # replaced through Maven resource filtering#
+  spec: "resource::${api.groupId}:${api.artifactId}:${api.version}:raml:zip:${api.artifactId}.raml" # replaced through Maven resource filtering
+  majorVersion: "v1"
+  
+mule.httpResponseTimeout: "30000"
+
+mule.mqAccountMatchResponseTimeout: "6000"
+
+mule.mqSummaryResponseTimeout: "20000"
+
+mule.mqAccountStatementResponseTimeout: "20000"
+
+json.logger:
+  prettyPrint: "true"
+  disabled.fields: ""
+
+https:
+  path: "/*"
+
+deps.https.listener:
+  attemptMillis: "2000"
+  frequency: "2"
+  timeout: "30000"
+  
+deps.health:
+  milliesBetweenRetries: "1000"
+  maxRetries: "2"
+  timeoutMillis: "1000"
+
+mock.https.request:
+  basepath: "/get"
+  host: "postman-echo.com"
+  port: "443"

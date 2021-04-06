@@ -1,0 +1,8 @@
+### Cloudhub Configaration #####
+ch:
+  password: "![Urr7oSdHxXvg4yt45FXW/w==]"
+##HTTP Listener TLS Properties##  
+tls:
+  keystore:
+    keyPassword: "![FfXDvxLVBJ9T79NqtQ24Ng==]"
+    password: "![FfXDvxLVBJ9T79NqtQ24Ng==]"

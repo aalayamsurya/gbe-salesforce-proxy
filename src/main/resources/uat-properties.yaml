@@ -99,3 +99,12 @@ salesforce:
 json.logger:
   prettyPrint: "true"
   disabled.fields: ""    
+
+tls:
+  keystore:
+    type: "pkcs12"
+    path: "certs/preprodexternal.p12"
+    alias: "preprodexternal"
+  truststore:
+    type: "pkcs12"
+    path: "certs/te_070b9965_b8c6_4fca_883a_6bdb2cb96641.p12"

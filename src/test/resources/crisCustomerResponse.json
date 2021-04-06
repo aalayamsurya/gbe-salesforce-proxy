@@ -1,0 +1,18 @@
+{
+ "customer":
+    {
+    "ng_crisrefid":"00118820044",
+    "ng_firstname":"DAWN WAYAN",
+    "ng_middlename":"C",
+    "ng_lastname":"JACK",
+    "ng_primaryphone":"(315) 744-4619",
+    "ng_alternatephone":"(911) 109-0000",
+    "ng_dob":"1997-01-19",
+    "ng_mailingstreet":"7475 MORGAN RD APT8-4",
+    "ng_mailingcity":"LIVERPOOL",                 
+    "ng_shippingstreet":"",
+    "ng_shippingcity":"",
+    "ng_email":"test.456@nationalgrid.com",
+    "ng_tid":"sf-gc-9926a2ccfbce4dcd85c5444102473a3d"
+    }
+}
