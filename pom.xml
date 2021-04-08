@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -8,11 +8,11 @@
         <relativePath>parent-pom.xml</relativePath>
     </parent>
 	<groupId>56c14f77-79ed-4de3-8313-d542ea9f232b</groupId>
-	<artifactId>gbe-salesforce-proxy-oauth</artifactId>
+	<artifactId>gbe-sf-proxy-oauth</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>gbe-salesforce-proxy-oauth</name>
+	<name>gbe-sf-proxy-oauth</name>
 
     <properties>
 		<my.bg.org.id>56c14f77-79ed-4de3-8313-d542ea9f232b</my.bg.org.id>
@@ -42,6 +42,9 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+            <configuration>
+                    <classifier>mule-application</classifier>
+                </configuration>
             </plugin>
 		<plugin>
                 <groupId>org.apache.maven.plugins</groupId>

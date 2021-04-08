@@ -1,0 +1,7 @@
+##Alert Notification CloudHub Connector Properties##
+ch:
+ password: "![Urr7oSdHxXvg4yt45FXW/w==]"
+ 
+http:
+  requester:
+    password: "![1bTu9BaZZRny/LRxApGiBBUX/cyZUaY0RRBnAHVko7x+x95kVFvo5ob33QlVIq9Q]"   

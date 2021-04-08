@@ -34,6 +34,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
 }]]]></http:headers>
+					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
+					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>
@@ -58,6 +60,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
 }]]]></http:headers>
+					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
+					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="vStatusCode"/>
 			</when>
@@ -79,6 +83,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
 }]]]></http:headers>
+					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
+					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="vStatusCode"/>
 			</when>
@@ -100,6 +106,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
 }]]]></http:headers>
+					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
+					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="vStatusCode"/>
 			</when>
@@ -121,6 +129,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
 }]]]></http:headers>
+					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
+					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>

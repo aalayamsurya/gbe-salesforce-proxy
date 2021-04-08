@@ -8,8 +8,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
 http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
 http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
-	<configuration-properties doc:name="Configuration properties" doc:id="8a2a297e-727e-459b-9c91-b54df8ed9e96" file="${env}-properties.yaml" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="191d7624-e363-4884-a26b-56353b975b04" file="${env}-properties.yaml" key="${key}" />
+	<configuration-properties doc:name="Configuration properties" doc:id="8a2a297e-727e-459b-9c91-b54df8ed9e96" file="config/${env}-properties.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="191d7624-e363-4884-a26b-56353b975b04" file="config/${env}-secure-properties.yaml" key="${key}" />
 	<configuration doc:name="Configuration" doc:id="e08bdaf4-0e40-42ff-924b-47ebe65dabc0" defaultErrorHandler-ref="ng-error-handler" />
 	<json-logger:config name="jsonLoggerConfig" doc:name="JSON Logger Config" doc:id="852b7003-6b82-4406-ace1-b5f1bbf091f7" applicationName="${api.name}" applicationVersion="${api.version}" environment="${env}" />
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d76612eb-3b28-4ff6-ab11-98a075f66c1b" >
