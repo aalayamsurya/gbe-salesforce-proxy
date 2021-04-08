@@ -246,7 +246,7 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="common-proxyapi-test-suite" doc:id="572eea06-0d31-4fd1-a064-9e050a352091" timeOut="1200000">
+	<munit:test name="common-proxyapi-test-suite" doc:id="572eea06-0d31-4fd1-a064-9e050a352091" timeOut="2400000" ignore="true">
 		<munit:behavior>
 			<munit-tools:mock-when doc:name="Mock when" doc:id="5576ec23-c1bb-4f9e-ba8a-ab2d4f506c67" processor="http:request">
 				<munit-tools:with-attributes >
