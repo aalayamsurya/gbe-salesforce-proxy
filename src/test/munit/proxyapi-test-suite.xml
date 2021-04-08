@@ -9,11 +9,11 @@
 		
 	http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
 	<munit:config name="proxyapi-test-suite.xml" />
-	<munit:test name="proxyapi-test-suiteTest" doc:id="516a15d7-7068-4cc2-aff5-3a2a1d7b4ee6" timeOut="120000">
+	<munit:test name="workorder-proxyapi-test-suite" doc:id="516a15d7-7068-4cc2-aff5-3a2a1d7b4ee6" timeOut="120000">
 		<munit:behavior>
 			<munit-tools:mock-when doc:name="Mock when" doc:id="4cd55368-2739-4e03-a9c4-0a2d66f06271" processor="http:request">
 				<munit-tools:with-attributes >
-					<munit-tools:with-attribute whereValue="callHttpWithBasicAuthWorkOrders" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="Call to WorkOrders API" attributeName="doc:name" />
 					<munit-tools:with-attribute whereValue="0db17a99-9f76-4221-a661-61ed05f9986f" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return >
@@ -92,11 +92,11 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="proxyapi-test-suiteTest1" doc:id="00a492b7-92ed-4af8-933f-420669215737" timeOut="120000">
+	<munit:test name="serviceorderapi-proxy-test-suite" doc:id="00a492b7-92ed-4af8-933f-420669215737" timeOut="120000">
 		<munit:behavior>
 			<munit-tools:mock-when doc:name="Mock when" doc:id="8adf93ee-55fb-4d98-87d9-77c9d2362a6d" processor="http:request">
 				<munit-tools:with-attributes >
-					<munit-tools:with-attribute whereValue="callServiceOrdersBasicAuth" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="Call to ServiceOrders API" attributeName="doc:name" />
 					<munit-tools:with-attribute whereValue="af4e021e-4fdd-4d11-b5bb-0f29273e51de" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return >
@@ -148,11 +148,11 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="proxyapi-test-suiteTest2" doc:id="f19c4d6f-689d-4d6d-8082-008e21b322c6" timeOut="1200000">
+	<munit:test name="customer-proxyapi-test-suite" doc:id="f19c4d6f-689d-4d6d-8082-008e21b322c6" timeOut="1200000">
 		<munit:behavior>
 			<munit-tools:mock-when doc:name="Mock when" doc:id="af37b890-91b0-4f27-beae-5d874f4e0d8a" processor="http:request">
 				<munit-tools:with-attributes >
-					<munit-tools:with-attribute whereValue="callHttpwithCustomersBasic" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="Call to Customer API" attributeName="doc:name" />
 					<munit-tools:with-attribute whereValue="767c5b38-b555-4cfe-8bfd-0d74579b8de0" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return >
@@ -197,11 +197,11 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="proxyapi-test-suiteTest3" doc:id="a0735d6f-65e8-4033-80c2-0f6161e20e84" timeOut="1200000">
+	<munit:test name="premise-proxyapi-test-suite" doc:id="a0735d6f-65e8-4033-80c2-0f6161e20e84" timeOut="1200000">
 		<munit:behavior>
 			<munit-tools:mock-when doc:name="Mock when" doc:id="b986faa5-0304-49c0-8461-49ec5aeae72c" processor="http:request">
 				<munit-tools:with-attributes >
-					<munit-tools:with-attribute whereValue="callHttpWithPremise" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="Call to Premise API" attributeName="doc:name" />
 					<munit-tools:with-attribute whereValue="562ad646-682c-4d33-aaf2-820a43e9cadd" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return >
@@ -246,12 +246,12 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="proxyapi-test-suiteTest4" doc:id="572eea06-0d31-4fd1-a064-9e050a352091" timeOut="1200000">
+	<munit:test name="common-proxyapi-test-suite" doc:id="572eea06-0d31-4fd1-a064-9e050a352091" timeOut="1200000">
 		<munit:behavior>
 			<munit-tools:mock-when doc:name="Mock when" doc:id="5576ec23-c1bb-4f9e-ba8a-ab2d4f506c67" processor="http:request">
 				<munit-tools:with-attributes >
-					<munit-tools:with-attribute whereValue="callHttpWithAssetsKeyword" attributeName="doc:name" />
-					<munit-tools:with-attribute whereValue="e609c510-2857-48eb-b876-4e94f737bd7b" attributeName="doc:id" />
+					<munit-tools:with-attribute whereValue="Call to Common API" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="7d4f6e32-cb22-45fd-8bf9-108016e1e399" attributeName="doc:id" />
 				</munit-tools:with-attributes>
 				<munit-tools:then-return >
 					<munit-tools:attributes value="#[{'statusCode': 200}]" />
