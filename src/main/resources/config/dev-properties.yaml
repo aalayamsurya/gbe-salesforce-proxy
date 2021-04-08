@@ -10,15 +10,10 @@ http:
     port: "8091"
     basepath: "proxyapi"
     version: "/*"
-    config: HTTPS_Shared_Listener_Config
-  
+    config: HTTPS_Shared_Listener_Config  
   requester:
-    username: "637fcf6f13514c2fbc3e946cca8d2063" 
-      
-  premise:
-    basepath: ""
-    version: "v1"
-    requestpath: "/premise"
+    username: "637fcf6f13514c2fbc3e946cca8d2063"      
+  premise:    
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apidev-premiseassets-fr.cloudhub.io"
@@ -28,25 +23,7 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-      
-  assets:
-    basepath: ""
-    version: "v1"
-    requestpath: "/assets"
-    timeout: "3000000"
-    port: "8091"
-    host: "mule-worker-internal-apidev-premiseassets-fr.cloudhub.io"
-    reconnection:
-      attempts: "2"
-      frequency: "30000"
-    untilsuccessful:
-      frequency: "30000"
-      attempts: "2"
-      
-  serviceOrders:
-    basepath: ""
-    version: "v04"
-    requestpath: "/serviceOrders"
+  serviceOrders:    
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apidev-serviceorders-fr.cloudhub.io"
@@ -57,10 +34,7 @@ http:
       frequency: "30000"
       attempts: "2"
       
-  workOrders:
-    basepath: ""
-    version: "v1"
-    requestpath: "/workOrders"
+  workOrders:    
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apidev-workorders-fr.cloudhub.io"
@@ -71,10 +45,7 @@ http:
       frequency: "30000"
       attempts: "2"
       
-  customer:
-    basepath: ""
-    version: "v1"
-    requestpath: "/customer"
+  customer:    
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apidev-ngcustomers-fr.cloudhub.io"
@@ -84,7 +55,44 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-      
+  preferences:
+    host: "testsecure-api.nationalgridus.com"    
+    timeout: "3000000"
+    port: "443"
+    protocol: "HTTPS"
+    baseuri:  "/xapi/preferences"
+    client_id:  ""
+    tls:
+      cert:
+        path: "keystore/qa-mtls-sfpmapi.nationalgridus.com.pfx"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  contacts:    
+    timeout: "3000000"
+    port: "8091"
+    host: "dev-api.nationalgridus.com"
+    protocol: "HTTPS"
+    baseuri:  "/ng-contactpref-exp"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  commons:    
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-apiuat-ng-common.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"        
 ##M-TLS configurations
 salesforce:
     mtls: 

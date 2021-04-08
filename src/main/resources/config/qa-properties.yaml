@@ -15,9 +15,6 @@ http:
   requester:
     username: "637fcf6f13514c2fbc3e946cca8d2063"  
   premise:
-    basepath: ""
-    version: "v1"
-    requestpath: "/premise"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apiqa-premiseassets.cloudhub.io"
@@ -27,25 +24,7 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-      
-  assets:
-    basepath: ""
-    version: "v1"
-    requestpath: "/assets"
-    timeout: "3000000"
-    port: "8091"
-    host: "mule-worker-internal-apiqa-premiseassets.cloudhub.io"
-    reconnection:
-      attempts: "2"
-      frequency: "30000"
-    untilsuccessful:
-      frequency: "30000"
-      attempts: "2"
-      
   serviceOrders:
-    basepath: ""
-    version: "v04"
-    requestpath: "/serviceOrders"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apiqa-serviceorders.cloudhub.io"
@@ -57,9 +36,6 @@ http:
       attempts: "2"
       
   workOrders:
-    basepath: ""
-    version: "v1"
-    requestpath: "/workOrders"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apiqa-workorders.cloudhub.io"
@@ -71,9 +47,6 @@ http:
       attempts: "2"
       
   customer:
-    basepath: ""
-    version: "v1"
-    requestpath: "/customer"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apiqa-customers.cloudhub.io"
@@ -83,6 +56,44 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
+  preferences:
+    host: "dev-api.nationalgridus.com"    
+    timeout: "3000000"
+    port: "443"
+    protocol: "HTTPS"
+    baseuri:  "/ng-commpref-exp"
+    client_id:  ""
+    tls:
+      cert:
+        path: "keystore/uat-mtls-sfpmapi.nationalgridus.com.pfx"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  contacts:    
+    timeout: "3000000"
+    port: "8091"
+    host: "dev-us.nationalgridus.com"
+    protocol: "HTTPS"
+    baseuri:  "/gbeapi/ng-contactpref-exp"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  commons:    
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-apiuat-ng-common.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"  
       
 ##M-TLS configurations
 salesforce:

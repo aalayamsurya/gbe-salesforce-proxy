@@ -1,7 +1,7 @@
 api:
   name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
-  id: "16702622"
+  id: "16660772"
 http:
   private:
     port: "8091"    
@@ -16,37 +16,39 @@ http:
   premise:
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiuat-premiseassets.cloudhub.io"
+    host: "mule-worker-internal-apihotfix-premiseassets.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
-      attempts: "2"      
+      attempts: "2"
   serviceOrders:
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiuat-serviceorders.cloudhub.io"
+    host: "mule-worker-internal-apihotfix-serviceorders.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
-      attempts: "2"      
-  workOrders:    
+      attempts: "2"
+      
+  workOrders:
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiuat-workorders.cloudhub.io"
+    host: "mule-worker-internal-apihotfix-workorders02.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
-      attempts: "2"      
-  customer:    
+      attempts: "2"
+      
+  customer:
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiuat-ngcustomers.cloudhub.io"
+    host: "mule-worker-internal-apihotfix-customers.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -54,15 +56,15 @@ http:
       frequency: "30000"
       attempts: "2"
   preferences:
-    host: "dev-us.nationalgridus.com"    
+    host: "dev-api.nationalgridus.com"    
     timeout: "3000000"
     port: "443"
     protocol: "HTTPS"
-    baseuri:  "/gbeapi/ng-commpref-exp"
+    baseuri:  "/ng-commpref-exp"
     client_id:  ""
     tls:
       cert:
-        path: "keystore/uat-mtls-sfpmapi.nationalgridus.com.pfx"
+        path: "keystore/qa-mtls-sfpmapi.nationalgridus.com.pfx"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -84,13 +86,13 @@ http:
   commons:    
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiuat-ng-common.cloudhub.io"
+    host: "mule-worker-internal-apihotfix-ng-common.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
-      attempts: "2"
+      attempts: "2"  
       
 ##M-TLS configurations
 salesforce:
@@ -102,8 +104,9 @@ salesforce:
 json.logger:
   prettyPrint: "true"
   disabled.fields: ""    
+##Alert Notification CloudHub Connector Properties##
 ch:
   username: "NGLocalUser"
 
-domain: "gbe-salesforce-proxy-oauth-uat"
+domain: "gbe-salesforce-proxy-oauth-qa"
 environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"
