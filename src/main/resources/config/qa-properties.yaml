@@ -1,5 +1,5 @@
 api:
-  name:    "gbe-sf-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
+  name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
   id: "16660772"
 http:
@@ -98,5 +98,5 @@ json.logger:
 ch:
   username: "NGLocalUser"
 
-domain: "gbe-sf-proxy-oauth-qa"
+domain: "gbe-salesforce-proxy-oauth-qa"
 environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"

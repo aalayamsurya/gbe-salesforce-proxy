@@ -8,11 +8,11 @@
         <relativePath>parent-pom.xml</relativePath>
     </parent>
 	<groupId>56c14f77-79ed-4de3-8313-d542ea9f232b</groupId>
-	<artifactId>gbe-sf-proxy-oauth</artifactId>
+	<artifactId>gbe-salesforce-proxy-oauth</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>mule-application</packaging>
 
-	<name>gbe-sf-proxy-oauth</name>
+	<name>gbe-salesforce-proxy-oauth</name>
 
     <properties>
 		<my.bg.org.id>56c14f77-79ed-4de3-8313-d542ea9f232b</my.bg.org.id>
