@@ -153,7 +153,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	"X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
 	"Content-Type" : vars."v_content_type",
 	"client_id" : p('http.preferences.client_id'),
-	"client_secret" : p('secure::http.preferences.client_secret'),
+	"client_secret" : p('secure::http.preferences.client_secret')
 }]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
@@ -179,7 +179,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	"X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
 	"Content-Type" : vars."v_content_type",
 	"client_id" : p('http.contacts.client_id'),
-	"client_secret" : p('secure::http.contacts.client_secret'),
+	"client_secret" : p('secure::http.contacts.client_secret')
 }]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
