@@ -9,7 +9,15 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 	
 	<flow name="proxyapiFlow" doc:id="4f236a5a-f3a1-490e-84df-acfa357b3b7d" >
-		<http:listener doc:name="Listener" doc:id="f59b7d34-17b5-484d-83ab-55e04a759eb8" path="${http.listener.version}" config-ref="HTTP_Listener_config"/>
+		<http:listener doc:name="Listener" doc:id="f59b7d34-17b5-484d-83ab-55e04a759eb8" path="${http.listener.version}" config-ref="HTTP_Listener_config">
+			<http:response statusCode="#[vars.httpStatus default 200]" >
+				<http:headers ><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+			</http:response>
+			<http:error-response statusCode="#[vars.httpStatus default 500]">
+				<http:body ><![CDATA[#[payload]]]></http:body>
+				<http:headers ><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+			</http:error-response>
+		</http:listener>
 		<json-logger:logger doc:name="initialLogger" doc:id="1f51478a-50d5-4fd3-a947-5d478c11e8fb" config-ref="jsonLoggerConfig" message="initial request payload">
 			<json-logger:content ><![CDATA[#[output application/json ---
 {
