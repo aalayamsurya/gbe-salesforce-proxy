@@ -3,9 +3,6 @@ api:
   version: "v1" #${project.version}    # replaced through Maven resource filtering
   id: "16681625"
 
-
-
-
 http:
   private:
     port: "8091"    
@@ -93,7 +90,7 @@ http:
     host: "api-dev-int-us.nationalgrid.com"
     port: "443"
     basepath: "cris-customer-proxy-dev"
-    version: "v1"
+    version: "v01"
     requestpath: "/getCustomer"
     timeout: "3000000"
     reconnection:
@@ -123,3 +120,4 @@ salesforce:
 json.logger:
   prettyPrint: "true"
   disabled.fields: ""    
+
