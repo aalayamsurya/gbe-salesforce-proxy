@@ -93,7 +93,7 @@ http:
     host: "localhost"
     port: "8086"
     basepath: "cris-customer-proxy"
-    version: "v1"
+    version: "v01"
     requestpath: "/getCustomer"
     timeout: "3000000"
     reconnection:
