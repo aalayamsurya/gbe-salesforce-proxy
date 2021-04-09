@@ -48,11 +48,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		</http:request-connection>
 	</http:request-config>
 	 <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fac8c170-7045-4d28-afd4-928ff0695aa8" flowRef="proxyapiFlow" />
-	<http:request-config name="http-request-config-getcustomers-details" doc:name="HTTP Request configuration" doc:id="58ab5543-c56d-4a2e-ac7b-6d062ea7d3ac" basePath="/api">
-		<http:request-connection host="${http.getcustomer.host}" port="${http.getcustomer.port}" protocol="HTTPS" tlsContext="singleTLSContext" connectionIdleTimeout="75000000">
-			<http:authentication >
-				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
-			</http:authentication>
+	<http:request-config name="http-request-config-getcustomers-details" doc:name="HTTP Request configuration" doc:id="58ab5543-c56d-4a2e-ac7b-6d062ea7d3ac" basePath="/${http.getcustomer.basepath}/api/${http.getcustomer.version}">
+		<http:request-connection host="${http.getcustomer.host}" port="${http.getcustomer.port}" protocol="HTTPS" tlsContext="singleTLSContext" connectionIdleTimeout="750000000">
 		</http:request-connection>
 	</http:request-config>
 	<global-property doc:name="Global Property" doc:id="0a99ed7f-5b3e-4e0c-8c59-e8583ee4ecfd" name="key" value="p4s4v4y/B?E(H+Mb" />
@@ -62,3 +59,4 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	</tls:context>
 
 </mule>
+
