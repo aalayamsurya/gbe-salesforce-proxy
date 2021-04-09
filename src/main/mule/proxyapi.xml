@@ -141,14 +141,16 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 					</ee:message>
 				</ee:transform>
 				<set-variable value="#[payload]" doc:name="Set Variable" doc:id="9e135b18-3e7d-4fca-bee4-405514258e2a" variableName="sfRequest" />
-				<http:request method="#[attributes.method]" doc:name="callHttpwithCustomersDetails" doc:id="a3968d67-669d-4fad-9819-57500ef73c88" config-ref="http-request-config-getcustomers-details" path="#[attributes.requestPath]" sendBodyMode="ALWAYS">
+				<http:request method="#[attributes.method]" doc:name="callHttpwithCustomersDetails" doc:id="a3968d67-669d-4fad-9819-57500ef73c88" config-ref="http-request-config-getcustomers-details" path="${http.getcustomer.requestpath}" sendBodyMode="ALWAYS">
 					<http:headers><![CDATA[#[output application/json
 ---
 {
 	"ng_tid": attributes.headers.'ng_tid',
-	"Content-Type" : vars."v_content_type",
-	"Source-System" : vars.'Source-System',
-	"Target-System" : vars.'Target-System'
+	"Accept" : "application/json",
+	"Content-Type" : "application/json",
+	"x-client_id": Mule::p('secure::https.request.x-clientid'),
+	"x-client_secret": Mule::p('secure::https.request.x-clientsecret')
+	
 }]]]></http:headers>
 					<http:query-params ><![CDATA[#[output application/java
 ---
@@ -233,3 +235,4 @@ output application/java
 		
 	</sub-flow> -->
 </mule>
+
