@@ -86,7 +86,7 @@ http:
   commons:    
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiuat-ng-common.cloudhub.io"
+    host: "mule-worker-internal-apidev-ng-common-fr.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"

@@ -40,7 +40,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="vStatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="httpStatus"/>
 			</when> 
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/workOrders"))]'>
 				<json-logger:logger doc:name="Log Before Workorders Call" doc:id="b05168b6-14f1-4ac6-a5cf-367178ba02ef"  message="Before  WorkOrders Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -63,7 +63,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="vStatusCode"/>
+				<set-variable value="#[attributes.statusCode default 200]" doc:name="setStatusCode" doc:id="f50bf07a-23e8-471d-80b3-944bf5980b66" variableName="httpStatus"/>
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/serviceOrders"))]'>
 				<json-logger:logger doc:name="Log Before ServiceOrder Call" doc:id="41527380-02ef-4de4-857e-e8034f835cd4" message="before ServiceOrders payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -86,7 +86,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="vStatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="httpStatus"/>
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/customer"))]'>
 				<json-logger:logger doc:name="Log Before Customer Call" doc:id="32d2abd1-50b5-4dfd-bfc5-cf2d72806410" message="Before Customers Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -109,7 +109,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="vStatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="httpStatus"/>
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/common"))]'>
 				<json-logger:logger doc:name="Log Before Common Call" doc:id="a8ae2a75-e89a-4186-a105-4a4057d8bc56" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -119,7 +119,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="serviceorders-http-request-config">
+				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="commons-http-request-config">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
@@ -135,7 +135,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="d917afc4-6c2f-4461-a0be-3b6991b6dcde" variableName="vStatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="d917afc4-6c2f-4461-a0be-3b6991b6dcde" variableName="httpStatus"/>
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/preferences"))]'>
 				<json-logger:logger doc:name="Log Before Preferences Call" doc:id="aa9c396c-c271-4d99-8fc5-38b51803b96e" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -161,7 +161,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="74725c04-8986-42f5-85f8-50ee88439a2c" variableName="vStatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="74725c04-8986-42f5-85f8-50ee88439a2c" variableName="httpStatus"/>
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/contacts"))]'>
 				<json-logger:logger doc:name="Log Before Contacts Call" doc:id="9a347434-23ef-47af-a79e-38f1da1133f4" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -187,7 +187,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 						<http:success-status-code-validator values="0..599" />
 					</http:response-validator>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="706303c3-1dc8-4991-b284-01dde9bc3600" variableName="vStatusCode"/>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="706303c3-1dc8-4991-b284-01dde9bc3600" variableName="httpStatus"/>
 			</when>
 			<otherwise >
 				<json-logger:logger doc:name="DefaultLogger" doc:id="cd56dad5-fb2a-41e4-b3a9-16bef8b33b17" message="DefaultLogger payload" config-ref="jsonLoggerConfig" tracePoint="AFTER_TRANSFORM">
@@ -197,7 +197,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<set-variable value="400" doc:name="setStatusCode" doc:id="96b9e2ae-5779-4a12-870e-2f8279459f33" variableName="vStatusCode"/>
+				<set-variable value="400" doc:name="setStatusCode" doc:id="96b9e2ae-5779-4a12-870e-2f8279459f33" variableName="httpStatus"/>
 				<set-payload value='#[%dw 2.0
 output application/json
 ---
@@ -205,7 +205,7 @@ output application/json
 			</otherwise>
 		</choice>
 		<choice doc:name="Choice" doc:id="a5df0a1d-e248-49e4-843a-ccc38349ab8e" >
-			<when expression="#[vars.vStatusCode &lt; 400]">
+			<when expression="#[vars.httpStatus &lt; 400]">
 				<json-logger:logger doc:name="responseStatusLogger" doc:id="5f5ea996-f906-4911-b4a9-17f386f29f34" config-ref="jsonLoggerConfig" message="Response status payload">
 					<json-logger:content ><![CDATA[#[output application/json ---
 {
@@ -214,7 +214,7 @@ output application/json
 }]]]></json-logger:content>
 				</json-logger:logger>
 			</when>
-			<when expression="#[vars.vStatusCode &gt;= 400]">
+			<when expression="#[vars.httpStatus &gt;= 400]">
 				<json-logger:logger doc:name="responseStatusLogger" doc:id="b9d528e8-5f58-4452-bbce-d42be854bcf5" message="Call ServiceOrders Basic Auth" config-ref="jsonLoggerConfig">
 					<json-logger:content ><![CDATA[#[output application/json ---
 {
