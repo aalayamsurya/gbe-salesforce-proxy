@@ -6,3 +6,9 @@ tls:
   keystore:
     keyPassword: "![FfXDvxLVBJ9T79NqtQ24Ng==]"
     password: "![FfXDvxLVBJ9T79NqtQ24Ng==]"
+##proxy rtf uat securtiy ##    
+https:
+   request: 
+     x-clinetid: "![QgHoUATI+GBPVsZCvHAWMM/sGq8o2ub51Giq0VrePGjJqpQV0PX0zL9NORkk84fW]"
+     x-clientsecret: "![znd7fwdYlICk93PGAI911VIwLDiVXkZdVHch5ifalEEn1Y1onrR18LcU92V2SEBY]"
+
