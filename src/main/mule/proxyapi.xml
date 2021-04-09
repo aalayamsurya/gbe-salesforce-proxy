@@ -18,9 +18,11 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		<choice doc:name="Choice" doc:id="8bd40ae7-9059-4f18-aea9-9ed8ceedc7dd" >
 			 <when expression='#[(!isEmpty(vars.pathName[1])) and ((vars.pathName[1] startsWith("/premise")) or (vars.pathName[1] startsWith("/assets")))]'>
 			 	<json-logger:logger doc:name="Log Before Premise or Asset API Call" doc:id="a8bdc7d4-6c42-4c0b-905e-1a21218c6755" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content><![CDATA[#[output application/json ---
+					<json-logger:content><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -44,9 +46,11 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</when> 
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/workOrders"))]'>
 				<json-logger:logger doc:name="Log Before Workorders Call" doc:id="b05168b6-14f1-4ac6-a5cf-367178ba02ef"  message="Before  WorkOrders Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content ><![CDATA[#[output application/json ---
+					<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger> 
@@ -67,9 +71,11 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/serviceOrders"))]'>
 				<json-logger:logger doc:name="Log Before ServiceOrder Call" doc:id="41527380-02ef-4de4-857e-e8034f835cd4" message="before ServiceOrders payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content ><![CDATA[#[output application/json ---
+					<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -90,9 +96,11 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/customer"))]'>
 				<json-logger:logger doc:name="Log Before Customer Call" doc:id="32d2abd1-50b5-4dfd-bfc5-cf2d72806410" message="Before Customers Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content ><![CDATA[#[output application/json ---
+					<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -113,13 +121,15 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/common"))]'>
 				<json-logger:logger doc:name="Log Before Common Call" doc:id="a8ae2a75-e89a-4186-a105-4a4057d8bc56" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content><![CDATA[#[output application/json ---
+					<json-logger:content><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="commons-http-request-config">
+				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="serviceorders-http-request-config">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
@@ -139,9 +149,11 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/preferences"))]'>
 				<json-logger:logger doc:name="Log Before Preferences Call" doc:id="aa9c396c-c271-4d99-8fc5-38b51803b96e" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content><![CDATA[#[output application/json ---
+					<json-logger:content><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -165,9 +177,11 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/contacts"))]'>
 				<json-logger:logger doc:name="Log Before Contacts Call" doc:id="9a347434-23ef-47af-a79e-38f1da1133f4" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
-					<json-logger:content><![CDATA[#[output application/json ---
+					<json-logger:content><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
