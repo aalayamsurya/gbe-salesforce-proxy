@@ -5,3 +5,8 @@ ch:
 tls.keystore:
     keyPassword: "![FfXDvxLVBJ9T79NqtQ24Ng==]"
     password: "![FfXDvxLVBJ9T79NqtQ24Ng==]"
+     
+https:
+   request: 
+     x-clinetid: "![KsKFhsUpR8BtHSyTAwm8RdCDNKZkPUA8H2qsqc8sZTaaHSVNWcJ0RXeLxArUNWwb]"
+     x-clientsecret: "![hePCC1veyJCPYIdi1vT1WI/SRAaj2hgVpNIKYgm/lqhz5/JCqA9R7p+cVzBqHuTD]"
