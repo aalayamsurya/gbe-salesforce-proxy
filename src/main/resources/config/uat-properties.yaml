@@ -132,3 +132,8 @@ ch:
 
 domain: "gbe-salesforce-proxy-oauth-uat"
 environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"
+
+tls.keystore:
+  type: "pkcs12"
+  path: "certs/ng-dev.p12"
+  alias: "server" 
