@@ -93,7 +93,21 @@ http:
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
-      attempts: "2"  
+      attempts: "2" 
+       
+  crisCustomer:
+    host: "api-qa-int-us.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-qa"
+    version: "v01"
+    requestpath: "/crisCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
       
 ##M-TLS configurations
 salesforce:

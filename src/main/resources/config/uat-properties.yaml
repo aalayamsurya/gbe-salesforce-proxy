@@ -91,7 +91,32 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-      
+  crisCustomer:
+    host: "api-uat-int-us.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-uat"
+    version: "v01"
+    requestpath: "/crisCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  updatecustomer:
+    host: "api-uat-int-us.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-uat"
+    version: "v01"
+    requestpath: "/phoneCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
 ##M-TLS configurations
 salesforce:
     mtls: 
@@ -107,3 +132,8 @@ ch:
 
 domain: "gbe-salesforce-proxy-oauth-uat"
 environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"
+
+tls.keystore:
+  type: "pkcs12"
+  path: "certs/ng-dev.p12"
+  alias: "server" 

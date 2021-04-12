@@ -203,6 +203,38 @@ output application/json
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="706303c3-1dc8-4991-b284-01dde9bc3600" variableName="httpStatus"/>
 			</when>
+		<when expression='#[vars.pathName[1] startsWith("/crisCustomer")]'>
+				<json-logger:logger doc:name="beforeCustomersLogger" doc:id="e7d1bbdc-f8f7-4445-80b7-cb807dde9988" config-ref="jsonLoggerConfig" message="Before Customers Payload" tracePoint="BEFORE_REQUEST">
+					<json-logger:content><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<set-variable value="#[payload]" doc:name="Set Variable" doc:id="0ec71e1c-a029-4d35-b88e-23b6670bbfcc" variableName="sfRequest" />
+				<http:request method="#[attributes.method]" doc:name="callHttpwithCustomersDetails" doc:id="0b6e8737-47da-448e-8699-8fd683498bf1" config-ref="http-request-config-getcustomers-details" path="${http.crisCustomer.requestpath}" sendBodyMode="ALWAYS" responseTimeout="120000">
+					<http:headers><![CDATA[#[output application/json
+---
+{
+	"ng_tid": attributes.headers.'ng_tid',
+	"Accept" : "application/json",
+	"Content-Type" : "application/json",
+	"Source-System" : attributes.headers.'Source-System',
+	"Target-System" : attributes.headers.'Target-System',
+	"x-client_id": Mule::p('secure::https.request.x-clientid'),
+	"x-client_secret": Mule::p('secure::https.request.x-clientsecret')
+	
+}]]]></http:headers>
+					<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"ng_crisrefid" : attributes.queryParams.ng_crisrefid,
+	"ng_cris_userid" : attributes.queryParams.ng_cris_userid
+}]]]></http:query-params>
+				</http:request>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="9a521c9b-c10f-4606-9d45-7ffe1001fe57" variableName="vStatusCode" />
+			</when>	
+			
 			<otherwise >
 				<json-logger:logger doc:name="DefaultLogger" doc:id="cd56dad5-fb2a-41e4-b3a9-16bef8b33b17" message="DefaultLogger payload" config-ref="jsonLoggerConfig" tracePoint="AFTER_TRANSFORM">
 					<json-logger:content ><![CDATA[#[output application/json ---
