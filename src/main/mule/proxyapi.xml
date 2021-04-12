@@ -189,6 +189,81 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="706303c3-1dc8-4991-b284-01dde9bc3600" variableName="httpStatus"/>
 			</when>
+		<when expression='#[vars.pathName[1] startsWith("/getCustomer")]'>
+				<json-logger:logger doc:name="beforeCustomersLogger" doc:id="e7d1bbdc-f8f7-4445-80b7-cb807dde9988" config-ref="jsonLoggerConfig" message="Before Customers Payload" tracePoint="BEFORE_REQUEST">
+					<json-logger:content><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<ee:transform doc:name="formatRequest" doc:id="6a6ba4c4-3825-4248-b0af-7b040d95a46f">
+					<ee:message>
+						<ee:set-payload resource="dwl/getcustomer-request.dwl" />
+					</ee:message>
+				</ee:transform>
+				<set-variable value="#[payload]" doc:name="Set Variable" doc:id="0ec71e1c-a029-4d35-b88e-23b6670bbfcc" variableName="sfRequest" />
+				<http:request method="#[attributes.method]" doc:name="callHttpwithCustomersDetails" doc:id="0b6e8737-47da-448e-8699-8fd683498bf1" config-ref="http-request-config-getcustomers-details" path="${http.getcustomer.requestpath}" sendBodyMode="ALWAYS" responseTimeout="120000">
+					<http:headers><![CDATA[#[output application/json
+---
+{
+	"ng_tid": attributes.headers.'ng_tid',
+	"Accept" : "application/json",
+	"Content-Type" : "application/json",
+	"x-client_id": Mule::p('secure::https.request.x-clientid'),
+	"x-client_secret": Mule::p('secure::https.request.x-clientsecret')
+	
+}]]]></http:headers>
+					<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"ng_crisrefid" : attributes.queryParams.ng_crisrefid,
+	"ng_cris_userid" : attributes.queryParams.ng_cris_userid
+}]]]></http:query-params>
+				</http:request>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="9a521c9b-c10f-4606-9d45-7ffe1001fe57" variableName="vStatusCode" />
+			</when>	
+		<when expression='#[vars.pathName[1] startsWith("/phoneCustomer")]'>
+				<json-logger:logger doc:name="beforeCustomersLogger" doc:id="6c0d2430-4d8e-487b-99d0-661abf28b85a" config-ref="jsonLoggerConfig" message="Before Customers Payload" tracePoint="BEFORE_REQUEST">
+					<json-logger:content><![CDATA[#[output application/json ---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<ee:transform doc:name="formatRequest" doc:id="cf957605-8503-4fa6-8174-3ad8ea3268e9">
+					<ee:message>
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload
+
+]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<http:request method="#[attributes.method]" doc:name="callHttpwithupdateCustomersDetails" doc:id="c92f6396-da6a-4c28-8336-4a687340c347" config-ref="http-request-config-getcustomers-details" path="${http.updatecustomer.requestpath}" responseTimeout="120000">
+					<http:headers><![CDATA[#[output application/json
+---
+{
+	"Source-System" : attributes.headers.'Source-System',
+	"Target-System" : attributes.headers.'Target-System',
+	"ng_tid": attributes.headers.'ng_tid',
+	"Accept" : "application/json",
+	"Content-Type" : "application/json",
+	"x-client_id": Mule::p('secure::https.request.x-clientid'),
+	"x-client_secret": Mule::p('secure::https.request.x-clientsecret')
+	
+}]]]></http:headers>
+					<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"ng_crisrefid" : attributes.queryParams.ng_crisrefid,
+	"ng_cris_userid" : attributes.queryParams.ng_cris_userid
+}]]]></http:query-params>
+				</http:request>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="855becba-6a12-4314-8004-149bd7831531" variableName="vStatusCode" />
+			</when>	
+			
 			<otherwise >
 				<json-logger:logger doc:name="DefaultLogger" doc:id="cd56dad5-fb2a-41e4-b3a9-16bef8b33b17" message="DefaultLogger payload" config-ref="jsonLoggerConfig" tracePoint="AFTER_TRANSFORM">
 					<json-logger:content ><![CDATA[#[output application/json ---
