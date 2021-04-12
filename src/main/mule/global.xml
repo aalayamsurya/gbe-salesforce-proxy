@@ -70,8 +70,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		</http:request-connection>
 	</http:request-config>
 	 <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fac8c170-7045-4d28-afd4-928ff0695aa8" flowRef="proxyapiFlow" />
-<http:request-config name="http-request-config-getcustomers-details" doc:name="HTTP Request configuration" doc:id="37e09dd6-b305-4b04-b8aa-a108b3a70462" basePath="/api/${http.getcustomer.version}">
-		<http:request-connection host="${http.getcustomer.host}" port="${http.getcustomer.port}" protocol="HTTPS" tlsContext="singleTLSContext" connectionIdleTimeout="750000000">
+<http:request-config name="http-request-config-getcustomers-details" doc:name="HTTP Request configuration" doc:id="37e09dd6-b305-4b04-b8aa-a108b3a70462" basePath="${http.crisCustomer.basepath}/api/${http.crisCustomer.version}">
+		<http:request-connection host="${http.crisCustomer.host}" port="${http.crisCustomer.port}" protocol="HTTPS" tlsContext="singleTLSContext" connectionIdleTimeout="750000000">
 		</http:request-connection>
 	</http:request-config>
 	
@@ -80,8 +80,4 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		<tls:trust-store insecure="true" />
 		<tls:key-store type="${tls.keystore.type}" path="${tls.keystore.path}" alias="${tls.keystore.alias}" keyPassword="${secure::tls.keystore.keyPassword}" password="${secure::tls.keystore.password}" />
 	</tls:context>
-	<http:request-config name="http-request-config-updatecustomers-details" doc:name="HTTP Request configuration" doc:id="8f1bad86-36af-4305-8cc0-fd593099c5cd" basePath="/api/${http.updatecustomer.version}">
-		<http:request-connection host="${http.updatecustomer.host}" port="${http.updatecustomer.port}" protocol="HTTPS" tlsContext="singleTLSContext" connectionIdleTimeout="750000000">
-		</http:request-connection>
-	</http:request-config>
 </mule>

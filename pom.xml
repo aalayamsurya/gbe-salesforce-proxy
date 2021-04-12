@@ -18,7 +18,7 @@
 		<my.bg.org.id>56c14f77-79ed-4de3-8313-d542ea9f232b</my.bg.org.id>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<app.runtime>4.3.0-20210119</app.runtime>
+		<app.runtime>4.3.0</app.runtime>
 		<mule.maven.plugin.version>3.4.0</mule.maven.plugin.version>
 		<munit.version>2.2.5</munit.version>
         <api.context>gbe-salesforce-proxy-oauth</api.context>

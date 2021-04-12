@@ -123,12 +123,12 @@ http:
       frequency: "30000"
       attempts: "2"
 ##cris customer      
-  getcustomer:
+  crisCustomer:
     host: "localhost"
     port: "8086"
     basepath: "cris-customer-proxy"
     version: "v01"
-    requestpath: "/getCustomer"
+    requestpath: "/crisCustomer"
     timeout: "3000000"
     reconnection:
       attempts: "2"
