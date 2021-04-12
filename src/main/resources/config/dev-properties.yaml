@@ -108,4 +108,4 @@ ch:
   username: "NGLocalUser"
 
 domain: "gbe-salesforce-proxy-oauth-dev"
-environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"    
+environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"

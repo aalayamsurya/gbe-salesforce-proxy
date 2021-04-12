@@ -19,25 +19,31 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</http:error-response>
 		</http:listener>
 		<json-logger:logger doc:name="initialLogger" doc:id="1f51478a-50d5-4fd3-a947-5d478c11e8fb" config-ref="jsonLoggerConfig" message="initial request payload">
-			<json-logger:content ><![CDATA[#[output application/json ---
+			<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
 		<flow-ref doc:name="ng-api-initialization" doc:id="23a317aa-778f-4c49-a033-02de52f5ff72" name="ng-api-initialization"/>
 		<json-logger:logger doc:name="afterProfileSetupLogger" doc:id="e913106d-dc9e-4873-8531-94a323c7f2fd" config-ref="jsonLoggerConfig" message="after API Profile setup">
-			<json-logger:content ><![CDATA[#[output application/json ---
+			<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
 		<set-variable value="#[attributes.headers]" doc:name="loadInboundProperties" doc:id="5969a641-d567-4809-bfe5-edaeee442c87" variableName="v_inbound_properties"/>
 		<json-logger:logger doc:name="inboundMesssageLogger" doc:id="8c58f8a0-7a54-486e-81e0-3c527b926598" message='#[if(vars.apiPath != "") vars.apiPath else "Unknown" ++ " NG API Proxy Started with Inbound Messsage"]' config-ref="jsonLoggerConfig" tracePoint="AFTER_REQUEST">
-			<json-logger:content ><![CDATA[#[output application/json ---
+			<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
@@ -76,9 +82,11 @@ output application/json
 			</when>
 			<otherwise >
 				<json-logger:logger doc:name="MutualTLSValidationCheckLogger" doc:id="9e3c1341-cee1-466f-bcbb-0f18faf4f06f" message="Mutual TLS Validation" config-ref="jsonLoggerConfig">
-					<json-logger:content><![CDATA[#[output application/json ---
+					<json-logger:content><![CDATA[#[%dw 2.0
+output application/json
+---
 {
- 	payload: payload,
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
