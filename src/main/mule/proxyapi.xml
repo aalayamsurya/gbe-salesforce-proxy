@@ -129,7 +129,7 @@ output application/json
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="serviceorders-http-request-config">
+				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="commons-http-request-config">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
