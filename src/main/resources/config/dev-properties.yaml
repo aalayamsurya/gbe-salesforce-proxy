@@ -95,7 +95,7 @@ http:
       attempts: "2"     
 ##cris customer    
   crisCustomer:
-    host: "api-dev-int-us.nationalgrid.com"
+    host: "api-dev-us01.nationalgrid.com"
     port: "443"
     basepath: "cris-customer-proxy-dev"
     version: "v01"

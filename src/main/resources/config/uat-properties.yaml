@@ -92,7 +92,7 @@ http:
       frequency: "30000"
       attempts: "2"
   crisCustomer:
-    host: "api-uat-int-us.nationalgrid.com"
+    host: "api-uat-us01.nationalgrid.com"
     port: "443"
     basepath: "cris-customer-proxy-uat"
     version: "v01"
