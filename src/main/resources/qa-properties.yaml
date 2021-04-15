@@ -53,7 +53,7 @@ http:
     requestpath: "/serviceOrders"
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiqa-serviceorders.cloudhub.io"
+    host: "mule-worker-internal-serviceorders-papi-qa.us-e1.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -81,7 +81,7 @@ http:
     requestpath: "/customer"
     timeout: "3000000"
     port: "8091"
-    host: "mule-worker-internal-apiqa-customers.cloudhub.io"
+    host: "mule-worker-internal-customers-papi-qa.us-e1.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
