@@ -1,0 +1,101 @@
+api:
+  name:    "proxyapi" #${project.artifactId} # replaced through Maven resource filtering
+  version: "v1" #${project.version}    # replaced through Maven resource filtering
+  id: "16681625"
+
+
+
+
+http:
+  private:
+    port: "8091"    
+  listener:
+    host: ""
+    port: "8091"
+    basepath: "proxyapi"
+    version: "/*"
+    config: HTTPS_Shared_Listener_Config
+  
+  requester:
+    username: "637fcf6f13514c2fbc3e946cca8d2063" 
+    password: "![unqBJjpgQvXkd16Z8VQowPMmsVsmJIBVxcpG6rFAPqhJz9HYoo48VRJN0qYPB7kZ]"  
+  premise:
+    basepath: ""
+    version: "v1"
+    requestpath: "/premise"
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-apidev-premiseassets-fr.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+      
+  assets:
+    basepath: ""
+    version: "v1"
+    requestpath: "/assets"
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-apidev-premiseassets-fr.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+      
+  serviceOrders:
+    basepath: ""
+    version: "v04"
+    requestpath: "/serviceOrders"
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-serviceorders-papi-dev.us-e1.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+      
+  workOrders:
+    basepath: ""
+    version: "v1"
+    requestpath: "/workOrders"
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-apidev-workorders-fr.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+      
+  customer:
+    basepath: ""
+    version: "v1"
+    requestpath: "/customer"
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-customers-papi-dev.us-e1.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+      
+##M-TLS configurations
+salesforce:
+    mtls: 
+      validation:
+        enabled: "N"
+    
+
+json.logger:
+  prettyPrint: "true"
+  disabled.fields: ""    

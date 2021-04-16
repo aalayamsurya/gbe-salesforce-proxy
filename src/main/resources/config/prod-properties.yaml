@@ -1,0 +1,123 @@
+api:
+  name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
+  version: "v1" #${project.version}    # replaced through Maven resource filtering
+  id: "16660772"
+http:
+  private:
+    port: "8091"    
+  listener:
+    host: ""
+    port: "8091"
+    basepath: "proxyapi"
+    version: "/*"
+    config: HTTPS_Shared_Listener_Config
+  
+  requester:
+    username: "9d3390c957a8463893826e3eef450fe4"  
+  premise:
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-premiseassets.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  serviceOrders:
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-serviceorders.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"      
+  workOrders:
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-workorders.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"      
+  customer:
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-ngcustomers.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  preferences:
+    host: "dev-us.nationalgridus.com"    
+    timeout: "3000000"
+    port: "443"
+    protocol: "HTTPS"
+    baseuri:  "/gbeapi/ng-commpref-exp"
+    client_id:  ""
+    tls:
+      cert:
+        path: "keystore/mtls-sfpmapi.nationalgridus.com.pfx"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  contacts:    
+    timeout: "3000000"
+    port: "8091"
+    host: "dev-us.nationalgridus.com"
+    protocol: "HTTPS"
+    baseuri:  "/gbeapi/ng-contactpref-exp"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  commons:    
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-ng-common.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"   
+      
+  crisCustomer:
+    host: "api-prod-int-us.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-prod"
+    version: "v01"
+    requestpath: "/crisCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"  
+##M-TLS configurations
+salesforce:
+    mtls: 
+      validation:
+        enabled: "N"
+    
+
+json.logger:
+  prettyPrint: "true"
+  disabled.fields: ""    
+ch:
+  username: "NGLocalUser"
+
+domain: "gbe-salesforce-proxy-oauth-prod"
+environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"
