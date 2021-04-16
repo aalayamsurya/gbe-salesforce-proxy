@@ -1,11 +1,7 @@
 api:
-  name:    "proxyapi" #${project.artifactId} # replaced through Maven resource filtering
+  name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
   id: "16660772"
-
-
-
-
 http:
   private:
     port: "8091"    
@@ -17,12 +13,8 @@ http:
     config: HTTPS_Shared_Listener_Config
   
   requester:
-    username: "637fcf6f13514c2fbc3e946cca8d2063" 
-    password: "![unqBJjpgQvXkd16Z8VQowPMmsVsmJIBVxcpG6rFAPqhJz9HYoo48VRJN0qYPB7kZ]"  
+    username: "637fcf6f13514c2fbc3e946cca8d2063"  
   premise:
-    basepath: ""
-    version: "v1"
-    requestpath: "/premise"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apiqa-premiseassets.cloudhub.io"
@@ -32,25 +24,7 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-      
-  assets:
-    basepath: ""
-    version: "v1"
-    requestpath: "/assets"
-    timeout: "3000000"
-    port: "8091"
-    host: "mule-worker-internal-apiqa-premiseassets.cloudhub.io"
-    reconnection:
-      attempts: "2"
-      frequency: "30000"
-    untilsuccessful:
-      frequency: "30000"
-      attempts: "2"
-      
   serviceOrders:
-    basepath: ""
-    version: "v04"
-    requestpath: "/serviceOrders"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-serviceorders-papi-qa.us-e1.cloudhub.io"
@@ -62,9 +36,6 @@ http:
       attempts: "2"
       
   workOrders:
-    basepath: ""
-    version: "v1"
-    requestpath: "/workOrders"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-apiqa-workorders.cloudhub.io"
@@ -76,12 +47,61 @@ http:
       attempts: "2"
       
   customer:
-    basepath: ""
-    version: "v1"
-    requestpath: "/customer"
     timeout: "3000000"
     port: "8091"
     host: "mule-worker-internal-customers-papi-qa.us-e1.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  preferences:
+    host: "dev-api.nationalgridus.com"    
+    timeout: "3000000"
+    port: "443"
+    protocol: "HTTPS"
+    baseuri:  "/ng-commpref-exp"
+    client_id:  ""
+    tls:
+      cert:
+        path: "keystore/uat-mtls-sfpmapi.nationalgridus.com.pfx"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  contacts:    
+    timeout: "3000000"
+    port: "8091"
+    host: "dev-us.nationalgridus.com"
+    protocol: "HTTPS"
+    baseuri:  "/gbeapi/ng-contactpref-exp"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  commons:    
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-apiuat-ng-common.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2" 
+       
+  crisCustomer:
+    host: "api-qa-us01.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-qa"
+    version: "v01"
+    requestpath: "/crisCustomer"
+    timeout: "3000000"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -99,3 +119,9 @@ salesforce:
 json.logger:
   prettyPrint: "true"
   disabled.fields: ""    
+##Alert Notification CloudHub Connector Properties##
+ch:
+  username: "NGLocalUser"
+
+domain: "gbe-salesforce-proxy-oauth-qa"
+environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"
