@@ -26,7 +26,7 @@ http:
       attempts: "2"
   serviceOrders:
     timeout: "3000000"
-    port: "8091"
+    port: "8093"
     host: "mule-worker-internal-serviceorders-papi-qa.us-e1.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -48,7 +48,7 @@ http:
       
   customer:
     timeout: "3000000"
-    port: "8091"
+    port: "8093"
     host: "mule-worker-internal-customers-papi-qa.us-e1.cloudhub.io"
     reconnection:
       attempts: "2"
