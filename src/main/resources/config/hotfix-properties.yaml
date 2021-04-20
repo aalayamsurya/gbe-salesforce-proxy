@@ -26,7 +26,7 @@ http:
   serviceOrders:
     timeout: "3000000"
     port: "8093"
-    host: "mule-worker-internal-apihotfix-serviceorders.cloudhub.io"
+    host: "mule-worker-internal-serviceorders-papi-hotfix.us-e1.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -48,7 +48,7 @@ http:
   customer:
     timeout: "3000000"
     port: "8093"
-    host: "mule-worker-internal-apihotfix-customers.cloudhub.io"
+    host: "mule-worker-internal-customers-papi-hotfix.us-e1.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
