@@ -14,8 +14,11 @@ http:
   requester:
     username: "637fcf6f13514c2fbc3e946cca8d2063"  
   premise:
+    mule4migrate: "false"
     timeout: "3000000"
     port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-premiseassets-papi-uat.us-e1.cloudhub.io"
     host: "mule-worker-internal-apiuat-premiseassets.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -24,18 +27,24 @@ http:
       frequency: "30000"
       attempts: "2"      
   serviceOrders:
+    mule4migrate: "false"
     timeout: "3000000"
-    port: "8093"
-    host: "mule-worker-internal-serviceorders-papi-uat.us-e1.cloudhub.io"
+    port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-serviceorders-papi-uat.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apiuat-serviceorders.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
       attempts: "2"      
-  workOrders:    
+  workOrders:
+    mule4migrate: "false"   
     timeout: "3000000"
     port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-workorders-papi-uat.us-e1.cloudhub.io"
     host: "mule-worker-internal-apiuat-workorders.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -43,10 +52,13 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"      
-  customer:    
+  customer:
+    mule4migrate: "false"  
     timeout: "3000000"
-    port: "8093"
-    host: "mule-worker-internal-customers-papi-uat.us-e1.cloudhub.io"
+    port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-customers-papi-uat.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apiuat-ngcustomers.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"

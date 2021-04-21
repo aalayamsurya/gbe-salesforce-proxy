@@ -15,8 +15,11 @@ http:
   requester:
     username: "637fcf6f13514c2fbc3e946cca8d2063"  
   premise:
+    mule4migrate: "false"  
     timeout: "3000000"
     port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-premiseassets-papi-training.us-e1.cloudhub.io"
     host: "mule-worker-internal-apitraining-premiseassets.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -25,9 +28,12 @@ http:
       frequency: "30000"
       attempts: "2"      
   serviceOrders:
+    mule4migrate: "false"  
     timeout: "3000000"
-    port: "8093"
-    host: "mule-worker-internal-serviceorders-papi-training.us-e1.cloudhub.io"
+    port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-serviceorders-papi-training.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apitraining-serviceorders.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
@@ -35,8 +41,11 @@ http:
       frequency: "30000"
       attempts: "2"      
   workOrders:
+    mule4migrate: "false"  
     timeout: "3000000"
     port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-workorders-papi-training.us-e1.cloudhub.io"
     host: "mule-worker-internal-apitraining-workorders-dr2.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -45,9 +54,12 @@ http:
       frequency: "30000"
       attempts: "2"      
   customer:
-    timeout: "3000000"
-    port: "8093"
-    host: "mule-worker-internal-customers-papi-training.us-e1.cloudhub.io"
+    mule4migrate: "false"  
+    timeout: "3000000"    
+    port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-customers-papi-training.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apitraining-customers.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
