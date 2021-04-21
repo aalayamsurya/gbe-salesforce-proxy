@@ -17,14 +17,14 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		<http:listener-connection host="0.0.0.0" port="${http.private.port}" />
 	</http:listener-config>
 	<http:request-config name="premise-http-request-config" doc:name="HTTP Request configuration" doc:id="e2463c7d-4c0b-4c57-8024-0573a3e87651" responseTimeout="1200000" >
-		<http:request-connection host="${http.premise.host}" port="${http.premise.port}" connectionIdleTimeout="1200000" >
+		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="1200000" >
 			<http:authentication >
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
 		</http:request-connection>
 	</http:request-config>
 	<http:request-config name="workorders-http-request-config" doc:name="HTTP Request configuration" doc:id="5e827d5f-e532-46f7-8294-529f69cb2f67" >
-		<http:request-connection host="${http.workOrders.host}" port="${http.workOrders.port}" connectionIdleTimeout="1200000" >
+		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="1200000" >
 			<http:authentication >
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
@@ -34,14 +34,14 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		</http:response-validator>
 	</http:request-config>
 	<http:request-config name="serviceorders-http-request-config" doc:name="HTTP Request configuration" doc:id="1aa13f64-cdec-4909-a116-3d54b3dbd8e3" >
-		<http:request-connection host="${http.serviceOrders.host}" port="${http.serviceOrders.port}" >
+		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" >
 			<http:authentication >
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
 		</http:request-connection>
 	</http:request-config>
 	<http:request-config name="customers-http-request-config" doc:name="HTTP Request configuration" doc:id="59686d4c-0dfb-4f15-b1cb-bf12058af68a" >
-		<http:request-connection host="${http.customer.host}" port="${http.customer.port}" >
+		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" >
 			<http:authentication >
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
