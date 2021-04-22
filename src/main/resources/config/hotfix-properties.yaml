@@ -17,7 +17,7 @@ http:
     mule4migrate: "false"  
     timeout: "3000000"
     port: "8091"
-    mule4port: "8093"
+    mule4port: "8091"
     mule4host:  "mule-worker-internal-premiseassets-papi-hotfix.us-e1.cloudhub.io"
     host: "mule-worker-internal-apihotfix-premiseassets.cloudhub.io"
     reconnection:
@@ -43,7 +43,7 @@ http:
     mule4migrate: "false"  
     timeout: "3000000"
     port: "8091"
-    mule4port: "8093"
+    mule4port: "8091"
     mule4host:  "mule-worker-internal-workorders-papi-hotfix.us-e1.cloudhub.io"
     host: "mule-worker-internal-apihotfix-workorders02.cloudhub.io"
     reconnection:
@@ -57,7 +57,7 @@ http:
     mule4migrate: "false"  
     timeout: "3000000"
     port: "8091"
-    mule4port: "8093"
+    mule4port: "8091"
     mule4host:  "mule-worker-internal-customers-papi-hotfix.us-e1.cloudhub.io"
     host: "mule-worker-internal-apihotfix-customers.cloudhub.io"
     reconnection:

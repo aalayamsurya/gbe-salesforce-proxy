@@ -17,7 +17,7 @@ http:
     mule4migrate: "false"
     timeout: "3000000"
     port: "8091"
-    mule4port: "8093"
+    mule4port: "8091"
     mule4host:  "mule-worker-internal-premiseassets-papi-uat.us-e1.cloudhub.io"
     host: "mule-worker-internal-apiuat-premiseassets.cloudhub.io"
     reconnection:
@@ -56,7 +56,7 @@ http:
     mule4migrate: "false"  
     timeout: "3000000"
     port: "8091"
-    mule4port: "8093"
+    mule4port: "8091"
     mule4host:  "mule-worker-internal-customers-papi-uat.us-e1.cloudhub.io"
     host: "mule-worker-internal-apiuat-ngcustomers.cloudhub.io"
     reconnection:
