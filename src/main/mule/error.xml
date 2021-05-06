@@ -11,7 +11,15 @@ http://www.mulesoft.org/schema/mule/error-handler-plugin http://www.mulesoft.org
 		
 	<error-handler name="ng-error-handler">
         <on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="d6a94618-1445-45aa-8e13-4de3b6f50caa">
-			<json-logger:logger doc:name="Logger" doc:id="114d5f8a-d2e0-4020-a22d-65a0998355af" config-ref="jsonLoggerConfig" tracePoint="EXCEPTION" priority="ERROR" message="Log Exception"/>
+			<json-logger:logger doc:name="Logger" doc:id="114d5f8a-d2e0-4020-a22d-65a0998355af" config-ref="jsonLoggerConfig" tracePoint="EXCEPTION" priority="ERROR" message="Log Exception">
+				<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+ 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	attributes: attributes
+}]]]></json-logger:content>
+			</json-logger:logger>
 			<choice doc:name="Type of Error" doc:id="2d6b411d-1f5c-459d-881f-1376dc367bd1">
                     <when expression='#[error.errorType.namespace == "EXAMPLE" and error.errorType.identifier == "ERROR"]'>
                         <set-variable value='#[%dw 2.0
@@ -48,7 +56,15 @@ vars.errorPayload]]></ee:set-payload>
 					<flow-ref doc:name="Flow Reference to alertNotificationFlow" doc:id="b7800834-b56c-4498-a75a-214f7daf8317" name="alert-notification-subflow"/>
 				</otherwise>
 			</choice>
-			<json-logger:logger doc:name="Logger" doc:id="cfe66788-9c9d-4932-8a7e-497613cdeb56" config-ref="jsonLoggerConfig" message="Log End with Exception" tracePoint="END" priority="ERROR"/>
+			<json-logger:logger doc:name="Logger" doc:id="cfe66788-9c9d-4932-8a7e-497613cdeb56" config-ref="jsonLoggerConfig" message="Log End with Exception" tracePoint="END" priority="ERROR">
+				<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+			</json-logger:logger>
 			<!-- <flow-ref doc:name="Flow Reference" doc:id="fb7c9578-1a94-48c4-9608-48528bc5167f" name="errorSub_Flow"/>
              -->
 
