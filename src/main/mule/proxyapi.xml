@@ -15,10 +15,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
     path: JSONLoggerModule::stringifyNonJSON(vars.pathName) 
 }]]]></json-logger:content>
 		</json-logger:logger>
-		<set-variable value="#[%dw 2.0
-&#10;output application/json
-&#10;---
-&#10;updatedPath: if (attributes.requestPath contains &quot;v04&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('v04')) [1] else &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1]]" doc:name="Set MigratedPath" doc:id="95e3fa4b-f2f1-41af-8a41-347e5bf06dbc" variableName="vMigartedPath"/>
+		<set-variable value="#[%dw 2.0&#10;&#10;output application/json&#10;&#10;---&#10;&#10;updatedPath:  if (attributes.requestPath contains &quot;v04&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('v04')) [1] else if (attributes.requestPath contains &quot;api/v1&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v1')) [1] else &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1]]" doc:name="Set MigratedPath" doc:id="95e3fa4b-f2f1-41af-8a41-347e5bf06dbc" variableName="vMigartedPath"/>
 		<choice doc:name="Choice" doc:id="8bd40ae7-9059-4f18-aea9-9ed8ceedc7dd" >
 			 <when expression='#[(!isEmpty(vars.pathName[1])) and ((vars.pathName[1] startsWith("/premise")) or (vars.pathName[1] startsWith("/assets")))]'>
 			 	<json-logger:logger doc:name="Log Before Premise or Asset API Call" doc:id="a8bdc7d4-6c42-4c0b-905e-1a21218c6755" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
