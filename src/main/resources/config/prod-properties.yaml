@@ -31,7 +31,7 @@ http:
     mule4migrate: "false"  
     timeout: "300000"
     port: "8091"
-    mule4port: "8091"
+    mule4port: "8093"
     mule4host:  "mule-worker-internal-serviceorders-papi.us-e1.cloudhub.io"
     host: "mule-worker-internal-serviceorders.cloudhub.io"
     reconnection:
