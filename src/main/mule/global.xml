@@ -17,7 +17,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		<http:listener-connection host="0.0.0.0" port="${http.private.port}" />
 	</http:listener-config>
 	<http:request-config name="premise-http-request-config" doc:name="HTTP Request configuration" doc:id="e2463c7d-4c0b-4c57-8024-0573a3e87651" responseTimeout="1200000" >
-		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="1200000" >
+		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="120000" >
 			<http:authentication >
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
