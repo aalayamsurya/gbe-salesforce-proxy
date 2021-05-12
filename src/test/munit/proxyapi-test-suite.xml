@@ -246,7 +246,7 @@
 			</munit-tools:verify-call>
 		</munit:validation>
 	</munit:test>
-	<munit:test name="common-proxyapi-test-suite" doc:id="572eea06-0d31-4fd1-a064-9e050a352091" timeOut="2400000" ignore="true">
+	<munit:test name="common-proxyapi-test-suite" doc:id="572eea06-0d31-4fd1-a064-9e050a352091" timeOut="2400000">
 		<munit:behavior>
 			<munit-tools:mock-when doc:name="Mock when" doc:id="5576ec23-c1bb-4f9e-ba8a-ab2d4f506c67" processor="http:request">
 				<munit-tools:with-attributes >
@@ -270,18 +270,18 @@
       "method" : "GET",
       "scheme" : "http",
       "queryParams" : { },
-      "requestUri" : "/api/v01/assets",
+      "requestUri" : "/api/v01/common",
       "queryString" : "",
       "version" : "HTTP/1.1",
-      "maskedRequestPath" : "/api/v01/assets",
+      "maskedRequestPath" : "/api/v01/common",
       "listenerPath" : "/*",
-      "relativePath" : "/api/v01/assets",
+      "relativePath" : "/api/v01/common",
       "localAddress" : "/127.0.0.1:8091",
       "uriParams" : { },
-      "rawRequestUri" : "/api/v01/assets",
-      "rawRequestPath" : "/api/v01/assets",
+      "rawRequestUri" : "/api/v01/common",
+      "rawRequestPath" : "/api/v01/common",
       "remoteAddress" : "/127.0.0.1:49506",
-      "requestPath" : "/api/v01/assets"
+      "requestPath" : "/api/v01/common"
     }]' />
 			</munit:set-event>
 			<flow-ref doc:name="Flow Reference" doc:id="bc3d22f4-fe7d-4d96-a010-5c5ce48d6a50" name="proxyapiFlow"/>
