@@ -17,6 +17,8 @@ http:
   premise:
     mule4migrate: "false"  
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     mule4port: "8091"
     mule4host:  "mule-worker-internal-premiseassets-papi-training.us-e1.cloudhub.io"
@@ -30,6 +32,8 @@ http:
   serviceOrders:
     mule4migrate: "false"  
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     mule4port: "8093"
     mule4host:  "mule-worker-internal-serviceorders-papi-training.us-e1.cloudhub.io"
@@ -43,6 +47,8 @@ http:
   workOrders:
     mule4migrate: "false"  
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     mule4port: "8093"
     mule4host:  "mule-worker-internal-workorders-papi-training.us-e1.cloudhub.io"
@@ -55,7 +61,9 @@ http:
       attempts: "2"      
   customer:
     mule4migrate: "false"  
-    timeout: "3000000"    
+    timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"    
     port: "8091"
     mule4port: "8091"
     mule4host:  "mule-worker-internal-customers-papi-training.us-e1.cloudhub.io"
@@ -69,6 +77,8 @@ http:
   preferences:
     host: "dev-us.nationalgridus.com"    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
     baseuri:  "/gbeapi/ng-commpref-exp"
@@ -84,6 +94,8 @@ http:
       attempts: "2"
   contacts:    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     host: "dev-us.nationalgridus.com"
     protocol: "HTTPS"
@@ -96,6 +108,8 @@ http:
       attempts: "2"
   commons:    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     host: "mule-worker-internal-apitraining-ng-common.cloudhub.io"
     reconnection:

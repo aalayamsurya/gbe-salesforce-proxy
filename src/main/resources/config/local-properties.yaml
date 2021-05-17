@@ -19,6 +19,8 @@ http:
     version: "v1"
     requestpath: "/premise"
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8093"
     host: "mule-worker-internal-apidev-premiseassets.cloudhub.io"
     reconnection:
@@ -33,6 +35,8 @@ http:
     version: "v1"
     requestpath: "/assets"
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8093"
     host: "mule-worker-internal-apidev-premiseassets-fr.cloudhub.io"
     reconnection:
@@ -47,6 +51,8 @@ http:
     version: "v04"
     requestpath: "/serviceOrders"
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8093"
     host: "mule-worker-internal-apidev-serviceorders.cloudhub.io"
     reconnection:
@@ -61,6 +67,8 @@ http:
     version: "v1"
     requestpath: "/workOrders"
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8093"
     host: "mule-worker-internal-apidev-workorders-v02.cloudhub.io"
     reconnection:
@@ -75,6 +83,8 @@ http:
     version: "v1"
     requestpath: "/customer"
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8093"
     host: "mule-worker-internal-apidev-customers.cloudhub.io"
     reconnection:
@@ -86,6 +96,8 @@ http:
 ## dummy common and preferences contacts     
   commons:    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     host: "mule-worker-internal-apidev-ng-common-fr.cloudhub.io"
     reconnection:
@@ -97,6 +109,8 @@ http:
   preferences:
     host: "testsecure-api.nationalgridus.com"    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
     baseuri:  "/xapi/preferences"
@@ -112,6 +126,8 @@ http:
       attempts: "2"
   contacts:    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     host: "dev-api.nationalgridus.com"
     protocol: "HTTPS"

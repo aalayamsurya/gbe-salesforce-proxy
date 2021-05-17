@@ -16,7 +16,7 @@ http://www.mulesoft.org/schema/mule/error-handler-plugin http://www.mulesoft.org
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 			</json-logger:logger>
