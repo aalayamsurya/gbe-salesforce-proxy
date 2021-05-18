@@ -23,7 +23,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -71,7 +71,7 @@ if ( p('http.premise.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger> 
@@ -119,7 +119,7 @@ if ( p('http.workOrders.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -167,7 +167,7 @@ if ( p('http.serviceOrders.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -215,7 +215,7 @@ if ( p('http.customer.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -243,7 +243,7 @@ output application/json
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -271,7 +271,7 @@ output application/json
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
