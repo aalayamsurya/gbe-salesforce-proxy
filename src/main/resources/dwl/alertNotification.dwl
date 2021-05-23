@@ -6,7 +6,7 @@ output text/plain
 "\nSource System : " ++ vars.'Source-System'    ++
 "\nTarget System : " ++ vars.'Target-System'    ++
 "\n    " ++
-"\nCorrelationId : " ++ correlationId ++
+"\nCorrelationId : " ++ attributes.headers.'X-Root-Correlation-Id' default correlationId ++
 "\n    "  ++
 "\n============================================================" ++
 "\nRequestPayload: " ++

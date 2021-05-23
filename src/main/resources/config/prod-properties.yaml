@@ -21,7 +21,7 @@ http:
     responsetime: "120000"
     port: "8091"
     mule4port: "8091"
-    mule4host:  "mule-worker-internal-premiseassets-papi.us-e1.cloudhub.io" 
+    mule4host:  "mule-worker-internal-premiseassets-papi-prod.us-e1.cloudhub.io" 
     host: "mule-worker-internal-premiseassets.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -36,7 +36,7 @@ http:
     responsetime: "120000"
     port: "8091"
     mule4port: "8093"
-    mule4host:  "mule-worker-internal-serviceorders-papi.us-e1.cloudhub.io"
+    mule4host:  "mule-worker-internal-serviceorders-papi-prod.us-e1.cloudhub.io"
     host: "mule-worker-internal-serviceorders.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -51,7 +51,7 @@ http:
     responsetime: "120000"
     port: "8091"
     mule4port: "8091"
-    mule4host:  "mule-worker-internal-workorders-papi.us-e1.cloudhub.io"
+    mule4host:  "mule-worker-internal-workorders-papi-prod.us-e1.cloudhub.io"
     host: "mule-worker-internal-workorders.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -66,7 +66,7 @@ http:
     responsetime: "120000"
     port: "8091"
     mule4port: "8091"
-    mule4host:  "mule-worker-internal-customers-papi.us-e1.cloudhub.io"
+    mule4host:  "mule-worker-internal-customers-papi-prod.us-e1.cloudhub.io"
     host: "mule-worker-internal-ngcustomers.cloudhub.io"
     reconnection:
       attempts: "2"
