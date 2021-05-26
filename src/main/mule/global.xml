@@ -3,11 +3,13 @@
 <mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
 	xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway" xmlns:http="http://www.mulesoft.org/schema/mule/http"
 	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:cloudhub="http://www.mulesoft.org/schema/mule/cloudhub"
 	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
 http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
 http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule/cloudhub/current/mule-cloudhub.xsd
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 	<configuration-properties doc:name="Configuration properties" doc:id="8a2a297e-727e-459b-9c91-b54df8ed9e96" file="config/${env}-properties.yaml" />
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="191d7624-e363-4884-a26b-56353b975b04" file="config/${env}-secure-properties.yaml" key="${key}" />
@@ -69,5 +71,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</tls:context>			
 		</http:request-connection>
 	</http:request-config>
+	<cloudhub:config name="CloudHub_Config" doc:name="cloudHubConfig" doc:id="8eb4cf57-b255-4cc3-b32b-1b07451b308c">
+		<cloudhub:connection username="${ch.username}" password="${secure::ch.password}" environment="${environment.id}" />
+	</cloudhub:config>
 	 <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fac8c170-7045-4d28-afd4-928ff0695aa8" flowRef="proxyapiFlow" />
 </mule>

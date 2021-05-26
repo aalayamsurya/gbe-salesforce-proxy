@@ -11,6 +11,6 @@ http:
     tls:
       cert:       
         password: "![c5F+utSCNo1mnB2Jv6JMCw==]" 
-  contacts::
+  contacts:
     client_id:  "![D7pVgaBK0immowaj1YOeQWLw3QLYiIK9Q+Y5/DPpDhiE3LdRCHZ+/xBJQdVToz2T]"
     client_secret:  "![k/qMrzcLbLuH4sL6z3aWXsyNuMN4kwK1wAfrsusQ1y2Elgs8ME5BOKtd6KfIDezO]"   

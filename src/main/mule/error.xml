@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:error-handler-plugin="http://www.mulesoft.org/schema/mule/error-handler-plugin"
-	xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
-	xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+<mule xmlns:cloudhub="http://www.mulesoft.org/schema/mule/cloudhub"
+	xmlns:error-handler-plugin="http://www.mulesoft.org/schema/mule/error-handler-plugin" xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd
-http://www.mulesoft.org/schema/mule/error-handler-plugin http://www.mulesoft.org/schema/mule/error-handler-plugin/current/mule-error-handler-plugin.xsd">
+http://www.mulesoft.org/schema/mule/error-handler-plugin http://www.mulesoft.org/schema/mule/error-handler-plugin/current/mule-error-handler-plugin.xsd
+http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule/cloudhub/current/mule-cloudhub.xsd">
 	 
 		
 	<error-handler name="ng-error-handler">
@@ -53,9 +54,9 @@ vars.errorPayload]]></ee:set-payload>
 				</ee:message>
 			</ee:transform>
 					<set-variable value="#[attributes.httpStatus]" doc:name="httpStatus" doc:id="66c7bc03-88e2-46e0-8eb6-5d82a0b95971" variableName="httpStatus" />
-					<flow-ref doc:name="Flow Reference to alertNotificationFlow" doc:id="b7800834-b56c-4498-a75a-214f7daf8317" name="alert-notification-subflow"/>
 				</otherwise>
 			</choice>
+			<flow-ref doc:name="Flow Reference to alertNotificationFlow" doc:id="b7800834-b56c-4498-a75a-214f7daf8317" name="alert-notification-subflow" />
 			<json-logger:logger doc:name="Logger" doc:id="cfe66788-9c9d-4932-8a7e-497613cdeb56" config-ref="jsonLoggerConfig" message="Log End with Exception" tracePoint="END" priority="ERROR">
 				<json-logger:content ><![CDATA[#[%dw 2.0
 output application/json
@@ -79,6 +80,7 @@ output application/json
 					<ee:set-variable resource="dwl/alertNotification.dwl" variableName="alert_text" />
 			</ee:variables>
 		</ee:transform>
+			<cloudhub:create-notification doc:name="Create Notification" doc:id="dbfa2869-c210-49ef-98bf-d5be3218a327" config-ref="CloudHub_Config" domain="${domain}" priority="ERROR" transactionId="#[attributes.headers.'X-Root-Correlation-Id' default correlationId]"/>
 		</async>
 	</sub-flow> 
 	
