@@ -1,0 +1,151 @@
+api:
+  name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
+  version: "v1" #${project.version}    # replaced through Maven resource filtering
+  id: "16911805"
+http:
+  private:
+    port: "8091"    
+  listener:
+    host: ""
+    port: "8091"
+    basepath: "proxyapi"
+    version: "/*"
+    config: HTTPS_Shared_Listener_Config  
+  requester:
+    username: "637fcf6f13514c2fbc3e946cca8d2063"  
+  premise:
+    mule4migrate: "false"
+    timeout: "3000000"
+    port: "8091"
+    mule4port: "8091"
+    mule4host:  "mule-worker-internal-premiseassets-papi-dev01.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apidev01-premiseassets.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"      
+  serviceOrders:
+    mule4migrate: "false"
+    timeout: "3000000"
+    port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-serviceorders-papi-dev01.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apidev01-serviceorders-dr.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"      
+  workOrders:
+    mule4migrate: "false"   
+    timeout: "3000000"
+    port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-workorders-papi-dev01.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apidev01-workorders.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"      
+  customer:
+    mule4migrate: "false"  
+    timeout: "3000000"
+    port: "8091"
+    mule4port: "8091"
+    mule4host:  "mule-worker-internal-customers-papi-dev01.us-e1.cloudhub.io"
+    host: "mule-worker-internal-apidev01-ngcustomers-dr.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  preferences:
+    host: "api-dev01-us01.nationalgrid.com"    
+    timeout: "3000000"
+    port: "443"
+    protocol: "HTTPS"
+    apiName:  "preference-gbe-eapi"
+    client_id:  ""
+    tls:
+      cert:
+        path: "keystore/dev01-mtls-sfpmapi.nationalgridus.com.pfx"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  contacts:    
+    timeout: "3000000"
+    port: "8091"
+    host: "api-dev01-us01.nationalgrid.com"
+    protocol: "HTTPS"
+    apiName:  "contact-sc-eapi"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  commons:    
+    timeout: "3000000"
+    port: "8091"
+    host: "mule-worker-internal-apidev01-ng-common.cloudhub.io"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  crisCustomer:
+    host: "api-dev01-us01.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-dev01"
+    version: "v01"
+    requestpath: "/crisCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+  updatecustomer:
+    host: "api-dev01-int-us.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-dev01"
+    version: "v01"
+    requestpath: "/phoneCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
+##M-TLS configurations
+salesforce:
+    mtls: 
+      validation:
+        enabled: "N"
+    
+
+json.logger:
+  prettyPrint: "true"
+  disabled.fields: ""    
+ch:
+  username: "NGLocalUser"
+
+domain: "gbe-salesforce-proxy-oauth-dev01"
+environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"
+
+tls.keystore:
+  type: "pkcs12"
+  path: "certs/ng-dev.p12"
+  alias: "server" 
