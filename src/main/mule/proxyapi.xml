@@ -15,7 +15,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
     path: JSONLoggerModule::stringifyNonJSON(vars.pathName) 
 }]]]></json-logger:content>
 		</json-logger:logger>
-		<set-variable value="#[%dw 2.0&#10;&#10;output application/json&#10;&#10;---&#10;&#10;updatedPath:  if (attributes.requestPath contains &quot;v04&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('v04')) [1] else if (attributes.requestPath contains &quot;api/v1&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v1')) [1] else &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1]]" doc:name="Set MigratedPath" doc:id="95e3fa4b-f2f1-41af-8a41-347e5bf06dbc" variableName="vMigartedPath"/>
+		<set-variable value="#[%dw 2.0&#10;output application/json&#10;---&#10;updatedPath:  if (attributes.requestPath contains &quot;v04&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('v04')) [1] else if (attributes.requestPath contains &quot;api/v01&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v01')) [1] else if (attributes.requestPath contains &quot;api/v1&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v1')) [1] else if(attributes.requestPath contains (&quot;/v01&quot;)) &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1] else if ((attributes.requestPath contains (p('http.preferences.apiName'))) or (attributes.requestPath contains (p('http.contacts.apiName')))) attributes.requestPath else &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1]]" doc:name="Set MigratedPath" doc:id="95e3fa4b-f2f1-41af-8a41-347e5bf06dbc" variableName="vMigartedPath"/>
 		<choice doc:name="Choice" doc:id="8bd40ae7-9059-4f18-aea9-9ed8ceedc7dd" >
 			 <when expression='#[(!isEmpty(vars.pathName[1])) and ((vars.pathName[1] startsWith("/premise")) or (vars.pathName[1] startsWith("/assets")))]'>
 			 	<json-logger:logger doc:name="Log Before Premise or Asset API Call" doc:id="a8bdc7d4-6c42-4c0b-905e-1a21218c6755" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -209,7 +209,7 @@ if ( p('http.customer.mule4migrate') == "true") {
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="httpStatus"/>
 			</when>
-			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/common"))]'>
+			<when expression='#[((!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/common")))]'>
 				<json-logger:logger doc:name="Log Before Common Call" doc:id="a8ae2a75-e89a-4186-a105-4a4057d8bc56" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
 					<json-logger:content><![CDATA[#[%dw 2.0
 output application/json
@@ -237,7 +237,7 @@ output application/json
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="d917afc4-6c2f-4461-a0be-3b6991b6dcde" variableName="httpStatus"/>
 			</when>
-			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/preferences"))]'>
+			<when expression="#[((!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith(&quot;/preferences&quot;)) or (attributes.requestPath contains (p('http.preferences.apiName'))))]">
 				<json-logger:logger doc:name="Log Before Preferences Call" doc:id="aa9c396c-c271-4d99-8fc5-38b51803b96e" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
 					<json-logger:content><![CDATA[#[%dw 2.0
 output application/json
@@ -265,7 +265,7 @@ output application/json
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="74725c04-8986-42f5-85f8-50ee88439a2c" variableName="httpStatus"/>
 			</when>
-			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/contacts"))]'>
+			<when expression="#[((!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith(&quot;/contacts&quot;)) or (attributes.requestPath contains (p('http.contacts.apiName'))))]">
 				<json-logger:logger doc:name="Log Before Contacts Call" doc:id="9a347434-23ef-47af-a79e-38f1da1133f4" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
 					<json-logger:content><![CDATA[#[%dw 2.0
 output application/json

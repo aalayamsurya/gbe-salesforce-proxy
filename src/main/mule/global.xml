@@ -56,7 +56,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</http:authentication>
 		</http:request-connection>
 	</http:request-config>
-	<http:request-config name="preferences-http-request-config" doc:name="HTTP Request configuration" doc:id="3c3d895c-476a-487a-9436-00e55cace1b0" basePath="${http.preferences.baseuri}" responseTimeout="${http.preferences.responsetime}">
+	<http:request-config name="preferences-http-request-config" doc:name="HTTP Request configuration" doc:id="3c3d895c-476a-487a-9436-00e55cace1b0">
 		<http:request-connection host="${http.preferences.host}" port="${http.preferences.port}" protocol="HTTPS" connectionIdleTimeout="${http.preferences.connectionidletime}">
 			<tls:context >
 				<tls:trust-store type="pkcs12" />
@@ -64,7 +64,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 			</tls:context>			
 		</http:request-connection>
 	</http:request-config>
-	<http:request-config name="contacts-http-request-config" doc:name="HTTP Request configuration" doc:id="8d91ff9d-f056-4429-966c-f01845cbe907" basePath="${http.contacts.baseuri}" responseTimeout="${http.contacts.responsetime}">
+	<http:request-config name="contacts-http-request-config" doc:name="HTTP Request configuration" doc:id="8d91ff9d-f056-4429-966c-f01845cbe907">
 		<http:request-connection host="${http.contacts.host}" port="${http.contacts.port}" protocol="HTTPS" connectionIdleTimeout="${http.contacts.connectionidletime}">
 			<tls:context >
 				<tls:key-store type="pkcs12" path="${http.preferences.tls.cert.path}" keyPassword="${secure::http.preferences.tls.cert.password}" password="${secure::http.preferences.tls.cert.password}" />

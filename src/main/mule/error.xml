@@ -80,7 +80,9 @@ output application/json
 					<ee:set-variable resource="dwl/alertNotification.dwl" variableName="alert_text" />
 			</ee:variables>
 		</ee:transform>
-			<cloudhub:create-notification doc:name="Create Notification" doc:id="dbfa2869-c210-49ef-98bf-d5be3218a327" config-ref="CloudHub_Config" domain="${domain}" priority="ERROR" transactionId="#[attributes.headers.'X-Root-Correlation-Id' default correlationId]"/>
+			<cloudhub:create-notification doc:name="Create Notification" doc:id="dbfa2869-c210-49ef-98bf-d5be3218a327" config-ref="CloudHub_Config" domain="${domain}" priority="ERROR" transactionId="#[attributes.headers.'X-Root-Correlation-Id' default correlationId]">
+				<reconnect frequency="20000" />
+			</cloudhub:create-notification>
 		</async>
 	</sub-flow> 
 	

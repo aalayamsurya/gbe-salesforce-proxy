@@ -75,13 +75,13 @@ http:
       frequency: "30000"
       attempts: "2"
   preferences:
-    host: "secure-api.nationalgridus.com"    
+    host: "api-us01.nationalgrid.com"    
     timeout: "300000"
     connectionidletime: "120000"
     responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
-    baseuri:  "/xapi/preferences"
+    apiName:  "preference-gbe-eapi"
     client_id:  "648bc2987c604688982c580de4d45b82"
     tls:
       cert:
@@ -97,9 +97,9 @@ http:
     connectionidletime: "120000"
     responsetime: "120000"
     port: "443"
-    host: "secure-api.nationalgridus.com"
+    host: "api-us01.nationalgrid.com" 
     protocol: "HTTPS"
-    baseuri:  "/xapi/contacts"
+    apiName:  "contact-sc-eapi"
     client_id: "141b50482ab24e549a79d726d4142ddd"
     reconnection:
       attempts: "2"
