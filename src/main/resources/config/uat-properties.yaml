@@ -74,13 +74,13 @@ http:
       frequency: "30000"
       attempts: "2"
   preferences:
-    host: "dev-us.nationalgridus.com"    
+    host: "api-uat-us01.nationalgrid.com"    
     timeout: "3000000"
     connectionidletime: "120000"
     responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
-    baseuri:  "/gbeapi/ng-commpref-exp"
+    apiName:  "preference-gbe-eapi"
     client_id:  ""
     tls:
       cert:
@@ -96,9 +96,9 @@ http:
     connectionidletime: "120000"
     responsetime: "120000"
     port: "8091"
-    host: "dev-us.nationalgridus.com"
+    host: "api-uat-us01.nationalgrid.com"
     protocol: "HTTPS"
-    baseuri:  "/gbeapi/ng-contactpref-exp"
+    apiName:  "contact-sc-eapi"
     reconnection:
       attempts: "2"
       frequency: "30000"
