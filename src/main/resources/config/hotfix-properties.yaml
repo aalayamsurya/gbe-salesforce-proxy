@@ -51,7 +51,7 @@ http:
     port: "8091"
     mule4port: "8091"
     mule4host:  "mule-worker-internal-workorders-papi-hotfix.us-e1.cloudhub.io"
-    host: "mule-worker-internal-apihotfix-workorders02.cloudhub.io"
+    host: "mule-worker-internal-apihotfix-workorders.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
