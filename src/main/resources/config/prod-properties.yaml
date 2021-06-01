@@ -81,7 +81,7 @@ http:
     responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
-    apiName:  "preference-gbe-eapi"
+    apiName:  "preference-sc-eapi"
     client_id:  "648bc2987c604688982c580de4d45b82"
     tls:
       cert:
