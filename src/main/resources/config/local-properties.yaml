@@ -114,7 +114,6 @@ http:
     port: "443"
     protocol: "HTTPS"
     baseuri:  "/xapi/preferences"
-    client_id:  ""
     tls:
       cert:
         path: "keystore/qa-mtls-sfpmapi.nationalgridus.com.pfx"

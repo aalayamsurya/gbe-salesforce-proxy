@@ -84,7 +84,6 @@ http:
     port: "443"
     protocol: "HTTPS"
     apiName:  "preference-gbe-eapi"
-    client_id:  ""
     tls:
       cert:
         path: "keystore/uat-mtls-sfpmapi.nationalgridus.com.pfx"

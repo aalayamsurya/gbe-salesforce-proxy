@@ -81,7 +81,6 @@ http:
     port: "443"
     protocol: "HTTPS"
     apiName:  "preference-sc-eapi"
-    client_id:  ""
     tls:
       cert:
         path: "keystore/uat-mtls-sfpmapi.nationalgridus.com.pfx"

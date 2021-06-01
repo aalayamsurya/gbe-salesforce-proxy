@@ -82,7 +82,6 @@ http:
     port: "443"
     protocol: "HTTPS"
     apiName:  "preference-sc-eapi"
-    client_id:  "648bc2987c604688982c580de4d45b82"
     tls:
       cert:
         path: "keystore/mtls-sfpmapi.nationalgridus.com.pfx"
@@ -100,7 +99,6 @@ http:
     host: "api-us01.nationalgrid.com" 
     protocol: "HTTPS"
     apiName:  "contact-sc-eapi"
-    client_id: "141b50482ab24e549a79d726d4142ddd"
     reconnection:
       attempts: "2"
       frequency: "30000"
