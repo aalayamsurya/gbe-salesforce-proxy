@@ -81,7 +81,7 @@ http:
     responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
-    apiName:  "preference-gbe-eapi"
+    apiName:  "preference-sc-eapi"
     client_id:  ""
     tls:
       cert:
@@ -110,7 +110,7 @@ http:
     timeout: "3000000"
     connectionidletime: "120000"
     responsetime: "120000"
-    port: "8091"
+    port: "443"
     host: "mule-worker-internal-apihotfix-ng-common.cloudhub.io"
     reconnection:
       attempts: "2"
