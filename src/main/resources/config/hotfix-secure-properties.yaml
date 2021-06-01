@@ -11,7 +11,7 @@ http:
     tls:
       cert:       
         password: "![c5F+utSCNo1mnB2Jv6JMCw==]" 
-  contacts::
+  contacts:
     client_id:  "![eOGsH5ARGSndi7rncEvXCh/CoQiIbv3mJtWc4luGgn84YOwFEIuIXUcfwwxmarFP]"
     client_secret:  "![ftlgOYbA1porLJIsAgOX+Lf4iQDKg8HbSpEdbM+MX1RFGxxQYK9DVNOYxK3CElJr]"
 ##proxy rtf uat securtiy ##    
