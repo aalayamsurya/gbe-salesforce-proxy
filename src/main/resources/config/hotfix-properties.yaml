@@ -105,11 +105,14 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-  commons:    
+  commons:
+    mule4migrate: "false"    
     timeout: "3000000"
     connectionidletime: "120000"
     responsetime: "120000"
-    port: "443"
+    port: "8091"
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-serviceorders-papi-hotfix.us-e1.cloudhub.io"
     host: "mule-worker-internal-apihotfix-ng-common.cloudhub.io"
     reconnection:
       attempts: "2"
