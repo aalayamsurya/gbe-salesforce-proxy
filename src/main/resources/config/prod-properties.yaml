@@ -110,6 +110,9 @@ http:
     connectionidletime: "120000"
     responsetime: "120000"
     port: "8091"
+    mule4port: "8093"
+    mule4migrate: "false" 
+    mule4host:  "mule-worker-internal-serviceorders-papi-prod.us-e1.cloudhub.io"
     host: "mule-worker-internal-ng-common.cloudhub.io"
     reconnection:
       attempts: "2"
