@@ -24,9 +24,9 @@
 		<api.context>gbe-salesforce-proxy-oauth</api.context>
 		<api.layer>${api.layer.sapi}</api.layer>
 		<api.visualizer.layer>${api.visualizer.sapi}</api.visualizer.layer>
-		<api.groupId>56c14f77-79ed-4de3-8313-d542ea9f232b</api.groupId>
+		<api.groupId>20fb66fc-3fbd-4ed8-971b-d68fd6899d99</api.groupId>
 		<api.artifactId>gbe-salesforce-proxy-oauth</api.artifactId>
-		<rtf.domain>${rtf.domain.internal}</rtf.domain>
+		<rtf.domain>${rtf.domain.external}</rtf.domain>
 		<api.version>1.0.0</api.version>
 	</properties>
 
