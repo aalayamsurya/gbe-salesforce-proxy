@@ -50,7 +50,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		</http:request-connection>
 	</http:request-config>
 	<http:request-config name="commons-http-request-config" doc:name="HTTP Request configuration" doc:id="0dca3e94-4fe3-4cc2-8958-1a13587649cb" responseTimeout="${http.commons.responsetime}">
-		<http:request-connection host="${http.commons.host}" port="${http.commons.port}" connectionIdleTimeout="${http.commons.connectionidletime}">
+		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="${http.commons.connectionidletime}">
 			<http:authentication >
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>

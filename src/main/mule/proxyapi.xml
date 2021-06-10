@@ -219,7 +219,27 @@ output application/json
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="commons-http-request-config" responseTimeout="120000">
+				<ee:transform doc:name="ConnectivityDetails for Mule3 or Mule4" doc:id="b29e3c3b-30c6-47eb-86c5-30417f586011">
+					<ee:message>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="vConnectDetails" ><![CDATA[%dw 2.0
+output application/json
+---
+if ( p('http.customer.mule4migrate') == "true") {
+	host: p('http.commons.mule4host'),
+	requestPath: vars.vMigartedPath.updatedPath,
+	port: p('http.commons.mule4port')
+}	else {
+	host: p('http.commons.host'),
+	requestPath: attributes.requestPath,
+	port: p('http.commons.port')
+} 
+	
+]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[vars.vConnectDetails.requestPath]" config-ref="commons-http-request-config" responseTimeout="120000">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
