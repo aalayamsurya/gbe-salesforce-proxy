@@ -56,7 +56,7 @@ if ( p('http.premise.mule4migrate') == "true") {
 	"Content-Type" : vars."v_content_type",
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
-}]]]></http:headers>
+} ++ attributes.headers]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
@@ -104,7 +104,7 @@ if ( p('http.workOrders.mule4migrate') == "true") {
 	"Content-Type" : vars."v_content_type",
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
-}]]]></http:headers>
+} ++ attributes.headers]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
@@ -152,7 +152,7 @@ if ( p('http.serviceOrders.mule4migrate') == "true") {
 	"Content-Type" : vars."v_content_type",
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
-}]]]></http:headers>
+} ++ attributes.headers]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
@@ -200,7 +200,7 @@ if ( p('http.customer.mule4migrate') == "true") {
 	"Content-Type" : vars."v_content_type",
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
-}]]]></http:headers>
+} ++ attributes.headers]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
@@ -248,7 +248,7 @@ if ( p('http.customer.mule4migrate') == "true") {
 	"Content-Type" : vars."v_content_type",
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
-}]]]></http:headers>
+} ++ attributes.headers]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
@@ -276,7 +276,7 @@ output application/json
 	"Content-Type" : vars."v_content_type",
 	"client_id" : p('secure::http.preferences.client_id'),
 	"client_secret" : p('secure::http.preferences.client_secret')
-}]]]></http:headers>
+} ++ attributes.headers]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
@@ -304,7 +304,7 @@ output application/json
 	"Content-Type" : vars."v_content_type",
 	"client_id" : p('secure::http.contacts.client_id'),
 	"client_secret" : p('secure::http.contacts.client_secret')
-}]]]></http:headers>
+} ++ attributes.headers]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
 					<http:response-validator >
