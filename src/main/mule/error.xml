@@ -80,9 +80,21 @@ output application/json
 					<ee:set-variable resource="dwl/alertNotification.dwl" variableName="alert_text" />
 			</ee:variables>
 		</ee:transform>
-			<cloudhub:create-notification doc:name="Create Notification" doc:id="dbfa2869-c210-49ef-98bf-d5be3218a327" config-ref="CloudHub_Config" domain="${domain}" priority="ERROR" transactionId="#[attributes.headers.'X-Root-Correlation-Id' default correlationId]">
+			<try doc:name="Try" doc:id="2b14a0d2-8fb6-451b-8720-6f022ae89391" >
+				<cloudhub:create-notification doc:name="Create Notification" doc:id="dbfa2869-c210-49ef-98bf-d5be3218a327" config-ref="CloudHub_Config" domain="${domain}" priority="ERROR" transactionId="#[vars.CorrelationalID default correlationId]">
 				<reconnect frequency="20000" />
 			</cloudhub:create-notification>
+				<error-handler >
+					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="a7db3766-7792-4ddb-bec1-5d6f63439326" >
+						<json-logger:logger doc:name="Log Cloud Notification Error" doc:id="bbf56d2c-2545-4c3c-b94b-e7816647090f" config-ref="jsonLoggerConfig" message="Log Cloudhub Notification Error" tracePoint="EXCEPTION" correlationId="#[vars.CorrelationalID default correlationId]">
+							<json-logger:content ><![CDATA[#[output application/json ---
+{
+ 	payload: error.description default ""
+}]]]></json-logger:content>
+						</json-logger:logger>
+					</on-error-continue>
+				</error-handler>
+			</try>
 		</async>
 	</sub-flow> 
 	

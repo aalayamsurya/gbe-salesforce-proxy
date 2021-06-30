@@ -1,7 +1,7 @@
 api:
   name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
-  id: "16660772"
+  id: "16953803"
 http:
   private:
     port: "8091"    
@@ -115,7 +115,7 @@ http:
     mule4port: "8093"
     mule4migrate: "false"
     mule4host:  "mule-worker-internal-serviceorders-papi-qa.us-e1.cloudhub.io"
-    host: "mule-worker-internal-apiuat-ng-common.cloudhub.io"
+    host: "mule-worker-internal-apiqa-ng-common.cloudhub.io"
     reconnection:
       attempts: "2"
       frequency: "30000"
