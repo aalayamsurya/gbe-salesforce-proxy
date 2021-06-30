@@ -1,7 +1,7 @@
 api:
   name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
-  id: "16660772"
+  id: "17018794"
 http:
   private:
     port: "8091"    
