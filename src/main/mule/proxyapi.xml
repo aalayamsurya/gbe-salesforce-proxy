@@ -9,6 +9,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 	
 	<sub-flow name="ng-proxy-api" doc:id="dc6ec052-016c-4a67-aade-2ff4615a21e6" >
+		<logger level="INFO" doc:name="Start Log" doc:id="a61237fd-4220-43dd-8ffb-fe7ebe1220d9" message="Start - Sub Flow ng-proxy-api"/>
 		<json-logger:logger doc:name="Logger" doc:id="fd809228-7a9a-40ed-ab5f-cf38b30979e1" config-ref="jsonLoggerConfig" message="Start of proxy routing">
 			<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
 {
@@ -419,6 +420,7 @@ output application/java
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
+		<logger level="INFO" doc:name="End Log" doc:id="e720bfaf-e9c8-468f-9df3-10efad3ed931" message="End - Sub Flow ng-proxy-api"/>
 	</sub-flow>
 	 <!-- <sub-flow name="Set-Api-System-Name-For-Alert-Notifications" doc:id="d12f4a7b-e2cd-4fd4-ab3e-e79e97239ee6" >
 		<set-variable value="if(vars.Source-System != null) (&quot;Source-System&quot;) else (attributes.headers.'Source-System' default &quot;Source-System&quot;)]]"vars.Source-System=""") doc:name="Set Variable" doc:id="399b04ab-8558-4d54-a294-393f75136e3a" variableName="v_source_system"/>
