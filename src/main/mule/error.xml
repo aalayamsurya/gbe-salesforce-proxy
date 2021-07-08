@@ -82,7 +82,7 @@ output application/json
 		</ee:transform>
 			<try doc:name="Try" doc:id="2b14a0d2-8fb6-451b-8720-6f022ae89391" >
 				<cloudhub:create-notification doc:name="Create Notification" doc:id="dbfa2869-c210-49ef-98bf-d5be3218a327" config-ref="CloudHub_Config" domain="${domain}" priority="ERROR" transactionId="#[vars.CorrelationalID default correlationId]">
-				<reconnect frequency="20000" />
+					<cloudhub:message ><![CDATA[#[vars.alert_text]]]></cloudhub:message>
 			</cloudhub:create-notification>
 				<error-handler >
 					<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="a7db3766-7792-4ddb-bec1-5d6f63439326" type="ANY">
