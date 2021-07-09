@@ -75,13 +75,14 @@ http:
       frequency: "30000"
       attempts: "2"
   preferences:
-    host: "api-us01.nationalgrid.com"    
+    host: "secure-api.nationalgridus.com"    
     timeout: "300000"
     connectionidletime: "120000"
     responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
     apiName:  "preference-sc-eapi"
+    baseuri: "/xapi/preferences"
     tls:
       cert:
         path: "keystore/mtls-sfpmapi.nationalgridus.com.pfx"
@@ -96,9 +97,10 @@ http:
     connectionidletime: "120000"
     responsetime: "120000"
     port: "443"
-    host: "api-us01.nationalgrid.com" 
+    host: "secure-api.nationalgridus.com" 
     protocol: "HTTPS"
     apiName:  "contact-sc-eapi"
+    baseuri: "/xapi/contacts"
     reconnection:
       attempts: "2"
       frequency: "30000"
