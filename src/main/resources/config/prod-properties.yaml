@@ -2,15 +2,13 @@ api:
   name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
   id: "16831918"
-http:
-  private:
-    port: "8091"    
+http:      
   listener:
     host: "0.0.0.0"
-    port: "8091"
-    basepath: "proxyapi"
+    port: "8091"    
     version: "/*"
-    config: HTTPS_Shared_Listener_Config
+  successcode: "200"
+  failurecode: "500"
   
   requester:
     username: "9d3390c957a8463893826e3eef450fe4"  
@@ -75,14 +73,15 @@ http:
       frequency: "30000"
       attempts: "2"
   preferences:
+    mule4migrate: "false"
     host: "secure-api.nationalgridus.com"    
     timeout: "300000"
     connectionidletime: "120000"
     responsetime: "120000"
     port: "443"
-    protocol: "HTTPS"
-    apiName:  "preference-sc-eapi"
+    protocol: "HTTPS"    
     baseuri: "/xapi/preferences"
+    apiName:  "preference-sc-eapi"
     tls:
       cert:
         path: "keystore/mtls-sfpmapi.nationalgridus.com.pfx"
@@ -92,21 +91,32 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-  contacts:    
+    migrate:
+      host: "api-us01.nationalgrid.com"      
+      port: "443"
+      protocol: "HTTPS"
+      apiName:  "preference-sc-eapi"
+  contacts:
+    mule4migrate: "false"   
     timeout: "300000"
     connectionidletime: "120000"
     responsetime: "120000"
     port: "443"
     host: "secure-api.nationalgridus.com" 
-    protocol: "HTTPS"
-    apiName:  "contact-sc-eapi"
+    protocol: "HTTPS"    
     baseuri: "/xapi/contacts"
+    apiName:  "contact-sc-eapi"
     reconnection:
       attempts: "2"
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
+    migrate:
+      host: "api-us01.nationalgrid.com"      
+      port: "443"
+      protocol: "HTTPS"
+      apiName:  "contact-sc-eapi"
   commons:    
     timeout: "300000"
     connectionidletime: "120000"

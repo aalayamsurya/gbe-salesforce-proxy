@@ -268,7 +268,22 @@ output application/json
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to Preferences API" doc:id="55230fa1-af16-44f8-81bd-432be4c4960e" path="#[attributes.requestPath]" config-ref="preferences-http-request-config" responseTimeout="120000">
+				<ee:transform doc:name="ConnectivityDetails for Mule3 or Mule4" doc:id="3e6a401a-9014-4f3d-b465-a74622bf6bfc">
+					<ee:message>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="vConnectURL" ><![CDATA[%dw 2.0
+output application/json
+---
+if ( p('http.preferences.mule4migrate') == "true") {
+	urlInfo: "https://" ++ p('http.preferences.migrate.host') ++":" ++ p('http.preferences.migrate.port') ++  attributes.requestPath
+	
+}	else {
+	urlInfo: "https://" ++ p('http.preferences.host') ++":" ++ p('http.preferences.port') ++  p('http.preferences.baseuri')  ++ attributes.requestPath
+} ]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<http:request method="#[attributes.method]" doc:name="Call to Preferences API" doc:id="55230fa1-af16-44f8-81bd-432be4c4960e" config-ref="preferences-http-request-config" responseTimeout="120000" url="#[vars.vConnectURL.urlInfo]">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
@@ -303,7 +318,22 @@ output application/json
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to: Contacts Request Calls" doc:id="2cf7ea44-085f-43d2-b2f6-181df133d5ce" path="#[attributes.requestPath]" config-ref="contacts-http-request-config" responseTimeout="120000">
+				<ee:transform doc:name="ConnectivityDetails for Mule3 or Mule4" doc:id="ab802924-a10e-429f-8c51-b250a90d777b">
+					<ee:message>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="vConnectURL" ><![CDATA[%dw 2.0
+output application/json
+---
+if ( p('http.contacts.mule4migrate') == "true") {
+	urlInfo: "https://" ++ p('http.contacts.migrate.host') ++":" ++ p('http.contacts.migrate.port') ++ "/"++ attributes.requestPath
+	
+}	else {
+	urlInfo: "https://" ++ p('http.contacts.host') ++":" ++ p('http.contacts.port') ++ p('http.contacts.baseuri')  ++ attributes.requestPath
+}]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<http:request method="#[attributes.method]" doc:name="Call to: Contacts Request Calls" doc:id="2cf7ea44-085f-43d2-b2f6-181df133d5ce" config-ref="contacts-http-request-config" responseTimeout="120000" url="#[vars.vConnectURL.urlInfo]">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {

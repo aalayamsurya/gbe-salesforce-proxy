@@ -10,10 +10,10 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	
 	<flow name="proxyapiFlow" doc:id="4f236a5a-f3a1-490e-84df-acfa357b3b7d" >
 		<http:listener doc:name="Listener" doc:id="f59b7d34-17b5-484d-83ab-55e04a759eb8" path="${http.listener.version}" config-ref="HTTP_Listener_config">
-			<http:response statusCode="#[vars.httpStatus default 200]" >
+			<http:response statusCode="#[vars.httpStatus default p('http.successcode') as Number]" >
 				<http:headers ><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
 			</http:response>
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
+			<http:error-response statusCode="#[vars.httpStatus default p('http.failurecode') as Number]">
 				<http:body ><![CDATA[#[payload]]]></http:body>
 				<http:headers ><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
 			</http:error-response>
