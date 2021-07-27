@@ -326,7 +326,7 @@ output application/json
 output application/json
 ---
 if ( p('http.contacts.mule4migrate') == "true") {
-	urlInfo: "https://" ++ p('http.contacts.migrate.host') ++":" ++ p('http.contacts.migrate.port') ++ "/"++ attributes.requestPath
+	urlInfo: "https://" ++ p('http.contacts.migrate.host') ++":" ++ p('http.contacts.migrate.port') ++ attributes.requestPath
 	
 }	else {
 	urlInfo: "https://" ++ p('http.contacts.host') ++":" ++ p('http.contacts.port') ++ p('http.contacts.baseuri')  ++ attributes.requestPath
