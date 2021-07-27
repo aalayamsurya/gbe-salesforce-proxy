@@ -80,7 +80,7 @@ http:
     port: "443"
     protocol: "HTTPS"
     baseuri: "/gbeapi/ng-commpref-exp"
-    apiName:  "preference-gbe-eapi"
+    apiName:  "preference-sc-eapi"
     tls:
       cert:
         path: "keystore/uat-mtls-sfpmapi.nationalgridus.com.pfx"
@@ -94,7 +94,7 @@ http:
       host: "api-uat-us01.nationalgrid.com"      
       port: "443"
       protocol: "HTTPS"
-      apiName:  "preference-gbe-eapi"
+      apiName:  "preference-sc-eapi"
   contacts:
     mule4migrate: "false"
     timeout: "3000000"
