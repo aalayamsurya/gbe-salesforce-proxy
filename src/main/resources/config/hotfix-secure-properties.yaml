@@ -7,10 +7,7 @@ http:
     password: "![unqBJjpgQvXkd16Z8VQowPMmsVsmJIBVxcpG6rFAPqhJz9HYoo48VRJN0qYPB7kZ]"  
   preferences:
     client_id:  "![eOGsH5ARGSndi7rncEvXCh/CoQiIbv3mJtWc4luGgn84YOwFEIuIXUcfwwxmarFP]"
-    client_secret:  "![ftlgOYbA1porLJIsAgOX+Lf4iQDKg8HbSpEdbM+MX1RFGxxQYK9DVNOYxK3CElJr]"
-    tls:
-      cert:       
-        password: "![c5F+utSCNo1mnB2Jv6JMCw==]" 
+    client_secret:  "![ftlgOYbA1porLJIsAgOX+Lf4iQDKg8HbSpEdbM+MX1RFGxxQYK9DVNOYxK3CElJr]"    
   contacts:
     client_id:  "![zwCH1X9OIhufgMqqKj2lXYy3c+eCIB5VHABxpwQkaNzv9m8eux0mq5uWORuQVtWo]"
     client_secret:  "![c/KdInCJYbhCy7/XAQIK2wQkA8rVePfciB/+60zUo/ZlTvfgnq2mXqcvjiO1JqQh]"
@@ -19,7 +16,3 @@ https:
    request: 
      x-clinetid: "![QgHoUATI+GBPVsZCvHAWMM/sGq8o2ub51Giq0VrePGjJqpQV0PX0zL9NORkk84fW]"
      x-clientsecret: "![znd7fwdYlICk93PGAI911VIwLDiVXkZdVHch5ifalEEn1Y1onrR18LcU92V2SEBY]"
-     
-tls.keystore:
-  password: "![ubKXvsn7pEUKfI6M2g15Yw==]"
-  keyPassword: "![ubKXvsn7pEUKfI6M2g15Yw==]"

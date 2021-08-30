@@ -8,9 +8,7 @@ http:
   preferences:
     client_id:  "![BFaxasoAXJZwiFH4IuTmXmDgg6BF5koy8vpgaef1rvrdIfgHkx1FZ6i4/S1Mgg/I]"
     client_secret:  "![INeFG2L8LH0OzlIF2AF66mFYO0qgYXH+moHvTABdsPVkrxXHHM+vUAeiJykwXUDm]"
-    tls:
-      cert:       
-        password: "![c5F+utSCNo1mnB2Jv6JMCw==]" 
+    
   contacts:
     client_id:  "![cvHxWxhToVZrD9GT9EGktUiZpx427urFWei9Mc8QN5bzZIzbtz4hw4+rgbrtXgNp]"
     client_secret:  "![BIqvLBWhviqTUH2UYh2LfT/XgsEBDQ7e/G0XMcyXs+awYHBVVEGRBWZZeT3dGGVk]"   
