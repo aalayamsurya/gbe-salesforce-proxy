@@ -9,13 +9,14 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
 	
 	<sub-flow name="ng-proxy-api" doc:id="dc6ec052-016c-4a67-aade-2ff4615a21e6" >
+		<logger level="INFO" doc:name="Start Log" doc:id="a61237fd-4220-43dd-8ffb-fe7ebe1220d9" message="Start - Sub Flow ng-proxy-api"/>
 		<json-logger:logger doc:name="Logger" doc:id="fd809228-7a9a-40ed-ab5f-cf38b30979e1" config-ref="jsonLoggerConfig" message="Start of proxy routing">
 			<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
 {
     path: JSONLoggerModule::stringifyNonJSON(vars.pathName) 
 }]]]></json-logger:content>
 		</json-logger:logger>
-		<set-variable value="#[%dw 2.0&#10;output application/json&#10;---&#10;updatedPath:  if (attributes.requestPath contains &quot;v04&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('v04')) [1] else if (attributes.requestPath contains &quot;api/v01&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v01')) [1] else if (attributes.requestPath contains &quot;api/v1&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v1')) [1] else if(attributes.requestPath contains (&quot;/v01&quot;)) &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1] else if ((attributes.requestPath contains (p('http.preferences.apiName'))) or (attributes.requestPath contains (p('http.contact.apiName')))) attributes.requestPath else &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1]]" doc:name="Set MigratedPath" doc:id="95e3fa4b-f2f1-41af-8a41-347e5bf06dbc" variableName="vMigartedPath"/>
+		<set-variable value="#[%dw 2.0&#10;output application/json&#10;---&#10;updatedPath:  if (attributes.requestPath contains &quot;v04&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('v04')) [1] else if (attributes.requestPath contains &quot;api/v01&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v01')) [1] else if (attributes.requestPath contains &quot;api/v1&quot;) &quot;v1&quot; ++ (attributes.requestPath splitBy('api/v1')) [1] else if(attributes.requestPath contains (&quot;/v01&quot;)) &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1] else if ((attributes.requestPath contains (p('http.preferences.apiName'))) or (attributes.requestPath contains (p('http.contacts.apiName')))) attributes.requestPath else &quot;v1&quot; ++ (attributes.requestPath splitBy('v01')) [1]]" doc:name="Set MigratedPath" doc:id="95e3fa4b-f2f1-41af-8a41-347e5bf06dbc" variableName="vMigartedPath"/>
 		<choice doc:name="Choice" doc:id="8bd40ae7-9059-4f18-aea9-9ed8ceedc7dd" >
 			 <when expression='#[(!isEmpty(vars.pathName[1])) and ((vars.pathName[1] startsWith("/premise")) or (vars.pathName[1] startsWith("/assets")))]'>
 			 	<json-logger:logger doc:name="Log Before Premise or Asset API Call" doc:id="a8bdc7d4-6c42-4c0b-905e-1a21218c6755" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -23,7 +24,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -71,7 +72,7 @@ if ( p('http.premise.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger> 
@@ -119,7 +120,7 @@ if ( p('http.workOrders.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -167,7 +168,7 @@ if ( p('http.serviceOrders.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
@@ -215,11 +216,31 @@ if ( p('http.customer.mule4migrate') == "true") {
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[attributes.requestPath]" config-ref="commons-http-request-config" responseTimeout="120000">
+				<ee:transform doc:name="ConnectivityDetails for Mule3 or Mule4" doc:id="b29e3c3b-30c6-47eb-86c5-30417f586011">
+					<ee:message>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="vConnectDetails" ><![CDATA[%dw 2.0
+output application/json
+---
+if ( p('http.customer.mule4migrate') == "true") {
+	host: p('http.commons.mule4host'),
+	requestPath: vars.vMigartedPath.updatedPath,
+	port: p('http.commons.mule4port')
+}	else {
+	host: p('http.commons.host'),
+	requestPath: attributes.requestPath,
+	port: p('http.commons.port')
+} 
+	
+]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<http:request method="#[attributes.method]" doc:name="Call to Common API" doc:id="7d4f6e32-cb22-45fd-8bf9-108016e1e399" path="#[vars.vConnectDetails.requestPath]" config-ref="commons-http-request-config" responseTimeout="120000">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
@@ -243,19 +264,41 @@ output application/json
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to Preferences API" doc:id="55230fa1-af16-44f8-81bd-432be4c4960e" path="#[attributes.requestPath]" config-ref="preferences-http-request-config" responseTimeout="120000">
+				<ee:transform doc:name="ConnectivityDetails for Mule3 or Mule4" doc:id="3e6a401a-9014-4f3d-b465-a74622bf6bfc">
+					<ee:message>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="vConnectURL" ><![CDATA[%dw 2.0
+output application/json
+---
+if ( p('http.preferences.mule4migrate') == "true") {
+	urlInfo: "https://" ++ p('http.preferences.migrate.host') ++":" ++ p('http.preferences.migrate.port') ++  attributes.requestPath
+	
+}	else {
+	urlInfo: "https://" ++ p('http.preferences.host') ++":" ++ p('http.preferences.port') ++  p('http.preferences.baseuri')  ++ attributes.requestPath
+} ]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<http:request method="#[attributes.method]" doc:name="Call to Preferences API" doc:id="55230fa1-af16-44f8-81bd-432be4c4960e" config-ref="preferences-http-request-config" responseTimeout="120000" url="#[vars.vConnectURL.urlInfo]">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
 	
 	"X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
 	"Content-Type" : vars."v_content_type",
-	"client_id" : p('http.preferences.client_id'),
-	"client_secret" : p('secure::http.preferences.client_secret')
+	"client_id" : p('secure::http.preferences.client_id'),
+	"client_secret" : p('secure::http.preferences.client_secret'),
+	"customerId" : attributes.headers.customerId default "",
+	"contactValue"	: attributes.headers.contactValue default "",
+	"emailAddress"	: attributes.headers.emailAddress default "",
+	"issuingAuthority" : attributes.headers.issuingAuthority default "",
+	"billingAccountNumber": attributes.headers.billingAccountNumber default "",
+	"regionFuelType": attributes.headers.regionFuelType default "",
+	"dataUsePurpose": attributes.headers.dataUsePurpose default ""	
 }]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
 					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
@@ -265,24 +308,39 @@ output application/json
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="74725c04-8986-42f5-85f8-50ee88439a2c" variableName="httpStatus"/>
 			</when>
-			<when expression="#[((!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith(&quot;/contacts&quot;)) or (attributes.requestPath contains (p('http.contact.apiName'))))]">
+			<when expression="#[((!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith(&quot;/contacts&quot;)) or (attributes.requestPath contains (p('http.contacts.apiName'))))]">
 				<json-logger:logger doc:name="Log Before Contacts Call" doc:id="9a347434-23ef-47af-a79e-38f1da1133f4" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
 					<json-logger:content><![CDATA[#[%dw 2.0
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request method="#[attributes.method]" doc:name="Call to: Contacts Request Calls" doc:id="2cf7ea44-085f-43d2-b2f6-181df133d5ce" path="#[attributes.requestPath]" config-ref="contacts-http-request-config" responseTimeout="120000">
+				<ee:transform doc:name="ConnectivityDetails for Mule3 or Mule4" doc:id="ab802924-a10e-429f-8c51-b250a90d777b">
+					<ee:message>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="vConnectURL" ><![CDATA[%dw 2.0
+output application/json
+---
+if ( p('http.contacts.mule4migrate') == "true") {
+	urlInfo: "https://" ++ p('http.contacts.migrate.host') ++":" ++ p('http.contacts.migrate.port') ++ attributes.requestPath
+	
+}	else {
+	urlInfo: "https://" ++ p('http.contacts.host') ++":" ++ p('http.contacts.port') ++ p('http.contacts.baseuri')  ++ attributes.requestPath
+}]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<http:request method="#[attributes.method]" doc:name="Call to: Contacts Request Calls" doc:id="2cf7ea44-085f-43d2-b2f6-181df133d5ce" config-ref="contacts-http-request-config" responseTimeout="120000" url="#[vars.vConnectURL.urlInfo]">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
 	
 	"X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
 	"Content-Type" : vars."v_content_type",
-	"client_id" : p('http.contacts.client_id'),
+	"client_id" : p('secure::http.contacts.client_id'),
 	"client_secret" : p('secure::http.contacts.client_secret')
 }]]]></http:headers>
 					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
@@ -392,6 +450,7 @@ output application/java
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
+		<logger level="INFO" doc:name="End Log" doc:id="e720bfaf-e9c8-468f-9df3-10efad3ed931" message="End - Sub Flow ng-proxy-api"/>
 	</sub-flow>
 	 <!-- <sub-flow name="Set-Api-System-Name-For-Alert-Notifications" doc:id="d12f4a7b-e2cd-4fd4-ab3e-e79e97239ee6" >
 		<set-variable value="if(vars.Source-System != null) (&quot;Source-System&quot;) else (attributes.headers.'Source-System' default &quot;Source-System&quot;)]]"vars.Source-System=""") doc:name="Set Variable" doc:id="399b04ab-8558-4d54-a294-393f75136e3a" variableName="v_source_system"/>
