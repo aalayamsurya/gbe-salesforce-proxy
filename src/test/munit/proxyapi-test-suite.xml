@@ -273,7 +273,7 @@
       "requestUri" : "/api/v01/common",
       "queryString" : "",
       "version" : "HTTP/1.1",
-      "maskedRequestPath" : "/api/v01/common",
+     "maskedRequestPath" : "/api/v01/common",
       "listenerPath" : "/*",
       "relativePath" : "/api/v01/common",
       "localAddress" : "/127.0.0.1:8091",
