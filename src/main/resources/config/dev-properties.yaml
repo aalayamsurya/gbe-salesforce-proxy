@@ -1,21 +1,21 @@
 api:
   name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
-  id: "16681625"
-http:
-  private:
-    port: "8091"    
+  id: "16935644"
+http:      
   listener:
-    host: ""
-    port: "8091"
-    basepath: "proxyapi"
+    host: "0.0.0.0"
+    port: "8091"    
     version: "/*"
-    config: HTTPS_Shared_Listener_Config  
+  successcode: "200"
+  failurecode: "500"     
   requester:
     username: "637fcf6f13514c2fbc3e946cca8d2063"      
   premise:
     mule4migrate: "false"      
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     mule4port: "8091"
     mule4host:  "mule-worker-internal-premiseassets-papi-dev.us-e1.cloudhub.io"
@@ -25,6 +25,8 @@ http:
   serviceOrders:
     mule4migrate: "false"     
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     mule4port: "8093"
     mule4host:  "mule-worker-internal-serviceorders-papi-dev.us-e1.cloudhub.io"
@@ -38,9 +40,11 @@ http:
   workOrders:
     mule4migrate: "false"    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     mule4port: "8091"
-    mule4host:  "mule-worker-internal-workorders-papi-dev.us-e1.cloudhub.io"
+    mule4host:  "mule-worker-internal-workorders-gbe-papi-dev.us-e1.cloudhub.io"
     host: "mule-worker-internal-apidev-workorders-fr.cloudhub.io"
     reconnection:
       attempts: "2"
@@ -51,6 +55,8 @@ http:
   customer:
     mule4migrate: "false"    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
     mule4port: "8091"
     mule4host:  "mule-worker-internal-customers-papi-dev.us-e1.cloudhub.io"
@@ -62,12 +68,15 @@ http:
       frequency: "30000"
       attempts: "2"
   preferences:
+    mule4migrate: "false"
     host: "testsecure-api.nationalgridus.com"    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "443"
     protocol: "HTTPS"
-    baseuri:  "/xapi/preferences"
-    client_id:  ""
+    baseuri: "/xapi/preferences"
+    apiName:  "preference-sc-eapi"
     tls:
       cert:
         path: "keystore/qa-mtls-sfpmapi.nationalgridus.com.pfx"
@@ -77,21 +86,40 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-  contacts:    
+    migrate:
+      host: "api-uat-us01.nationalgrid.com"      
+      port: "443"
+      protocol: "HTTPS"
+      apiName:  "preference-sc-eapi"
+  contacts:
+    mule4migrate: "false"  
     timeout: "3000000"
-    port: "8091"
+    connectionidletime: "120000"
+    responsetime: "120000"
+    port: "443"
     host: "dev-api.nationalgridus.com"
     protocol: "HTTPS"
-    baseuri:  "/ng-contactpref-exp"
+    baseuri: "/ng-contactpref-exp"
+    apiName:  "contact-sc-eapi"
     reconnection:
       attempts: "2"
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
+    migrate:
+      host: "api-uat-us01.nationalgrid.com"      
+      port: "443"
+      protocol: "HTTPS"
+      apiName:  "contact-sc-eapi"
   commons:    
     timeout: "3000000"
+    connectionidletime: "120000"
+    responsetime: "120000"
     port: "8091"
+    mule4migrate: "false" 
+    mule4port: "8093"
+    mule4host:  "mule-worker-internal-serviceorders-papi-dev.us-e1.cloudhub.io"
     host: "mule-worker-internal-apidev-ng-common-fr.cloudhub.io"
     reconnection:
       attempts: "2"
