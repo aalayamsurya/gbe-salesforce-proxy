@@ -10,20 +10,21 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	
 	<flow name="proxyapiFlow" doc:id="4f236a5a-f3a1-490e-84df-acfa357b3b7d" >
 		<http:listener doc:name="Listener" doc:id="f59b7d34-17b5-484d-83ab-55e04a759eb8" path="${http.listener.version}" config-ref="HTTP_Listener_config">
-			<http:response statusCode="#[vars.httpStatus default 200]" >
+			<http:response statusCode="#[vars.httpStatus default p('http.successcode') as Number]" >
 				<http:headers ><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
 			</http:response>
-			<http:error-response statusCode="#[vars.httpStatus default 500]">
+			<http:error-response statusCode="#[vars.httpStatus default p('http.failurecode') as Number]">
 				<http:body ><![CDATA[#[payload]]]></http:body>
 				<http:headers ><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
 			</http:error-response>
 		</http:listener>
+		<logger level="INFO" doc:name="Start Log" doc:id="88db7bd8-f1b1-4612-b7c2-fdcb072c2051" message="Start - proxyapiFlow Main Flow"/>
 		<json-logger:logger doc:name="initialLogger" doc:id="1f51478a-50d5-4fd3-a947-5d478c11e8fb" config-ref="jsonLoggerConfig" message="initial request payload">
 			<json-logger:content ><![CDATA[#[%dw 2.0
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
@@ -33,7 +34,7 @@ output application/json
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
@@ -43,7 +44,7 @@ output application/json
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 		</json-logger:logger>
@@ -55,7 +56,7 @@ output application/json
 	<sub-flow name="ng-api-initialization" doc:id="259c0db9-e038-43b8-88b5-3eac8f7151cb" >
 		<set-variable value="#[attributes.headers.'X-Root-Correlation-Id' default correlationId]" doc:name="setCorrelationalID" doc:id="f956d283-47cf-4cb3-a980-cf3cbb18e5d1" variableName="CorrelationalID"/>
 		<set-variable value="#[attributes.requestPath]" doc:name="setApiPath" doc:id="deddadaa-ee7a-4659-96c2-e311388f14a0" variableName="apiPath"/>
-		<set-variable value="#[if(attributes.requestPath contains (&quot;v04&quot;)) (attributes.requestPath splitBy(&quot;v04&quot;)) else if(attributes.requestPath contains (&quot;v01&quot;)) (attributes.requestPath  splitBy(&quot;v01&quot;)) else if(attributes.requestPath contains (&quot;api/v1&quot;)) (attributes.requestPath  splitBy(&quot;api/v1&quot;)) else if ((attributes.requestPath contains (p('http.preferences.apiName'))) or (attributes.requestPath contains (p('http.contact.apiName')))) attributes.requestPath else (attributes.requestPath splitBy(&quot;v01&quot;))]" doc:name="setPathName" doc:id="fe4d4a33-b74c-4ba3-a326-9155149b891a" variableName="pathName" />
+		<set-variable value="#[if(attributes.requestPath contains (&quot;v04&quot;)) (attributes.requestPath splitBy(&quot;v04&quot;)) else if(attributes.requestPath contains (&quot;v01&quot;)) (attributes.requestPath  splitBy(&quot;v01&quot;)) else if(attributes.requestPath contains (&quot;api/v1&quot;)) (attributes.requestPath  splitBy(&quot;api/v1&quot;)) else if ((attributes.requestPath contains (p('http.preferences.apiName'))) or (attributes.requestPath contains (p('http.contacts.apiName')))) attributes.requestPath else (attributes.requestPath splitBy(&quot;v01&quot;))]" doc:name="setPathName" doc:id="fe4d4a33-b74c-4ba3-a326-9155149b891a" variableName="pathName" />
 		<set-variable value="#[if(attributes.headers.'Target-System' !=null)  attributes.headers.'Target-System' else &quot;UNKNOWN&quot;]" doc:name="setTarget-System" doc:id="4be74794-37e6-4e3c-9b49-517eb049d1d9" variableName="Target-System"/>
 		<set-variable value="#[if(attributes.headers.'Source-System' !=null)  attributes.headers.'Source-System' else &quot;UNKNOWN&quot;]" doc:name="setSource-System" doc:id="032f6cfd-0349-4169-bc32-1dff0ae9850f" variableName="Source-System"/>
 		<set-variable value="#[if(attributes.headers.'content-type' != null) attributes.headers.'content-type'   else  &quot;application/json&quot;]" doc:name="contentType" doc:id="89b95435-5346-4ef1-a428-21e184c5f5a6" variableName="v_content_type"/>
@@ -86,13 +87,14 @@ output application/json
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") and (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
 				<flow-ref doc:name="ng-proxy-api" doc:id="09fba1d2-c58a-4c46-97c5-7924a4d7f2e4" name="ng-proxy-api"/>
 			</otherwise>
 		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="e6279f79-58b2-4929-b943-240ff13ce8a1" message="End of processing - proxyapiFlow Main Flow"/>
 	</sub-flow>
 	<flow name="mutual-tls-property-fetch-flow" doc:id="307314bb-878e-454a-8367-7714b214b5af" >
 		<ee:transform doc:name="validateTransformMessage" doc:id="a656c932-ebc1-4c91-894c-5c3776873293" >
