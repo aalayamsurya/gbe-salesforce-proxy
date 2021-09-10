@@ -7,7 +7,8 @@ http:
     password: "![unqBJjpgQvXkd16Z8VQowPMmsVsmJIBVxcpG6rFAPqhJz9HYoo48VRJN0qYPB7kZ]"  
   preferences:
     client_id:  "![eOGsH5ARGSndi7rncEvXCh/CoQiIbv3mJtWc4luGgn84YOwFEIuIXUcfwwxmarFP]"
-    client_secret:  "![ftlgOYbA1porLJIsAgOX+Lf4iQDKg8HbSpEdbM+MX1RFGxxQYK9DVNOYxK3CElJr]"    
+    client_secret:  "![ftlgOYbA1porLJIsAgOX+Lf4iQDKg8HbSpEdbM+MX1RFGxxQYK9DVNOYxK3CElJr]"
+    
   contacts:
     client_id:  "![zwCH1X9OIhufgMqqKj2lXYy3c+eCIB5VHABxpwQkaNzv9m8eux0mq5uWORuQVtWo]"
     client_secret:  "![c/KdInCJYbhCy7/XAQIK2wQkA8rVePfciB/+60zUo/ZlTvfgnq2mXqcvjiO1JqQh]"

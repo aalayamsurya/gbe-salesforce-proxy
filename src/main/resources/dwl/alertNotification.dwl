@@ -6,7 +6,7 @@ output text/plain
 "\nSource System : " ++ vars.'Source-System'    ++
 "\nTarget System : " ++ vars.'Target-System'    ++
 "\n    " ++
-"\nCorrelationId : " ++ correlationId ++
+"\nCorrelationId : " ++ vars.CorrelationalID default correlationId ++
 "\n    "  ++
 "\n============================================================" ++
 "\nRequestPayload: " ++
