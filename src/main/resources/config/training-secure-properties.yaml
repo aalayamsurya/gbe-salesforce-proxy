@@ -1,0 +1,14 @@
+##Alert Notification CloudHub Connector Properties##
+ch:
+ password: "![Urr7oSdHxXvg4yt45FXW/w==]"
+ 
+http:
+  requester:
+    password: "![unqBJjpgQvXkd16Z8VQowPMmsVsmJIBVxcpG6rFAPqhJz9HYoo48VRJN0qYPB7kZ]"  
+  preferences:
+    client_id:  "![WquFb2rqiueib6EBSzEZxz5t/Tb1tV+sgy/AuEBRKBBfMxLTq2PVvLxJ+E6JsXAc]"
+    client_secret:  "![GVCuNLDB0m8l1MiDAWABYxeUP2EzW+hxr/B8x3On6yaLl/pf8Js6DvBI3Zb3qzEx]"
+   
+  contacts::
+    client_id:  "![qk/ceN4S8UFtChCVNYgLUqKWMpFIGxrGwLJ+GGuai7BoLTWdCGFlOpsCeDLcXKyB]"
+    client_secret:  "![p3yZkZwGUFoAoy+dTkYQcWeEJ9gSjIv2hmejxm4WEScS9tzb+iRZdjc/ocGdDA6h]"  
