@@ -60,6 +60,7 @@ output application/json
 		<set-variable value="#[if(attributes.headers.'Target-System' !=null)  attributes.headers.'Target-System' else &quot;UNKNOWN&quot;]" doc:name="setTarget-System" doc:id="4be74794-37e6-4e3c-9b49-517eb049d1d9" variableName="Target-System"/>
 		<set-variable value="#[if(attributes.headers.'Source-System' !=null)  attributes.headers.'Source-System' else &quot;UNKNOWN&quot;]" doc:name="setSource-System" doc:id="032f6cfd-0349-4169-bc32-1dff0ae9850f" variableName="Source-System"/>
 		<set-variable value="#[if(attributes.headers.'content-type' != null) attributes.headers.'content-type'   else  &quot;application/json&quot;]" doc:name="contentType" doc:id="89b95435-5346-4ef1-a428-21e184c5f5a6" variableName="v_content_type"/>
+		<set-variable value='#[payload default ""]' doc:name="Set Variable" doc:id="378436ea-b98d-426e-98da-b6c80ecf0488" variableName="requestPayload"/>
 	</sub-flow>
 	<sub-flow name="mutual-tls-validation" doc:id="f58725b6-8097-4779-bef9-33929e88ed89" >
 		<flow-ref doc:name="mutualTlsPropertyFetchFlow" doc:id="2e1bc4a8-a93e-4e7c-bf9f-854ae27dfb77" name="mutual-tls-property-fetch-flow"/>

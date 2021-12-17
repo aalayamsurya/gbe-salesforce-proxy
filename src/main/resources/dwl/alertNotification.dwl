@@ -9,7 +9,7 @@ output text/plain
 "\nCorrelationId : " ++ vars.CorrelationalID default correlationId ++
 "\n    "  ++
 "\n============================================================" ++
-"\nRequestPayload: " ++
+"\nRequest Payload: " ++
 "\n " ++
 	(vars.requestPayload.^raw as String default "Issue with input payload") ++
 "\n============================================================" ++	
