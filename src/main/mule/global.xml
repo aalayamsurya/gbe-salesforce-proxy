@@ -24,6 +24,9 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
 		</http:request-connection>
+		<http:response-validator >
+			<http:success-status-code-validator values="200,201" />
+		</http:response-validator>
 	</http:request-config>
 	<http:request-config name="workorders-http-request-config" doc:name="HTTP Request configuration" doc:id="5e827d5f-e532-46f7-8294-529f69cb2f67" responseTimeout="${http.workOrders.responsetime}">
 		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="${http.workOrders.connectionidletime}" >
@@ -41,6 +44,9 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
 		</http:request-connection>
+		<http:response-validator >
+			<http:success-status-code-validator values="200,201" />
+		</http:response-validator>
 	</http:request-config>
 	<http:request-config name="customers-http-request-config" doc:name="HTTP Request configuration" doc:id="59686d4c-0dfb-4f15-b1cb-bf12058af68a" responseTimeout="${http.customer.responsetime}">
 		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="${http.customer.connectionidletime}">
@@ -48,6 +54,9 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				<http:basic-authentication username="${http.requester.username}" password="${secure::http.requester.password}" />
 			</http:authentication>
 		</http:request-connection>
+		<http:response-validator >
+			<http:success-status-code-validator values="200,201" />
+		</http:response-validator>
 	</http:request-config>
 	<http:request-config name="commons-http-request-config" doc:name="HTTP Request configuration" doc:id="0dca3e94-4fe3-4cc2-8958-1a13587649cb" responseTimeout="${http.commons.responsetime}">
 		<http:request-connection host="#[vars.vConnectDetails.host]" port="#[vars.vConnectDetails.port]" connectionIdleTimeout="${http.commons.connectionidletime}">
@@ -59,6 +68,9 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	<http:request-config name="preferences-http-request-config" doc:name="HTTP Request configuration" doc:id="3c3d895c-476a-487a-9436-00e55cace1b0">
 		<http:request-connection protocol="HTTPS" connectionIdleTimeout="${http.preferences.connectionidletime}">			
 		</http:request-connection>
+		<http:response-validator >
+			<http:success-status-code-validator values="200,201" />
+		</http:response-validator>
 	</http:request-config>
 	<http:request-config name="contacts-http-request-config" doc:name="HTTP Request configuration" doc:id="8d91ff9d-f056-4429-966c-f01845cbe907">
 		<http:request-connection protocol="HTTPS" connectionIdleTimeout="${http.contacts.connectionidletime}">			
