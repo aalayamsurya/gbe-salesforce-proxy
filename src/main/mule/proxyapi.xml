@@ -48,8 +48,9 @@ if ( p('http.premise.mule4migrate') == "true") {
 ]]></ee:set-variable>
 					</ee:variables>
 				</ee:transform>
-				<http:request method="#[attributes.method]" doc:name="Call to Premise API" doc:id="562ad646-682c-4d33-aaf2-820a43e9cadd" path="#[vars.vConnectDetails.requestPath]" config-ref="premise-http-request-config" responseTimeout="120000">
-					<http:headers ><![CDATA[#[output application/json
+				<try doc:name="Try" doc:id="3c356a3c-1563-4e41-86b5-1b1d05e1a4d0" >
+					<http:request method="#[attributes.method]" doc:name="Call to Premise API" doc:id="562ad646-682c-4d33-aaf2-820a43e9cadd" path="#[vars.vConnectDetails.requestPath]" config-ref="premise-http-request-config" responseTimeout="120000">
+					<http:headers><![CDATA[#[output application/json
 ---
 {
 	
@@ -58,13 +59,29 @@ if ( p('http.premise.mule4migrate') == "true") {
 	"Source-System" : vars.'Source-System',
 	"Target-System" : vars.'Target-System',
 }]]]></http:headers>
-					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
-					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
-					<http:response-validator >
+					<http:uri-params><![CDATA[#[attributes.uriParams]]]></http:uri-params>
+					<http:query-params><![CDATA[#[attributes.queryParams]]]></http:query-params>
+					<http:response-validator>
 						<http:success-status-code-validator values="200,201" />
 					</http:response-validator>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="httpStatus"/>
+					<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="httpStatus" />
+					<error-handler >
+						<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="f7f1092e-5d5b-4e56-975b-2fb0c11cc887" when='#[!isEmpty(error.muleMessage.payload) and (error.muleMessage.payload."errorType" == "SYSTEM:DATAERROR")]' type="HTTP:INTERNAL_SERVER_ERROR">
+							<ee:transform doc:name="Map Data Error Payload Response" doc:id="49576f53-9bf8-4e65-aeba-df2924d972c5" >
+								<ee:message >
+									<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+error.muleMessage.payload."errorPayload"]]></ee:set-payload>
+								</ee:message>
+								<ee:variables >
+									<ee:set-variable variableName="httpStatus" ><![CDATA[error.muleMessage.payload.errorCode]]></ee:set-variable>
+								</ee:variables>
+							</ee:transform>
+						</on-error-continue>
+					</error-handler>
+				</try>
 			</when> 
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/workOrders"))]'>
 				<json-logger:logger doc:name="Log Before Workorders Call" doc:id="b05168b6-14f1-4ac6-a5cf-367178ba02ef"  message="Before  WorkOrders Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -193,7 +210,7 @@ if ( p('http.customer.mule4migrate') == "true") {
 					</ee:variables>
 				</ee:transform>
 				<try doc:name="Try" doc:id="a2189daa-6086-4be6-989c-95fc7c64b1b1" >
-					<http:request method="#[attributes.method]" doc:name="Call to Customer API" doc:id="767c5b38-b555-4cfe-8bfd-0d74579b8de0" path="#[vars.vConnectDetails.requestPath]" config-ref="customers-http-request-config" responseTimeout="120000">
+					<http:request method="#[attributes.method]" doc:name="Call to Customer API" doc:id="767c5b38-b555-4cfe-8bfd-0d74579b8de0" path="#[vars.vConnectDetails.requestPath]" config-ref="customers-http-request-config">
 					<http:headers><![CDATA[#[output application/json
 ---
 {
@@ -211,7 +228,7 @@ if ( p('http.customer.mule4migrate') == "true") {
 				</http:request>
 					<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="httpStatus" />
 					<error-handler >
-						<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="eb7b739e-8b7b-46de-b0fc-358fdadb1a1a" type="HTTP:INTERNAL_SERVER_ERROR" when='#[error.muleMessage.payload."errorType" == "SYSTEM:DATAERROR"]'>
+						<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="eb7b739e-8b7b-46de-b0fc-358fdadb1a1a" when='#[!isEmpty(error.muleMessage.payload) and (error.muleMessage.payload."errorType" == "SYSTEM:DATAERROR")]' type="HTTP:INTERNAL_SERVER_ERROR">
 							<ee:transform doc:name="Map Data Error Payload Response" doc:id="934149fe-d557-48ae-bc4a-44b2ac166f8d" >
 								<ee:message >
 									<ee:set-payload ><![CDATA[%dw 2.0
