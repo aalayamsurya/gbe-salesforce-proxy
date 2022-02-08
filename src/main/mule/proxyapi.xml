@@ -416,7 +416,7 @@ if ( p('http.contacts.mule4migrate') == "true") {
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="9a521c9b-c10f-4606-9d45-7ffe1001fe57" variableName="vStatusCode" />
 			</when>	 -->
-			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/commonCustomers"))]'>
+			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/CommonCustomers"))]'>
 				<json-logger:logger doc:name="Log Before Common Customers Call" doc:id="7b44b8c6-bffc-4df5-b8fb-c1ae0d55ce02" config-ref="jsonLoggerConfig" message="Before Common Customers Payload " tracePoint="BEFORE_REQUEST">
 					<json-logger:content ><![CDATA[#[%dw 2.0
 output application/json
@@ -426,7 +426,17 @@ output application/json
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<http:request doc:name="Call to: Common Customers Request Calls" doc:id="5d9c4a52-8909-4879-87fa-f1d492be79c0" config-ref="gbe-commoncustomers-http-request-config" method="#[attributes.method]" path="#[attributes.requestPath]">
+              <ee:transform doc:name="Update requestPath" doc:id="647fafc0-1a61-435a-8bc8-3f1bb77059ab">
+					<ee:message>
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="requestPathUpdatedVar" ><![CDATA[%dw 2.0
+output application/java
+---
+(attributes.requestPath splitBy "CommonCustomers")[1]]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<http:request doc:name="Call to: Common Customers Request Calls" doc:id="5d9c4a52-8909-4879-87fa-f1d492be79c0" config-ref="gbe-commoncustomers-http-request-config" method="#[attributes.method]" path="#[vars.requestPathUpdatedVar]">
 					<http:headers ><![CDATA[#[output application/json
 ---
 {
