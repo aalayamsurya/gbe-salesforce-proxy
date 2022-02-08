@@ -416,7 +416,44 @@ if ( p('http.contacts.mule4migrate') == "true") {
 				</http:request>
 				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="9a521c9b-c10f-4606-9d45-7ffe1001fe57" variableName="vStatusCode" />
 			</when>	 -->
-			
+			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/commonCustomers"))]'>
+				<json-logger:logger doc:name="Log Before Common Customers Call" doc:id="7b44b8c6-bffc-4df5-b8fb-c1ae0d55ce02" config-ref="jsonLoggerConfig" message="Before Common Customers Payload " tracePoint="BEFORE_REQUEST">
+					<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+ 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<http:request doc:name="Call to: Common Customers Request Calls" doc:id="5d9c4a52-8909-4879-87fa-f1d492be79c0" config-ref="gbe-commoncustomers-http-request-config" method="#[attributes.method]" path="#[attributes.requestPath]">
+					<http:headers ><![CDATA[#[output application/json
+---
+{
+	
+	"X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
+	"Content-Type" : attributes.headers.'Content-Type',
+	"Source-System" : attributes.headers.'Source-System',
+	"Target-System" : attributes.headers.'Target-System',
+	"ng_billingaccount_number": attributes.headers.'ng_billingaccount_number',
+	"ng_customer_number": attributes.headers.'ng_customer_number',
+	"ng_premise_number": attributes.headers.'ng_premise_number',
+	"Accept": attributes.headers.'Accept'
+}]]]></http:headers>
+					<http:uri-params ><![CDATA[#[attributes.uriParams]]]></http:uri-params>
+					<http:query-params ><![CDATA[#[attributes.queryParams]]]></http:query-params>
+				</http:request>
+				<json-logger:logger doc:name="Log After Common Customers Call" doc:id="9db63457-4220-4c1c-b66d-4fa18f3ea3f8" config-ref="jsonLoggerConfig" message="After Common Customers Payload " tracePoint="AFTER_REQUEST">
+					<json-logger:content ><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+ 	payload: payload,
+ 	attributes: attributes
+}]]]></json-logger:content>
+				</json-logger:logger>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="76cb798d-3964-4beb-a124-8cb85b8a73a3" variableName="httpStatus" />
+			</when>
 			<otherwise >
 				<json-logger:logger doc:name="DefaultLogger" doc:id="cd56dad5-fb2a-41e4-b3a9-16bef8b33b17" message="DefaultLogger payload" config-ref="jsonLoggerConfig" tracePoint="AFTER_TRANSFORM">
 					<json-logger:content ><![CDATA[#[output application/json ---
