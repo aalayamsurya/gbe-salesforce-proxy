@@ -432,6 +432,8 @@ output application/json
 {
 	
 	"X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
+    "client_id" : p('secure::http.commonCustomers.client_id'),
+    "client_secret" : p('secure::http.commonCustomers.client_secret'),
 	"Content-Type" : attributes.headers.'Content-Type',
 	"Source-System" : attributes.headers.'Source-System',
 	"Target-System" : attributes.headers.'Target-System',
