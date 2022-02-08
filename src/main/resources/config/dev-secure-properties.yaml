@@ -8,10 +8,16 @@ http:
   preferences:
     client_id:  "![eOGsH5ARGSndi7rncEvXCh/CoQiIbv3mJtWc4luGgn84YOwFEIuIXUcfwwxmarFP]"
     client_secret:  "![ftlgOYbA1porLJIsAgOX+Lf4iQDKg8HbSpEdbM+MX1RFGxxQYK9DVNOYxK3CElJr]"
-   
+
+  commonCustomers:
+    client_id:  "![3j8VmIXNNn+K2DzWXTKPCjvCjZoIjHWEWLWWWTi4Tgq4DHjkK7wJmvqL0biJmWom]"
+    client_secret:  "![hux61Xw2to1gAx92ygTAF6VM+aBf0wJHZzKlLPkBrcQSOhV8HRHUMVqkFUwzwawW]" 
+    
   contacts::
     client_id:  "![zwCH1X9OIhufgMqqKj2lXYy3c+eCIB5VHABxpwQkaNzv9m8eux0mq5uWORuQVtWo]"
-    client_secret:  "![c/KdInCJYbhCy7/XAQIK2wQkA8rVePfciB/+60zUo/ZlTvfgnq2mXqcvjiO1JqQh]" 
+    client_secret:  "![c/KdInCJYbhCy7/XAQIK2wQkA8rVePfciB/+60zUo/ZlTvfgnq2mXqcvjiO1JqQh]"
+
+
     
 ##cris customer      
 https:
