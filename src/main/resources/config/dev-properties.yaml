@@ -71,8 +71,10 @@ http:
     timeout: "3000000"
     connectionidletime: "39000"
     responsetime: "66000"
-    port: "8091"
-    host: "mule-worker-internal-gbe-customers-eapi-dev.us-e1.cloudhub.io"
+    port: "443"
+    host: "apidev.nationalgrid.com"
+    basePath: "/gbe-customers-eapi"
+    version: "v1"
     reconnection:
       attempts: "3"
       frequency: "3000"
