@@ -80,8 +80,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		<cloudhub:connection username="${ch.username}" password="${secure::ch.password}" environment="${environment.id}" />
 	</cloudhub:config>
 	 <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="fac8c170-7045-4d28-afd4-928ff0695aa8" flowRef="proxyapiFlow" />
-	 <http:request-config name="gbe-commoncustomers-http-request-config" doc:name="HTTP Request configuration" doc:id="59686d4c-0dfb-4f15-b1cb-bf12058af68a" responseTimeout="${http.commonCustomers.responsetime}">
-		<http:request-connection host="${http.commonCustomers.host}" port="${http.commonCustomers.port}" connectionIdleTimeout="${http.commonCustomers.connectionidletime}">
+	 <http:request-config name="gbe-commoncustomers-http-request-config" doc:name="HTTP Request configuration" doc:id="59686d4c-0dfb-4f15-b1cb-bf12058af68a" responseTimeout="${http.commonCustomers.responsetime}" basePath="${http.commonCustomers.basePath}">
+		<http:request-connection host="${http.commonCustomers.host}" port="${http.commonCustomers.port}" connectionIdleTimeout="${http.commonCustomers.connectionidletime}" protocol="HTTPS">
 			<reconnection >
 				<reconnect frequency="${http.commonCustomers.reconnection.frequency}" count="${http.commonCustomers.reconnection.attempts}" />
 			</reconnection>
