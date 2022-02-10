@@ -65,7 +65,28 @@ if ( p('http.premise.mule4migrate') == "true") {
 						<http:success-status-code-validator values="200,201" />
 					</http:response-validator>
 				</http:request>
-					<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="82c2821b-52d3-4202-b181-6f177e6d55aa" variableName="httpStatus" />
+					<choice doc:name="Choice" doc:id="f187720c-b653-4582-9fb1-19df5087a109" >
+						<when expression='#[(!isEmpty(payload.errorType) and (payload.errorType == "SYSTEM:DATAERROR"))]'>
+							<ee:transform doc:name="Map Data Error Response" doc:id="e9910ce6-93e6-472a-b0f6-802fdd33b44c" >
+								<ee:message >
+									<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.errorPayload
+]]></ee:set-payload>
+								</ee:message>
+								<ee:variables >
+									<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+payload.errorCode]]></ee:set-variable>
+								</ee:variables>
+							</ee:transform>
+						</when>
+						<otherwise >
+							<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="919094f3-8f8a-487b-bcf4-0c78c2b97bc7" variableName="httpStatus" />
+						</otherwise>
+					</choice>
 					<error-handler >
 						<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="f7f1092e-5d5b-4e56-975b-2fb0c11cc887" when='#[!isEmpty(error.muleMessage.payload) and (error.muleMessage.payload."errorType" == "SYSTEM:DATAERROR")]' type="HTTP:INTERNAL_SERVER_ERROR">
 							<ee:transform doc:name="Map Data Error Payload Response" doc:id="49576f53-9bf8-4e65-aeba-df2924d972c5" >
@@ -177,7 +198,28 @@ if ( p('http.serviceOrders.mule4migrate') == "true") {
 						<http:success-status-code-validator values="200,201" />
 					</http:response-validator>
 				</http:request>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="7afb46e8-7190-4167-a64a-f543af9107b0" variableName="httpStatus"/>
+				<choice doc:name="Choice" doc:id="429589cf-603a-4db9-9bf6-bd9b9330e05a" >
+						<when expression='#[(!isEmpty(payload.errorType) and (payload.errorType == "SYSTEM:DATAERROR"))]'>
+							<ee:transform doc:name="Map Data Error Response" doc:id="077baaa6-e6e3-445e-9256-c27e63167721" >
+								<ee:message >
+									<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.errorPayload
+]]></ee:set-payload>
+								</ee:message>
+								<ee:variables >
+									<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+payload.errorCode]]></ee:set-variable>
+								</ee:variables>
+							</ee:transform>
+						</when>
+						<otherwise >
+							<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6d830d8f-23e9-41ad-8803-33182d4a951f" variableName="httpStatus" />
+						</otherwise>
+					</choice>
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/customer"))]'>
 				<json-logger:logger doc:name="Log Before Customer Call" doc:id="32d2abd1-50b5-4dfd-bfc5-cf2d72806410" message="Before Customers Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
@@ -226,7 +268,28 @@ if ( p('http.customer.mule4migrate') == "true") {
 						<http:success-status-code-validator values="200,201" />
 					</http:response-validator>
 				</http:request>
-					<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6ad383d7-bed8-4c3f-ab27-c7da274fa5f6" variableName="httpStatus" />
+					<choice doc:name="Choice" doc:id="2d2e6f98-8f11-4cd5-b993-3380ab7fbba6" >
+						<when expression='#[(!isEmpty(payload.errorType) and (payload.errorType == "SYSTEM:DATAERROR"))]'>
+							<ee:transform doc:name="Map Data Error Response" doc:id="8ff5c110-f402-46c3-bfe6-a6b33f989f75" >
+								<ee:message >
+									<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.errorPayload
+]]></ee:set-payload>
+								</ee:message>
+								<ee:variables >
+									<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+payload.errorCode]]></ee:set-variable>
+								</ee:variables>
+							</ee:transform>
+						</when>
+						<otherwise >
+							<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="02431d2a-63f2-4c9d-9950-a97538657f39" variableName="httpStatus" />
+						</otherwise>
+					</choice>
 					<error-handler >
 						<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="eb7b739e-8b7b-46de-b0fc-358fdadb1a1a" when='#[!isEmpty(error.muleMessage.payload) and (error.muleMessage.payload."errorType" == "SYSTEM:DATAERROR")]' type="HTTP:INTERNAL_SERVER_ERROR">
 							<ee:transform doc:name="Map Data Error Payload Response" doc:id="934149fe-d557-48ae-bc4a-44b2ac166f8d" >
