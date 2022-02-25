@@ -343,7 +343,7 @@ attributes.requestPath replace "api/v01/commonCustomers" with "api/v1/customers"
 "X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
 "ng_from_date": attributes.headers.'ng_from_date' default null,
 "ng_to_date": attributes.headers.'ng_to_date' default null,
-"ng_statement_type": attributes.headers.'ng_statement_type' default null,
+"ng_statement_type": attributes.headers.'ng_statement_type' default "Billing Only",
 "ng_servicepoint": attributes.headers.'ng_servicepoint'
 }]]]></http:headers>
 				</http:request>
