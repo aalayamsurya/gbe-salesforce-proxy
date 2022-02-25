@@ -121,7 +121,7 @@ http:
     connectionidletime: "39000"
     responsetime: "66000"
     port: "443"
-    host: "apidev.nationalgrid.com"
+    host: "apiuat.nationalgrid.com"
     basePath: "/gbe-customers-eapi-uat"
     version: "v1"
     reconnection:
