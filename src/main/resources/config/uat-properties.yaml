@@ -122,7 +122,7 @@ http:
     responsetime: "66000"
     port: "443"
     host: "apidev.nationalgrid.com"
-    basePath: "/gbe-customers-eapi-dev01"
+    basePath: "/gbe-customers-eapi-uat"
     version: "v1"
     reconnection:
       attempts: "3"
