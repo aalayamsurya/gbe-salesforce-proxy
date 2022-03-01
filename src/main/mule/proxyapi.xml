@@ -198,28 +198,7 @@ if ( p('http.serviceOrders.mule4migrate') == "true") {
 						<http:success-status-code-validator values="200,201" />
 					</http:response-validator>
 				</http:request>
-				<choice doc:name="Choice" doc:id="429589cf-603a-4db9-9bf6-bd9b9330e05a" >
-						<when expression='#[(!isEmpty(payload.errorType) and (payload.errorType == "SYSTEM:DATAERROR"))]'>
-							<ee:transform doc:name="Map Data Error Response" doc:id="077baaa6-e6e3-445e-9256-c27e63167721" >
-								<ee:message >
-									<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-payload.errorPayload
-]]></ee:set-payload>
-								</ee:message>
-								<ee:variables >
-									<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
-output application/java
----
-payload.errorCode]]></ee:set-variable>
-								</ee:variables>
-							</ee:transform>
-						</when>
-						<otherwise >
-							<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6d830d8f-23e9-41ad-8803-33182d4a951f" variableName="httpStatus" />
-						</otherwise>
-					</choice>
+				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="6d830d8f-23e9-41ad-8803-33182d4a951f" variableName="httpStatus" />
 			</when>
 			<when expression='#[(!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/customer"))]'>
 				<json-logger:logger doc:name="Log Before Customer Call" doc:id="32d2abd1-50b5-4dfd-bfc5-cf2d72806410" message="Before Customers Payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">

@@ -21,28 +21,13 @@ output application/json
  	attributes: attributes
 }]]]></json-logger:content>
 			</json-logger:logger>
-			<choice doc:name="Type of Error" doc:id="2d6b411d-1f5c-459d-881f-1376dc367bd1">
-                    <when expression='#[error.errorType.namespace == "EXAMPLE" and error.errorType.identifier == "ERROR"]'>
-                        <set-variable value='#[%dw 2.0
-output application/json
----
-{
-	message: "Error Payload via Error Handler Plugin Custom Properties"
-}]' doc:name="errorPayload" doc:id="d38d22a8-9b3f-448a-95cd-85ab3a5dd3e3" variableName="errorPayload" />
-                    </when>
-                <otherwise>
-                        <set-variable value='#[if (error.errorMessage.payload == null) "No Payload Available" else error.errorMessage.payload]' doc:name="errorPayload" doc:id="ed3f1411-bfce-4a93-b0db-4b7618ef81e2" variableName="errorPayload" />
-                    </otherwise>
-                </choice>
+			<set-variable value='#[if (error.errorMessage.payload == null) "No Payload Available" else error.errorMessage.payload]' doc:name="Set Error Payload Details" doc:id="3b8fa838-b4ac-4342-a2ee-71cf84f29b9c" variableName="vErrorPayload"/>
 			<error-handler-plugin:on-error doc:name="Process Error" doc:id="8f8d4a67-e04c-4036-b214-19d50b2b9b9c" apiVersion="p('api.version')" customErrorMap="#[${file::dwl/errorMap.dwl}]" customValidationErrorMap="#[${file::dwl/validationErrorMap.dwl}]"/>
 			<choice doc:name="Choice" doc:id="2aa66edc-d348-4886-b772-ffb8fd70a6c0" >
-				<when expression='#[vars.errorPayload != "No Payload Available"]'>
+				<when expression='#[!isEmpty(error.errorMessage.payload)]'>
 					<ee:transform doc:name="Transform Message" doc:id="4eefb59c-64a1-4774-85c5-b885f2acb8b3" >
 						<ee:message >
-							<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-vars.errorPayload]]></ee:set-payload>
+							<ee:set-payload resource="dwl\apiErrorResponse.dwl" />
 						</ee:message>
 					</ee:transform>
 					<set-variable value="#[attributes.httpStatus]" doc:name="Set Variable" doc:id="0e348c40-c0ea-44c7-9e42-2b80c74ed588" variableName="httpStatus"/>
@@ -56,7 +41,27 @@ vars.errorPayload]]></ee:set-payload>
 					<set-variable value="#[attributes.httpStatus]" doc:name="httpStatus" doc:id="66c7bc03-88e2-46e0-8eb6-5d82a0b95971" variableName="httpStatus" />
 				</otherwise>
 			</choice>
-			<flow-ref doc:name="Flow Reference to alertNotificationFlow" doc:id="b7800834-b56c-4498-a75a-214f7daf8317" name="alert-notification-subflow" />
+			<json-logger:logger doc:name="Logger" doc:id="193be9c1-1409-47ff-9d7f-82279505d9ad" config-ref="jsonLoggerConfig" message="Log Alert Trigger Details" tracePoint="EXCEPTION" priority="ERROR">
+				<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+    pathDetails: vars.pathName[1],
+    (isEmailTriggerd: vars.vErrorPayload.isMailTriggered) if (!isEmpty (vars.vErrorPayload.isMailTriggered))
+}]]]></json-logger:content>
+			</json-logger:logger>
+			<choice doc:name="Choice" doc:id="8855b4ac-1ba7-4d5d-9e27-ff13bb7838dd" >
+				<when expression='#[(vars.pathName[1] startsWith("/serviceOrders")) and (vars.vErrorPayload.isMailTriggered)]'>
+					<json-logger:logger doc:name="Log Alert Triggerd Alerdy" doc:id="8a7b19cb-b7ce-4356-8123-063ddfd7e6f0" config-ref="jsonLoggerConfig" message="Log Alert already Triggered." tracePoint="EXCEPTION" priority="ERROR">
+						<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+    payload: JSONLoggerModule::stringifyNonJSON(payload),
+    isMailTriggered: vars.vErrorPayload.isMailTriggered
+}]]]></json-logger:content>
+					</json-logger:logger>
+				</when>
+				<otherwise >
+					<flow-ref doc:name="Flow Reference to alertNotificationFlow" doc:id="b7800834-b56c-4498-a75a-214f7daf8317" name="alert-notification-subflow" />
+				</otherwise>
+			</choice>
 			<json-logger:logger doc:name="Logger" doc:id="cfe66788-9c9d-4932-8a7e-497613cdeb56" config-ref="jsonLoggerConfig" message="Log End with Exception" tracePoint="END" priority="ERROR">
 				<json-logger:content ><![CDATA[#[%dw 2.0
 output application/json

@@ -18,7 +18,6 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 				<http:headers ><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
 			</http:error-response>
 		</http:listener>
-		<logger level="INFO" doc:name="Start Log" doc:id="88db7bd8-f1b1-4612-b7c2-fdcb072c2051" message="Start - proxyapiFlow Main Flow"/>
 		<json-logger:logger doc:name="initialLogger" doc:id="1f51478a-50d5-4fd3-a947-5d478c11e8fb" config-ref="jsonLoggerConfig" message="initial request payload">
 			<json-logger:content ><![CDATA[#[%dw 2.0
 output application/json
