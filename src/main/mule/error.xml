@@ -17,7 +17,7 @@ http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule
 output application/json
 ---
 {
- 	(payload: payload) if ((attributes.method == "POST") or (attributes.method == "PUT")),
+ 	(payload: payload) if ((attributes.method != "GET")),
  	attributes: attributes
 }]]]></json-logger:content>
 			</json-logger:logger>
