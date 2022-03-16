@@ -314,7 +314,16 @@ output application/json
  	attributes: attributes
 }]]]></json-logger:content>
 				</json-logger:logger>
-				<set-variable value="#[attributes.statusCode]" doc:name="setStatusCode" doc:id="76cb798d-3964-4beb-a124-8cb85b8a73a3" variableName="httpStatus" />
+				<ee:transform doc:name="Set Status Code" doc:id="458c13f7-0acd-40cd-a673-e6bc2aa8898f" >
+					<ee:message >
+					</ee:message>
+					<ee:variables >
+						<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
+output application/java
+---
+if(payload.webserviceControllerOutput != null) 500 else if (attributes.statusCode != null) attributes.statusCode else 500]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
 			</when>
 			<when expression='#[((!isEmpty(vars.pathName[1])) and (vars.pathName[1] startsWith("/common")))]'>
 				<json-logger:logger doc:name="Log Before Common Call" doc:id="a8ae2a75-e89a-4186-a105-4a4057d8bc56" message="Before Premise call payload" config-ref="jsonLoggerConfig" tracePoint="BEFORE_REQUEST">
