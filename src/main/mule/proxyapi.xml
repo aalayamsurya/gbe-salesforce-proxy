@@ -290,10 +290,10 @@ attributes.requestPath replace "api/v01/commonCustomers" with "api/v1/customers"
 ---
 {
 "ng_customer_number" : attributes.headers.'ng_customer_number' default null,
-"x-client_id" : "06e007c70cd14d66925a330fce5df7be",
+"x-client_id" : Mule::p('secure::http.commonCustomers.client_id'),
 "ng_billingaccount_number" : attributes.headers.'ng_billingaccount_number',
 "Target-System" : attributes.headers.'Target-System' default "CSS",
-"x-client_secret" : "1Cb27727665d40Aa8E44BCf69a2a4b11",
+"x-client_secret" : Mule::p('secure::http.commonCustomers.client_secret'),
 "Accept" : "application/json",
 "Source-System" : attributes.headers.'Source-System' default "Salesforce",
 "ng_premise_number" : attributes.headers.'ng_premise_number' default null,
