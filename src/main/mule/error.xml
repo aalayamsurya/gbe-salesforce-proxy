@@ -49,7 +49,7 @@ output application/json
 }]]]></json-logger:content>
 			</json-logger:logger>
 			<choice doc:name="Choice" doc:id="8855b4ac-1ba7-4d5d-9e27-ff13bb7838dd" >
-				<when expression='#[(vars.pathName[1] startsWith("/serviceOrders")) and (vars.vErrorPayload.isMailTriggered)]'>
+				<when expression='#[(vars.pathName[1] startsWith("/serviceOrders") || vars.pathName[1] startsWith("/customer") || vars.pathName[1] startsWith("/premise") ) and (vars.vErrorPayload.isMailTriggered)]'>
 					<json-logger:logger doc:name="Log Alert Triggerd Alerdy" doc:id="8a7b19cb-b7ce-4356-8123-063ddfd7e6f0" config-ref="jsonLoggerConfig" message="Log Alert already Triggered." tracePoint="EXCEPTION" priority="ERROR">
 						<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
 {
