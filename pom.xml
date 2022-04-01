@@ -19,7 +19,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<app.runtime>4.3.0</app.runtime>
-		<mule.maven.plugin.version>3.5.2</mule.maven.plugin.version>
+		<mule.maven.plugin.version>3.4.0</mule.maven.plugin.version>
 		<munit.version>2.2.5</munit.version>
 		<api.context>gbe-salesforce-proxy-oauth</api.context>
 		<api.layer>${api.layer.sapi}</api.layer>
