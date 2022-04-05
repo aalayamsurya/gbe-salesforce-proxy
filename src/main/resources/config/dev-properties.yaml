@@ -181,7 +181,7 @@ tls.keystore:
 json.logger:
   prettyPrint: "true"
   disabled.fields: ""
-##Alert Notification CloudHub Connector Properties##
+##Alert Notification CloudHub Connector Properties###
 ch:
   username: "NGLocalUser"
 
