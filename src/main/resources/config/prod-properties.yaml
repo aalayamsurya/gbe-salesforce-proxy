@@ -56,7 +56,21 @@ http:
       frequency: "30000"
     untilsuccessful:
       frequency: "30000"
-      attempts: "2"      
+      attempts: "2"
+  commonCustomers:    
+    timeout: "3000000"
+    connectionidletime: "39000"
+    responsetime: "66000"
+    port: "443"
+    host: "api.nationalgrid.com"
+    basePath: "/gbe-customers-eapi"
+    version: "v1"
+    reconnection:
+      attempts: "3"
+      frequency: "3000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"    
   customer:
     mule4migrate: "true"  
     timeout: "300000"

@@ -116,6 +116,20 @@ http:
       port: "443"
       protocol: "HTTPS"
       apiName:  "contact-sc-eapi"
+  commonCustomers:    
+    timeout: "3000000"
+    connectionidletime: "39000"
+    responsetime: "66000"
+    port: "443"
+    host: "apitraining.nationalgrid.com"
+    basePath: "/gbe-customers-eapi"
+    version: "v1"
+    reconnection:
+      attempts: "3"
+      frequency: "3000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"
   commons:
     mule4migrate: "false"    
     timeout: "3000000"
