@@ -549,7 +549,6 @@ output application/java
 	</sub-flow>
 	 <!-- <sub-flow name="Set-Api-System-Name-For-Alert-Notifications" doc:id="d12f4a7b-e2cd-4fd4-ab3e-e79e97239ee6" >
 		<set-variable value="if(vars.Source-System != null) (&quot;Source-System&quot;) else (attributes.headers.'Source-System' default &quot;Source-System&quot;)]]"vars.Source-System=""") doc:name="Set Variable" doc:id="399b04ab-8558-4d54-a294-393f75136e3a" variableName="v_source_system"/>
-		<set-variable value="if(vars.Target-System != null) (&quot;Target-System&quot;) else (attributes.headers.'Target-System' default &quot;Target-System&quot;)]]" doc:name="Set-v_target_system" doc:id="48e1dbfc-d17f-446c-9b58-32782342998c" variableName="v_target_system"/>
-		
+		<set-variable value="if(vars.Target-System != null) (&quot;Target-System&quot;) else (attributes.headers.'Target-System' default &quot;Target-System&quot;)]]" doc:name="Set-v_target_system" doc:id="48e1dbfc-d17f-446c-9b58-32782342998c" variableName="v_target_system"/>		
 	</sub-flow> -->
 </mule>
