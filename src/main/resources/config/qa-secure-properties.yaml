@@ -10,5 +10,9 @@ http:
     client_secret:  "![GVCuNLDB0m8l1MiDAWABYxeUP2EzW+hxr/B8x3On6yaLl/pf8Js6DvBI3Zb3qzEx]"
     
   contacts:
-    client_id:  "![qk/ceN4S8UFtChCVNYgLUqKWMpFIGxrGwLJ+GGuai7BoLTWdCGFlOpsCeDLcXKyB]"
-    client_secret:  "![p3yZkZwGUFoAoy+dTkYQcWeEJ9gSjIv2hmejxm4WEScS9tzb+iRZdjc/ocGdDA6h]" 
+    client_id:  "![zwCH1X9OIhufgMqqKj2lXYy3c+eCIB5VHABxpwQkaNzv9m8eux0mq5uWORuQVtWo]"
+    client_secret:  "![c/KdInCJYbhCy7/XAQIK2wQkA8rVePfciB/+60zUo/ZlTvfgnq2mXqcvjiO1JqQh]"
+  
+  commonCustomers:
+    client_id:  "![3j8VmIXNNn+K2DzWXTKPCjvCjZoIjHWEWLWWWTi4Tgq4DHjkK7wJmvqL0biJmWom]"
+    client_secret:  "![hux61Xw2to1gAx92ygTAF6VM+aBf0wJHZzKlLPkBrcQSOhV8HRHUMVqkFUwzwawW]"

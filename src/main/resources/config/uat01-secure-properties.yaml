@@ -12,6 +12,11 @@ http:
   contacts:
     client_id:  "![zwCH1X9OIhufgMqqKj2lXYy3c+eCIB5VHABxpwQkaNzv9m8eux0mq5uWORuQVtWo]"
     client_secret:  "![c/KdInCJYbhCy7/XAQIK2wQkA8rVePfciB/+60zUo/ZlTvfgnq2mXqcvjiO1JqQh]"
+    
+  commonCustomers:
+    client_id:  "![3j8VmIXNNn+K2DzWXTKPCjvCjZoIjHWEWLWWWTi4Tgq4DHjkK7wJmvqL0biJmWom]"
+    client_secret:  "![hux61Xw2to1gAx92ygTAF6VM+aBf0wJHZzKlLPkBrcQSOhV8HRHUMVqkFUwzwawW]"   
+
 ##proxy rtf uat securtiy ##    
 https:
    request: 

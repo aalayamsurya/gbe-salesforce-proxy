@@ -11,4 +11,8 @@ http:
     
   contacts:
     client_id:  "![cvHxWxhToVZrD9GT9EGktUiZpx427urFWei9Mc8QN5bzZIzbtz4hw4+rgbrtXgNp]"
-    client_secret:  "![BIqvLBWhviqTUH2UYh2LfT/XgsEBDQ7e/G0XMcyXs+awYHBVVEGRBWZZeT3dGGVk]"   
+    client_secret:  "![BIqvLBWhviqTUH2UYh2LfT/XgsEBDQ7e/G0XMcyXs+awYHBVVEGRBWZZeT3dGGVk]" 
+    
+  commonCustomers:
+    client_id:  "![hCR1J+aIQ/KS0A7GyQIwspRzpQcjsleoAs9+Q45PIxaobyNSc7lb/rIuqCFFvSYL]"
+    client_secret:  "![FbHQ5LkbXBGtIaeE6dmw4BHxce1fYMbyEDtrC/X8oXNBXT1KtLr4lfTavQZ9zQvZ]"  
