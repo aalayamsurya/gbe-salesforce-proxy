@@ -131,7 +131,7 @@ http:
       frequency: "3000"
     untilsuccessful:
       frequency: "30000"
-      attempts: "2      
+      attempts: "2"      
   commons:    
     timeout: "3000000"
     connectionidletime: "120000"
