@@ -118,6 +118,20 @@ http:
       port: "443"
       protocol: "HTTPS"
       apiName:  "contact-sc-eapi"
+  commonCustomers:    
+    timeout: "3000000"
+    connectionidletime: "39000"
+    responsetime: "66000"
+    port: "443"
+    host: "apiuat.nationalgrid.com"
+    basePath: "/gbe-customers-eapi"
+    version: "v1"
+    reconnection:
+      attempts: "3"
+      frequency: "3000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"      
   commons:    
     timeout: "3000000"
     connectionidletime: "120000"
@@ -147,7 +161,19 @@ http:
     untilsuccessful:
       frequency: "30000"
       attempts: "2"
-      
+  updatecustomer:
+    host: "api-uat-int-us.nationalgrid.com"
+    port: "443"
+    basepath: "cris-customer-proxy-uat"
+    version: "v01"
+    requestpath: "/phoneCustomer"
+    timeout: "3000000"
+    reconnection:
+      attempts: "2"
+      frequency: "30000"
+    untilsuccessful:
+      frequency: "30000"
+      attempts: "2"      
 ##M-TLS configurations
 salesforce:
     mtls: 
@@ -164,3 +190,8 @@ ch:
 
 domain: "gbe-salesforce-proxy-oauth-qa"
 environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"
+
+tls.keystore:
+  type: "pkcs12"
+  path: "certs/ng-dev.p12"
+  alias: "server" 
