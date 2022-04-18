@@ -301,7 +301,7 @@ output application/json
 						<ee:set-variable variableName="httpStatus" ><![CDATA[%dw 2.0
 output application/java
 ---
-if ((payload.webserviceControllerOutput != null) or (payload.errors != null)) 500 else if (attributes.statusCode != null) attributes.statusCode else 500]]></ee:set-variable>
+if(payload.webserviceControllerOutput != null) 500 else if (attributes.statusCode != null) attributes.statusCode else 500]]></ee:set-variable>
 					</ee:variables>
 				</ee:transform>
 			</when>
