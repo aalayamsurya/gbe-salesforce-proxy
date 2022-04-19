@@ -282,7 +282,8 @@ attributes.requestPath replace "api/v01/commonCustomers" with "api/v1/customers"
 "ng_from_date": attributes.headers.'ng_from_date' default null,
 "ng_to_date": attributes.headers.'ng_to_date' default null,
 "ng_statement_type": attributes.headers.'ng_statement_type' default "Billing Only",
-"ng_servicepoint": attributes.headers.'ng_servicepoint'
+"ng_servicepoint": attributes.headers.'ng_servicepoint',
+"ng_prod_ordno": attributes.headers.'ng_prod_ordno' default null
 }]]]></http:headers>
 				</http:request>
 				<json-logger:logger doc:name="Log After Common Customers Call" doc:id="9db63457-4220-4c1c-b66d-4fa18f3ea3f8" config-ref="jsonLoggerConfig" message="After Common Customers Payload " tracePoint="AFTER_REQUEST">
