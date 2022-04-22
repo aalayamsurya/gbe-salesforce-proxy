@@ -268,15 +268,15 @@ attributes.requestPath replace "api/v01/commonCustomers" with "api/v1/customers"
 					<http:headers ><![CDATA[#[output application/java
 ---
 {
-"ng_customer_number" : attributes.headers.'ng_customer_number' default null,
+"ng_customer_number" : attributes.headers.'ng_customer_number' default 0,
 "x-client_id" : Mule::p('secure::http.commonCustomers.client_id'),
-"ng_billingaccount_number" : attributes.headers.'ng_billingaccount_number',
+"ng_billingaccount_number" : attributes.headers.'ng_billingaccount_number' default 0,
 "ng_building_number": attributes.headers.'ng_building_number',
 "Target-System" : attributes.headers.'Target-System' default "CSS",
 "x-client_secret" : Mule::p('secure::http.commonCustomers.client_secret'),
 "Accept" : "application/json",
 "Source-System" : attributes.headers.'Source-System' default "Salesforce",
-"ng_premise_number" : attributes.headers.'ng_premise_number' default null,
+"ng_premise_number" : attributes.headers.'ng_premise_number' default 0,
 "Content-Type" : "application/json",
 "X-Root-Correlation-Id" : attributes.headers.'X-Root-Correlation-Id' default correlationId,
 "ng_from_date": attributes.headers.'ng_from_date' default null,
