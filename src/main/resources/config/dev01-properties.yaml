@@ -1,7 +1,7 @@
 api:
-  name:    "gbe-salesforce-proxy-oauth" #${project.artifactId} # replaced through Maven resource filtering
+  name:    "gbe-salesforce-proxy" #${project.artifactId} # replaced through Maven resource filtering
   version: "v1" #${project.version}    # replaced through Maven resource filtering
-  id: "16911805"
+  id: "17786589"
 http:      
   listener:
     host: "0.0.0.0"
@@ -126,20 +126,7 @@ http:
       port: "443"
       protocol: "HTTPS"
       apiName:  "contact-sc-eapi"
-  commonCustomers:    
-    timeout: "3000000"
-    connectionidletime: "39000"
-    responsetime: "66000"
-    port: "443"
-    host: "apidev.nationalgrid.com"
-    basePath: "/gbe-customers-eapi-dev01"
-    version: "v1"
-    reconnection:
-      attempts: "3"
-      frequency: "3000"
-    untilsuccessful:
-      frequency: "30000"
-      attempts: "2"       
+         
   commons:    
     timeout: "3000000"
     connectionidletime: "120000"
@@ -199,5 +186,5 @@ json.logger:
 ch:
   username: "NGLocalUser"
 
-domain: "gbe-salesforce-proxy-oauth-dev01"
+domain: "gbe-salesforce-proxy-dev01"
 environment.id: "3cb0e531-c1a2-420a-8322-6fc16f3a6a81"

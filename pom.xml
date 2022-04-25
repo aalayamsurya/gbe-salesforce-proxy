@@ -8,24 +8,24 @@
 		<relativePath>parent-pom.xml</relativePath>
 	</parent>
 	<groupId>56c14f77-79ed-4de3-8313-d542ea9f232b</groupId>
-	<artifactId>gbe-salesforce-proxy-oauth</artifactId>
+	<artifactId>gbe-salesforce-proxy</artifactId>
 	<version>3.3.0-rc.3</version>
 	<packaging>mule-application</packaging>
 
-	<name>gbe-salesforce-proxy-oauth</name>
+	<name>gbe-salesforce-proxy</name>
 
 	<properties>
 		<my.bg.org.id>56c14f77-79ed-4de3-8313-d542ea9f232b</my.bg.org.id>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<app.runtime>4.3.0</app.runtime>
+		<app.runtime>4.3.0-20220221</app.runtime>
 		<mule.maven.plugin.version>3.4.0</mule.maven.plugin.version>
 		<munit.version>2.2.5</munit.version>
-		<api.context>gbe-salesforce-proxy-oauth</api.context>
+		<api.context>gbe-salesforce-proxy</api.context>
 		<api.layer>${api.layer.sapi}</api.layer>
 		<api.visualizer.layer>${api.visualizer.sapi}</api.visualizer.layer>
 		<api.groupId>56c14f77-79ed-4de3-8313-d542ea9f232b</api.groupId>
-		<api.artifactId>gbe-salesforce-proxy-oauth</api.artifactId>
+		<api.artifactId>gbe-salesforce-proxy</api.artifactId>
 		<rtf.domain>${rtf.domain.internal}</rtf.domain>
 		<api.version>1.0.0</api.version>
 	</properties>
